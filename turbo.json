@@ -1,23 +1,38 @@
 {
-  "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["**/.env.*local"],
-  "pipeline": {
-    "build": {
-      "dependsOn": ["format", "^build"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
-    },
-    "check-types": {},
-    "format": {
-      "cache": false,
-      "outputs": ["**/*.{js,jsx,ts,tsx}", "!**/node_modules/**"]
-    },
-    "lint": {},
-    "dev": {
-      "cache": false,
-      "persistent": true
-    },
-    "clean": {
-      "cache": false
-    }
-  }
+	"$schema": "https://turbo.build/schema.json",
+	"globalDependencies": [
+		"**/.env.*local"
+	],
+	"pipeline": {
+		"build": {
+			"dependsOn": [
+				"format",
+				"^build"
+			],
+			"outputs": [
+				"dist/**",
+				".next/**",
+				"!.next/cache/**"
+			],
+			"env": [
+				"NODE_ENV"
+			]
+		},
+		"check-types": {},
+		"format": {
+			"cache": false,
+			"outputs": [
+				"**/*.{js,jsx,ts,tsx}",
+				"!**/node_modules/**"
+			]
+		},
+		"lint": {},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"clean": {
+			"cache": false
+		}
+	}
 }

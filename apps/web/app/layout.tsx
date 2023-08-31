@@ -2,6 +2,8 @@ import type { ReactNode } from 'react';
 
 import '@heimdall/ui/styles.css';
 
+import Analytics from '../components/analytics';
+
 export default function RootLayout({
 	children,
 }: {
@@ -9,7 +11,10 @@ export default function RootLayout({
 }): JSX.Element {
 	return (
 		<html lang='en'>
-			<body>{children}</body>
+			<body>
+				{children}
+				<Analytics />
+			</body>
 		</html>
 	);
 }
