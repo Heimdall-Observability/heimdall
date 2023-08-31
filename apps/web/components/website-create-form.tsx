@@ -6,18 +6,23 @@ import { useEffect, useState } from 'react';
 
 import { websiteFormAtom } from '@/jotai/store';
 import { websiteFormSchema } from '@/lib/validations/website';
+import {
+	Button,
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	Icons,
+	Input,
+	toast,
+} from '@heimdall/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { useForm } from 'react-hook-form';
 import Modal from 'react-modal';
 import { z } from 'zod';
-
-import { Icons } from './icons';
-import { Button } from './ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form';
-import { Input } from './ui/input';
-import { toast } from './ui/use-toast';
 
 export const WebsiteForm = () => {
 	const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +35,7 @@ export const WebsiteForm = () => {
 			id: '',
 		},
 	});
+
 	async function onSubmit(values: z.infer<typeof websiteFormSchema>) {
 		setIsLoading(true);
 		const res = await fetch('/api/website', {
@@ -101,7 +107,10 @@ export const WebsiteForm = () => {
 						variants={modalVariants} // Apply the animation variants
 						initial='hidden' // Set the initial animation state
 						animate='visible' // Set the target animation
-						exit={{ opacity: 0, transition: { duration: 0.1 } }} // Exit gracefully
+						exit={{
+							opacity: 0,
+							transition: { duration: 0.1 },
+						}} // Exit gracefully
 						transition={{
 							type: 'keyframes',
 							delay: 0.1,
