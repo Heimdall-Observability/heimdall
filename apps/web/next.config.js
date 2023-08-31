@@ -1,4 +1,4 @@
 module.exports = {
-  reactStrictMode: true,
-  transpilePackages: ["@heimdall/ui"],
+	reactStrictMode: true,
+	transpilePackages: ['@heimdall/ui'],
 };

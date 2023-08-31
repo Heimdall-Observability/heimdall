@@ -28,9 +28,24 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 
 # turbo
 .turbo
 
 # vercel
 .vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.idea
+
+.react-email
+react-email/node_modules/
+
+# others
+.husky
+.dist/
+dist/

@@ -1,0 +1,15 @@
+*.lock
+*.log
+\.build
+\.cache
+\.editorconfig
+.env
+\.git
+\.gitignore
+\.ignore
+\.prettierignore
+node_modules
+#package.json
+\.next
+public
+dist

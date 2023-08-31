@@ -1,11 +1,5 @@
 {
-  "extends": "tsconfig/react-library.json",
-  "include": ["."],
-  "exclude": ["dist", "build", "node_modules"],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./*"],
-    }
-  }
+	"extends": "@heimdall/tsconfig/react-library.json",
+	"include": ["."],
+	"exclude": ["dist", "build", "node_modules"]
 }
