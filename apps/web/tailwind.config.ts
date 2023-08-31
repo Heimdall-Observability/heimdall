@@ -5,3 +5,5 @@ const tailwindConfig = {
 	content: ['./components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}'],
 	presets: [sharedConfig],
 } satisfies Config;
+
+export default tailwindConfig;
