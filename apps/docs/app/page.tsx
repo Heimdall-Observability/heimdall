@@ -1,9 +1,8 @@
-import { Button, Header } from "ui";
+import { Button } from "@heimdall/ui";
 
 export default function Page(): JSX.Element {
   return (
     <>
-      <Header text="Docs" />
       <Button />
     </>
   );

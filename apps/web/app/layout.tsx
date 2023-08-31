@@ -1,7 +1,9 @@
+import { ReactNode } from "react";
+
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }): JSX.Element {
   return (
     <html lang="en">
