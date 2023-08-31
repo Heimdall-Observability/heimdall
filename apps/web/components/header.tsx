@@ -6,8 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 
 import MobileMenu from '@/components/mobile-menu';
-import { cn } from '@heimdall/ui';
-import { ExcludeSquare, ScribbleLoop } from '@phosphor-icons/react';
+import { Button, cn } from '@heimdall/ui';
+import { ExcludeSquare } from '@phosphor-icons/react';
 import { useAnimation } from 'framer-motion';
 
 const LINKS = [
@@ -58,7 +58,7 @@ export const Header = () => {
 
 	return (
 		<header className='sticky top-0 z-40 bg-white'>
-			<div className='flex h-12 items-center justify-between gap-6 border-b py-4 md:gap-10'>
+			<div className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
 				<nav
 					ref={navRef}
 					className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'
@@ -83,6 +83,10 @@ export const Header = () => {
 							</ul>
 							<MobileMenu />
 						</div>
+
+						<Button variant='outline' className='hidden md:block'>
+							<Link href='/login'>Get started</Link>
+						</Button>
 					</div>
 				</nav>
 			</div>

@@ -1,3 +1,4 @@
+import { ExcludeSquare } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import {
 	AlertTriangle,
@@ -88,21 +89,18 @@ export function ArrowIcon({
 export const Icons = {
 	logo: ({ ...props }) => (
 		<svg
-			width='61'
-			height='40'
-			viewBox='0 0 61 40'
-			fill='none'
 			xmlns='http://www.w3.org/2000/svg'
+			width='60'
+			height='60'
+			fill='#0074a6'
+			viewBox='0 0 256 256'
 			{...props}
 		>
-			<g id='Group 15'>
-				<circle id='Ellipse 3' cx='20' cy='20' r='20' fill='#FFAC30' />
-				<path
-					id='Ellipse 4'
-					d='M60.6453 20C60.6453 25.3043 58.5381 30.3914 54.7874 34.1421C51.0367 37.8929 45.9496 40 40.6453 40C35.3409 40 30.2539 37.8929 26.5031 34.1421C22.7524 30.3914 20.6453 25.3043 20.6453 20L40.6453 20H60.6453Z'
-					fill='#3A4276'
-				/>
-			</g>
+			<path
+				d='M96,96v64H40V40H160V96Zm64,0v64H96v56H216V96Z'
+				opacity='0.2'
+			></path>
+			<path d='M216,88H168V40a8,8,0,0,0-8-8H40a8,8,0,0,0-8,8V160a8,8,0,0,0,8,8H88v48a8,8,0,0,0,8,8H216a8,8,0,0,0,8-8V96A8,8,0,0,0,216,88ZM48,152V48H152V88H96a8,8,0,0,0-8,8v56Zm104-48v48H104V104Zm56,104H104V168h56a8,8,0,0,0,8-8V104h40Z'></path>
 		</svg>
 	),
 	bell: Bell,

@@ -154,8 +154,8 @@ const MobileNav = () => {
 						className='border-b border-gray-300 px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
 						style={{ transitionDelay: '400ms' }}
 					>
-						<Link href='/about' className='flex w-auto pb-4'>
-							Logout
+						<Link href='/login' className='flex w-auto pb-4'>
+							Login
 						</Link>
 					</li>
 				</ul>
