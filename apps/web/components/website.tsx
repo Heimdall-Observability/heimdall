@@ -2,7 +2,14 @@ import Link from 'next/link';
 
 import { useState } from 'react';
 
-import { Button, Card, CardContent, CardHeader, Icons } from '@heimdall/ui';
+import {
+	Button,
+	Card,
+	CardContent,
+	CardHeader,
+	Icons,
+	Skeleton,
+} from '@heimdall/ui';
 import { Website as WebsiteType } from '@prisma/client';
 import { LucideSettings, User2 } from 'lucide-react';
 

@@ -6,12 +6,12 @@ import { Icons } from '@/components/icons';
 import { Button, ButtonProps, buttonVariants } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { userWebsitesAtom, websiteFormAtom } from '@/jotai/store';
-import { cn } from '@/lib/utils';
 import { useAtom } from 'jotai';
 
 export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
 	const [websites] = useAtom(userWebsitesAtom);
 	const [, setCreateWebsite] = useAtom(websiteFormAtom);
+
 	async function onClick() {
 		if (websites.length > 1) {
 			return toast({
@@ -22,6 +22,7 @@ export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
 		}
 		setCreateWebsite(true);
 	}
+
 	return (
 		<Button onClick={onClick} {...props}>
 			<Icons.add className='h-4 w-4 ' />
