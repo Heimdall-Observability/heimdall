@@ -35,6 +35,9 @@ importers:
       '@types/prettier':
         specifier: ^2.7.3
         version: 2.7.3
+      autoprefixer:
+        specifier: ^10.4.15
+        version: 10.4.15(postcss@8.4.29)
       dotenv-cli:
         specifier: ^7.2.1
         version: 7.3.0
@@ -108,6 +111,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.7
         version: 18.2.7
+      autoprefixer:
+        specifier: ^10.4.15
+        version: 10.4.15(postcss@8.4.29)
       cssnano:
         specifier: ^6.0.1
         version: 6.0.1(postcss@8.4.29)
