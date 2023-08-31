@@ -41,12 +41,12 @@ export default async function HomePage() {
 			</svg>
 			<Link
 				href='/login'
-				className='group mt-20 flex space-x-1 rounded-full text-blue-900 hover:text-blue-950 border border-blue-500 bg-blue-50 px-10 py-2 text-sm font-medium ring-0 transition-all hover:border-blue-800 hover:bg-blue-100 sm:mt-0'
+				className='group mt-20 flex space-x-1 rounded-full text-primary hover:text-primary/90 border border-primary/50 bg-primary/10 px-10 py-2 text-sm font-medium ring-0 transition-all hover:border-primary/80 hover:bg-primary/20 sm:mt-0'
 			>
 				<p>Get started here</p>
 				<ExpandingArrow />
 			</Link>
-			<h1 className='bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text pb-8 pt-4 text-center text-2xl font-semibold text-transparent md:text-4xl'>
+			<h1 className='bg-gradient-to-br from-black via-[#171717] to-[#0074a6] text-heading bg-clip-text pb-8 pt-4 text-center text-2xl font-semibold text-transparent md:text-4xl'>
 				Web. Log. Analytics.
 			</h1>
 		</>

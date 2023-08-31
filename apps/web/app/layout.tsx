@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 
 import type { ReactNode } from 'react';
 
+import { Header } from '@/components/header';
 import { fontHeading, fontSans } from '@/lib/fonts';
 import '@/styles/globals.css';
 import { cn } from '@heimdall/ui';
