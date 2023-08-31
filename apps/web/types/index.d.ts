@@ -44,6 +44,7 @@ export type DocsConfig = {
 	sidebarNav: SidebarNavItem[];
 };
 export type DashboardConfig = {
+	mainNav: MainNavItem[];
 	sidebarNav: SidebarNavItem[];
 };
 

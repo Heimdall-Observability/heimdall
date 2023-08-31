@@ -9,6 +9,7 @@ import MobileMenu from '@/components/mobile-menu';
 import { Button, cn } from '@heimdall/ui';
 import { ExcludeSquare } from '@phosphor-icons/react';
 import { useAnimation } from 'framer-motion';
+import { User } from 'next-auth';
 
 const LINKS = [
 	{ name: 'Pricing', href: '/pricing' },
@@ -37,7 +38,7 @@ function NavItem({ href, text }: { href: string; text: string }) {
 	);
 }
 
-export const Header = () => {
+function SiteHeader({ user }: { user?: User }) {
 	const navRef = useRef<HTMLDivElement>(null);
 	const control = useAnimation();
 
@@ -92,4 +93,33 @@ export const Header = () => {
 			</div>
 		</header>
 	);
-};
+}
+
+function DashboardHeader() {
+	return (
+		<header className='sticky top-0 z-40 bg-white'>
+			<div className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
+				<nav className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'>
+					<div className='container mx-auto flex justify-between'>
+						<div className='flex items-center justify-center gap-2 align-middle'>
+							<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+							<Link
+								href='/'
+								aria-label='almond-ui'
+								className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
+							>
+								heimdall
+							</Link>
+						</div>
+
+						<Button variant='outline' className='hidden md:block'>
+							<Link href='/login'>Get started</Link>
+						</Button>
+					</div>
+				</nav>
+			</div>
+		</header>
+	);
+}
+
+export { SiteHeader, DashboardHeader };
