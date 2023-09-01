@@ -1,4 +1,3 @@
-import { ExcludeSquare } from '@phosphor-icons/react';
 import { clsx } from 'clsx';
 import {
 	AlertTriangle,
@@ -41,9 +40,6 @@ import {
 	Webhook,
 	X,
 } from 'lucide-react';
-
-export type XIcon = typeof LucideIcon;
-type SafeNumber = number | `${number}`;
 
 export interface ThemeSwitchProps extends LucideProps {
 	resolvedTheme?: 'light' | 'dark';

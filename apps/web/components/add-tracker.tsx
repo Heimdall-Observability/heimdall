@@ -37,7 +37,7 @@ export default function RootLayout({
                 {children}
                 <Loglib
                     config={{
-                        id: "${id}",
+                        id: "${id}"
                     }}
                 />
             </body>
@@ -61,7 +61,7 @@ export default function RootLayout({
                 {children}
                 <Loglib
                     config={{
-                        id: "${id}",
+                        id: "${id}"
                     }}
                 />
             </body>
@@ -138,7 +138,7 @@ loglib.record({
 	{
 		name: 'cdn',
 		getCode: (id: string) => `<head>
-        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id='${id}'></script>
+        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id='${id}'></script><title/>
 </head>
   `,
 		icon: Icons.htmlLogo,

@@ -154,11 +154,7 @@ export const EventFilter = ({
 								size='sm'
 								aria-label='Toggle italic'
 								variant='outline'
-								pressed={
-									activeFilter.find((f) => f.title === filter.title)
-										? true
-										: false
-								}
+								pressed={!!activeFilter.find((f) => f.title === filter.title)}
 								onPressedChange={(pressed) => {
 									// rome-ignore lint/style/noNonNullAssertion: <explanation>
 									const selectedFilter = filteData.find(
