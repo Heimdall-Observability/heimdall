@@ -84,7 +84,7 @@ export async function inviteTeam(
 						inviteLink: `${siteConfig.url}/dashboard/team/invite/${inviteToken}`,
 						userImage: user.image ?? '',
 					}),
-					from: 'no-reply@loglib.io',
+					from: 'no-reply@heimdall.francismasha.com',
 				});
 			};
 			if (invites.length > 3) {
