@@ -1,3 +1,5 @@
+const { fontFamily } = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -45,6 +47,10 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      fontFamily: {
+        sans: ["var(--font-sans)", ...fontFamily.sans],
+        heading: ["var(--font-heading)", ...fontFamily.sans],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
@@ -59,10 +65,69 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: 0 },
         },
+        typing: {
+          from: { width: "0" },
+          to: { width: "24ch" },
+        },
+        blink: {
+          from: { "border-right-color": "transparent" },
+          to: { "border-right-color": "black" },
+        },
+        text: {
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "0% center",
+          },
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "100% center",
+          },
+        },
+        border: {
+          "0%, 100%": {
+            transform: "translateX(0)",
+          },
+          "50%": {
+            transform: "translateX(50px)",
+          },
+          "70%": {
+            transform: "translateX(100px)",
+          },
+          "80%": {
+            transform: "translateX(400px)",
+          },
+          "100%": {
+            transform: "translateX(600px)",
+          },
+        },
+
+        "background-pan": {
+          from: {
+            "background-position": "0% center",
+          },
+          to: {
+            "background-position": "-200% center",
+          },
+        },
+        "spin-slow": {
+          from: {
+            "transform-origin": "center center",
+            transform: "rotate(0deg)",
+          },
+          to: {
+            "transform-origin": "center center",
+            transform: "rotate(360deg)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        typing: "typing 2s steps(14), blink 0.1s infinite",
+        text: "text 6s linear infinite",
+        border: "border 30s ease infinite -2s",
+        "background-pan": "background-pan 3s linear infinite",
+        "spin-slow": "spin-slow 10s linear infinite",
       },
     },
   },

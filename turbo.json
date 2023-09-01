@@ -20,11 +20,16 @@
     "clean": {
       "cache": false
     },
-    "db:migrate:deploy": {},
-    "db:push": {},
-    "db:seed": {},
-    "generate": {
-      "dependsOn": ["^generate"]
+    "migrate": {
+      "cache": false
+    },
+    "deploy": {
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "cache": true
     }
   }
 }

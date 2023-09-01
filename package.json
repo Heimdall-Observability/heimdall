@@ -12,16 +12,20 @@
   },
   "scripts": {
     "build": "turbo run build",
+    "build:tracker": "turbo --filter tracker",
+    "build:api": "turbo --filter api build",
+    "build:web": "turbo --filter web build",
+    "dev:tracker": "turbo --filter \"./packages/*\" dev",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "clean": "turbo run clean && rm -rf node_modules",
     "ui:add": "pnpm --filter ui ui:add",
-    "db:migrate:deploy": "turbo run db:migrate:deploy",
-    "db:push": "turbo run db:push",
-    "db:seed": "turbo run db:seed",
-    "generate": "turbo run generate"
+    "typecheck": "turbo typecheck",
+    "deploy:api": "turbo --filter api deploy",
+    "migrate": "turbo --filter db migrate",
+    "migrate:clickhouse": "turbo --filter api setup:clickhouse"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
