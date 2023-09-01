@@ -1,10 +1,11 @@
+import "dotenv/config";
 import { migrate } from "drizzle-orm/libsql/migrator";
-import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
+import { createClient } from "@libsql/client";
 
 async function main() {
-  const arg1 = process.argv[2] ?? "file:./db.sqlite";
-  const arg2 = process.argv[3];
+  const arg1 = (process.env.TURSO_DB_URL as string) ?? "file:./db.sqlite";
+  const arg2 = process.env.TURSO_DB_AUTH_TOKEN as string;
   console.log(
     "⌗ Starting Migration",
     "[Database]:",

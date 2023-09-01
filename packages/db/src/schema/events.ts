@@ -17,7 +17,7 @@ export const events = sqliteTable(
     }).notNull(),
     sessionId: text("sessionId").notNull(),
     visitorId: text("visitorId").notNull(),
-    properites: blob("properties", {
+    properties: blob("properties", {
       mode: "json",
     }).$type<{
       city: string;

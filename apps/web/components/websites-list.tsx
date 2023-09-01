@@ -12,7 +12,7 @@ import { WebsiteCreateButton } from './website-create-button';
 import { DeleteWebsiteAlert } from './website-delete-alert';
 import { EditWebsiteForm } from './website-edit-form';
 
-export const WebsitesList = () => {
+export default function WebsitesList() {
 	const [websites] = useAtom(websitesAtom);
 	const [selected, setSelected] = useState<string>('');
 	const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
@@ -54,4 +54,4 @@ export const WebsitesList = () => {
 			<DeleteWebsiteAlert id={selected} />
 		</>
 	);
-};
+}

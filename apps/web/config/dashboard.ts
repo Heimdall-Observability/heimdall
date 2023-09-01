@@ -13,23 +13,23 @@ export const dashboardConfig: DashboardConfig = {
 	],
 	sidebarNav: [
 		{
-			title: 'General',
+			title: 'Website',
 			href: '/dashboard',
 			icon: 'monitor',
 		},
 		{
 			title: 'Status',
-			href: '/dashboard',
+			href: '/dashboard/status',
 			icon: 'radio',
 		},
 		{
 			title: 'Reports',
-			href: '/dashboard',
+			href: '/dashboard/reports',
 			icon: 'reports',
 		},
 		{
 			title: 'Notifications',
-			href: '/dashboard',
+			href: '/dashboard/notification',
 			icon: 'settings',
 		},
 	],

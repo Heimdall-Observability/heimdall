@@ -1,6 +1,6 @@
 import { WebsiteCreateButton } from '@/components/website-create-button';
 import { WebsiteForm } from '@/components/website-create-form';
-import { WebsitesList } from '@/components/websites-list';
+import WebsitesList from '@/components/websites-list';
 
 export default async function DashboardPage() {
 	return (

@@ -8,10 +8,13 @@ export const getTodayVisitorsCount = (websiteId: string) => {
 	return {
 		clickhouse: async () => {
 			const sessionsCount = await client.query({
-				query: `select visitorId as id from loglib.event where websiteId='${websiteId}' AND timestamp >= '${before24Hour
-					.toISOString()
-					.slice(0, 19)
-					.replace('T', ' ')}'`,
+				query: `select visitorId as id
+                from heimdall_logs.event
+                where websiteId = '${websiteId}'
+                  AND timestamp >= '${before24Hour
+										.toISOString()
+										.slice(0, 19)
+										.replace('T', ' ')}'`,
 				format: 'JSONEachRow',
 			});
 			const s = (await sessionsCount.json()) as { id: string }[];
@@ -22,7 +25,9 @@ export const getTodayVisitorsCount = (websiteId: string) => {
 				where(fields, operators) {
 					return operators.and(
 						operators.eq(fields.websiteId, websiteId),
-						sql` ${fields.timestamp} >= ${before24Hour}`
+						sql` ${fields.timestamp}
+            >=
+            ${before24Hour}`
 					);
 				},
 			});

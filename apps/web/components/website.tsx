@@ -27,15 +27,12 @@ export function Website({
 }: WebsiteProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	return (
-		<Card
-			key={key}
-			className='@container/card border-stone-400/20 bg-gradient-to-tr shadow-sm shadow-orange-800/40 dark:from-black dark:to-stone-900/30'
-		>
+		<Card key={key} className='@container/card shadow-none'>
 			<div className='card__layer1'></div>
 			<div className='card__layer2'></div>
 			<CardHeader className=''>
 				<div className=' flex items-center justify-between'>
-					<h3 className=' font-heading text-2xl font-bold'>{site.title}</h3>
+					<h3 className='text-2xl font-bold'>{site.title}</h3>
 					<LucideSettings
 						className=' cursor-pointer'
 						onClick={() => {
@@ -48,9 +45,9 @@ export function Website({
 			</CardHeader>
 			<CardContent className=' flex flex-col @[320px]/card:flex-row @[320px]/card:items-center justify-between gap-2'>
 				<div>
-					<div className=' flex items-center gap-2 text-orange-400'>
+					<div className=' flex items-center gap-2 text-secondary'>
 						<User2 size={20} className=' ' />
-						<p className='  font-bold'>{visitors} Visitors</p>
+						<p className='font-semibold'>{visitors} Visitors</p>
 					</div>
 				</div>
 				<Link className=' w-full @[320px]/card:w-fit ' href={`/${site.id}`}>
