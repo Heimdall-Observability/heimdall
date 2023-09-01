@@ -10,6 +10,7 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	Circle,
+	Clipboard,
 	Cloudy,
 	Coffee,
 	CreditCard,
@@ -104,6 +105,7 @@ export const Icons = {
 		</svg>
 	),
 	bell: Bell,
+	clipboard: Clipboard,
 	close: X,
 	spinner: Loader2,
 	chevronLeft: ChevronLeft,

@@ -2,7 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
 
-import { Icons } from '@/components/icons';
+import { websiteDeleteModalAtom } from '@/jotai/store';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,15 +12,16 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
-import { toast } from '@/components/ui/use-toast';
-import { websiteDeleteModalAtom } from '@/jotai/store';
+	Icons,
+	toast,
+} from '@heimdall/ui';
 import { useAtom } from 'jotai';
 
 export function DeleteWebsiteAlert({ id }: { id: string }) {
 	const router = useRouter();
 	const [showDeleteAlert, setShowDeleteAlert] = useAtom(websiteDeleteModalAtom);
 	const [isDeleteLoading, setIsDeleteLoading] = useState<boolean>(false);
+
 	async function deleteSite() {
 		try {
 			await fetch(`/api/website/${id}`, {
@@ -41,6 +42,7 @@ export function DeleteWebsiteAlert({ id }: { id: string }) {
 			});
 		}
 	}
+
 	return (
 		<AlertDialog open={showDeleteAlert} onOpenChange={setShowDeleteAlert}>
 			<AlertDialogContent>

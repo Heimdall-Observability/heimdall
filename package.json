@@ -6,6 +6,10 @@
     "name": "Francis Masha",
     "email": "francismasha96@gmail.com"
   },
+  "prisma": {
+    "schema": "apps/web/prisma/schema.prisma",
+    "seed": "tsx apps/web/prisma/seed.ts"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -13,7 +17,11 @@
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "clean": "turbo run clean && rm -rf node_modules",
-    "ui:add": "pnpm --filter ui ui:add"
+    "ui:add": "pnpm --filter ui ui:add",
+    "db:migrate:deploy": "turbo run db:migrate:deploy",
+    "db:push": "turbo run db:push",
+    "db:seed": "turbo run db:seed",
+    "generate": "turbo run generate"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.8",
@@ -34,6 +42,7 @@
     "tailwindcss": "^3.3.3",
     "tsup": "^6.7.0",
     "turbo": "latest",
+    "tsx": "^3.7.1",
     "typescript": "^5.1.6",
     "vitest": "^0.31.0"
   }
