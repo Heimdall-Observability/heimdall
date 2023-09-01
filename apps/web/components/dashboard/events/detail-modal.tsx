@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { LoglibCustomEvent } from '@loglib/types';
+import { LoglibCustomEvent } from '@heimdall/types';
 import { Row } from '@tanstack/react-table';
 
 const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
@@ -49,7 +49,7 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 									className=' flex border-b dark:border-gray-800 py-2 gap-2'
 									key={key}
 								>
-									<div className='font-bold'>{key}: </div>
+									<div className='font-bold'>{key}:</div>
 
 									<div>
 										{JSON.stringify(
@@ -69,7 +69,7 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 									className=' flex border-b dark:border-gray-800 py-2 gap-2'
 									key={key}
 								>
-									<div className='font-bold'>{key}: </div>
+									<div className='font-bold'>{key}:</div>
 									<div>
 										{automaticProperties[key as keyof typeof allProperties]}
 									</div>
@@ -86,7 +86,7 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 									className=' flex border-b dark:border-gray-800 py-2 gap-2'
 									key={key}
 								>
-									<div className='font-bold'>{key}: </div>
+									<div className='font-bold'>{key}:</div>
 									<div>{JSON.stringify(customProperties[key])}</div>
 								</div>
 							);

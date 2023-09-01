@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import { celebrateSettingAtom } from '@/jotai/store';
 import { getLast24Hour } from '@/lib/time-helper';
-import { loglib } from '@loglib/tracker';
+import { getToday } from '@/lib/time-helper';
+import { loglib } from '@heimdall/tracker';
 import { AnimatePresence, motion } from 'framer-motion';
 import html2canvas from 'html2canvas';
 import { useAtom } from 'jotai';
@@ -11,7 +12,6 @@ import { block } from 'million/react';
 import ReactCanvasConfetti from 'react-canvas-confetti';
 import Modal from 'react-modal';
 
-import { getToday } from '../../lib/time-helper';
 import { Icons } from '../icons';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
@@ -131,6 +131,7 @@ export function CelebrateFn({
 		link.click();
 		document.body.removeChild(link);
 	};
+
 	function getTimeString() {
 		switch (time) {
 			case '24hr':
@@ -149,6 +150,7 @@ export function CelebrateFn({
 				return '';
 		}
 	}
+
 	const [msg, setMsg] = useState(
 		`Yooo! ${getTimeString()} your site stats have been 🤯`
 	);

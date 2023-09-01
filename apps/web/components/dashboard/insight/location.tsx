@@ -23,6 +23,7 @@ export const Location = ({
 			value: term,
 		});
 	}
+
 	return (
 		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7 grid-cols-1 my-4'>
 			<Card className=' md:col-span-3 bg-gradient-to-tr from-stone-950 to-stone-900/80'>
@@ -65,7 +66,7 @@ export const Location = ({
 								hideSearchBar={data && data?.data.locations.country.length < 10}
 								isLoading={isLoading}
 								tip='Your visitors country and how many times they are visited :)'
-								Row={(location) => (
+								Row={(location: any) => (
 									<TableRow>
 										<TableCell
 											className=' flex items-center gap-1 cursor-pointer'
@@ -117,7 +118,7 @@ export const Location = ({
 								hideSearchBar={data && data?.data.locations.city.length < 10}
 								isLoading={isLoading}
 								tip='Your visitors city and how many times they are visited :)'
-								Row={(location) => (
+								Row={(location: any) => (
 									<TableRow>
 										<TableCell
 											className=' flex items-center gap-1 cursor-pointer'

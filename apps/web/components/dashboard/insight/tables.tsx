@@ -4,8 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { loglib } from '@loglib/tracker';
-import { GetInsightResponse } from '@loglib/types';
+import { loglib } from '@heimdall/tracker';
+import { GetInsightResponse } from '@heimdall/types';
 import {
 	Asterisk,
 	Link2Icon,
@@ -43,6 +43,7 @@ export const InsightTables = ({
 			value: term,
 		});
 	}
+
 	return (
 		<Card className=' md:col-span-3 bg-gradient-to-tr from-stone-950 to-stone-900/50 '>
 			<Tabs

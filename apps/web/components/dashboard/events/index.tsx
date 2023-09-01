@@ -1,7 +1,7 @@
 'use client';
 
 import { fetcher } from '@/lib/utils';
-import { LoglibCustomEvent } from '@loglib/types';
+import { LoglibCustomEvent } from '@heimdall/types';
 import { env } from 'env.mjs';
 import useSWR from 'swr';
 

@@ -3,6 +3,7 @@
  * for Docker builds.
  */
 import { env } from './env.mjs';
+import million from 'million/compiler';
 
 const nextConfig = {
   experimental: { serverActions: true },
@@ -33,4 +34,9 @@ const nextConfig = {
   ],
 };
 
-export default nextConfig;
+export default million.next(nextConfig, {
+  auto: {
+    rsc: true,
+    threshold: 0.5,
+  },
+});

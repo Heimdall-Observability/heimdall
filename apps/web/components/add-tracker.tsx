@@ -25,7 +25,7 @@ import {
 const snippets = [
 	{
 		name: 'nextjs/app-tsx',
-		getCode: (id: string) => `import Loglib from "@loglib/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
 export default function RootLayout({
     children,
   }: {
@@ -43,7 +43,7 @@ export default function RootLayout({
             </body>
         </html>
         );
-}      
+}
   `,
 		icon: Icons.typescript,
 		fileName: 'app/layout.tsx',
@@ -51,7 +51,7 @@ export default function RootLayout({
 	},
 	{
 		name: 'nextjs/app-jsx',
-		getCode: (id: string) => `import Loglib from "@loglib/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
 export default function RootLayout({
     children,
   }) {
@@ -67,7 +67,7 @@ export default function RootLayout({
             </body>
         </html>
     );
-}     
+}
   `,
 		icon: Icons.javascript,
 		fileName: 'app/layout.js',
@@ -75,7 +75,7 @@ export default function RootLayout({
 	},
 	{
 		name: 'nextjs-tsx',
-		getCode: (id: string) => `import Loglib from "@loglib/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
 export default function App({ Component, pageProps }: AppProps) {
      return (
         <>
@@ -95,13 +95,13 @@ export default function App({ Component, pageProps }: AppProps) {
 	},
 	{
 		name: 'nextjs-jsx',
-		getCode: (id: string) => `import Loglib from "@loglib/tracker/react"
+		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react"
 export default function App({ Component, pageProps }) {
     return (
         <>
             <Component {...pageProps} />
             <Loglib config={{
-                id: "${id}" 
+                id: "${id}"
             }} />
         </>
     );
@@ -113,10 +113,10 @@ export default function App({ Component, pageProps }) {
 	},
 	{
 		name: 'other-frameworks-jsx',
-		getCode: (id: string) => `import {loglib} from "@loglib/tracker"
+		getCode: (id: string) => `import {loglib} from "@heimdall/tracker"
 
 loglib.record({
-    id: "${id}" 
+    id: "${id}"
 })
   `,
 		icon: Icons.javascript,
@@ -125,10 +125,10 @@ loglib.record({
 	},
 	{
 		name: 'other-frameworks-tsx',
-		getCode: (id: string) => `import {loglib} from "@loglib/tracker"
+		getCode: (id: string) => `import {loglib} from "@heimdall/tracker"
 
 loglib.record({
-    id: "${id}" 
+    id: "${id}"
 })
     `,
 		icon: Icons.typescript,
@@ -138,25 +138,28 @@ loglib.record({
 	{
 		name: 'cdn',
 		getCode: (id: string) => `<head>
-        <script src="https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js" data-id=${id}></script>
-</head>
+        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id=${id'}>'</script>
+		</head>
   `,
 		icon: Icons.htmlLogo,
 		fileName: 'index.html',
 		lang: 'html',
 		description: 'simply copy the following code into your script tag',
 		hideLangSelector: true,
-	},
+	}
+,
 	{
 		name: 'wordpress',
-		getCode: (id: string) => `
-  We're not live on wordpress plugin store just yet 
-  but you can download the plugin from github and install it manually in your wordpress site.
-  you can find the plugin here:
-  https://github.com/loglib/loglib-wordpress-plugin
-  Then you can update the plugin settings with your website id.
-  id: ${id}
-  `,
+		getCode: (id: string) =>
+`
+We're not live on wordpress plugin store just yet
+but you can download the plugin from github and install it manually in your wordpress site.
+you can find the plugin here:
+https://github.com/loglib/loglib-wordpress-plugin
+Then you can update the plugin settings with your website id.
+id: ${id}
+`
+,
 		icon: Icons.wordpress,
 		lang: 'text',
 		fileName: 'wordpress-plugin',
@@ -187,7 +190,9 @@ export const AddTracker = ({
 				setSelected(
 					// rome-ignore lint/style/noNonNullAssertion: <explanation>
 					snippets.find(
-						(snippet) => snippet.name === `${selectedFramework}-${selectedLang}`
+						(snippet) => snippet.name ===
+`${selectedFramework}-${selectedLang}`
+
 					)!
 				);
 			} else {

@@ -21,8 +21,8 @@ import {
 } from '@/components/ui/select';
 import { Toggle } from '@/components/ui/toggle';
 import COUNTRIES from '@/lib/constants';
-import { loglib } from '@loglib/tracker';
-import { LoglibCustomEvent } from '@loglib/types';
+import { loglib } from '@heimdall/tracker';
+import { LoglibCustomEvent } from '@heimdall/types';
 import { Equal, EqualNot, SlidersHorizontal } from 'lucide-react';
 
 import { filter } from './small-filter';
