@@ -21,7 +21,7 @@
 		"format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
 		"format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
 		"clean": "turbo run clean && rm -rf node_modules",
-		"ui:add": "pnpm --filter ui ui:add",
+		"ui:add": "pnpm --filter web ui:add",
 		"typecheck": "turbo typecheck",
 		"deploy:api": "turbo --filter api deploy",
 		"migrate": "turbo --filter db migrate",
