@@ -98,7 +98,7 @@ export const WebsiteForm = () => {
 					className='font-jost flex h-full items-center justify-center border-none outline-none backdrop:blur-xl'
 					style={{
 						overlay: {
-							backgroundColor: 'rgba(0, 0, 0, 0.8)',
+							backgroundColor: 'rgba(0, 0, 0, 0.2)',
 							backdropFilter: 'blur(4px)',
 						},
 						content: {},
@@ -174,12 +174,12 @@ export const WebsiteForm = () => {
 									name='id'
 									render={({ field }) => (
 										<FormItem className=''>
-											<FormLabel>Your website @loglib</FormLabel>
+											<FormLabel>Your website @heimdall</FormLabel>
 											{/* <FormMessage /> */}
 											<FormControl>
 												<div className='border-input flex items-center  rounded-md border px-1 focus-within:outline-none'>
 													<span className=' flex h-10 items-center border-r px-2 text-sm'>
-														loglib.io/
+														heimdall.com/
 													</span>
 													<input
 														placeholder='site_name'

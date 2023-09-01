@@ -33,6 +33,7 @@ export function SideNav({ items }: DashboardNavProps) {
 					return (
 						href && (
 							<Link
+								key={href}
 								href={disabled ? '/' : href}
 								className={cn(
 									'flex items-center font-medium transition-colors hover:text-foreground/80',

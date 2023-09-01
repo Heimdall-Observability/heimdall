@@ -1,5 +1,5 @@
 import { Teams } from '@/server/query';
-import { Website } from '@prisma/client';
+import { Website } from '@heimdall/types/models';
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 import { User } from 'next-auth';
