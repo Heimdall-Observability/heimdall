@@ -25,6 +25,6 @@
     "tsx": "^3.12.7"
   },
   "devDependencies": {
-    "@heimdall/tsconfig": "workspace:*"
+    "@heimdall/config": "workspace:*"
   }
 }
