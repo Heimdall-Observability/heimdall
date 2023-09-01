@@ -4,8 +4,9 @@ import Link, { type LinkProps } from 'next/link';
 
 import { ComponentProps, ReactNode } from 'react';
 
+import { ArrowIcon } from '@/components/icons';
 import { ElementState, useElementState } from '@/hooks/use-element-state';
-import { ArrowIcon, cn } from '@heimdall/ui';
+import { cn } from '@/lib/utils';
 import { Variant, motion, useReducedMotion } from 'framer-motion';
 
 type ArrowIconProps = ComponentProps<typeof ArrowIcon>;

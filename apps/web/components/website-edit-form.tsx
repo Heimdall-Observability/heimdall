@@ -2,32 +2,35 @@ import Link from 'next/link';
 
 import { useEffect, useState } from 'react';
 
-import { siteConfig } from '@/config/site';
-import { websiteDeleteModalAtom } from '@/jotai/store';
-import { websiteFormSchema } from '@/lib/validations/website';
+import { Button } from '@/components/ui/button';
 import {
-	Button,
 	Form,
 	FormControl,
 	FormField,
 	FormItem,
 	FormLabel,
 	FormMessage,
-	Icons,
-	Input,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
+} from '@/components/ui/select';
+import {
 	Tooltip,
 	TooltipContent,
 	TooltipProvider,
 	TooltipTrigger,
-	toast,
-} from '@heimdall/ui';
+} from '@/components/ui/tooltip';
+import { toast } from '@/components/ui/use-toast';
+import { siteConfig } from '@/config/site';
+import { websiteDeleteModalAtom } from '@/jotai/store';
+import { websiteFormSchema } from '@/lib/validations/website';
+import { Website } from '@heimdall/types/models';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Website } from '@prisma/client';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
 import { ExternalLink, Info, Trash2 } from 'lucide-react';
@@ -36,6 +39,7 @@ import Modal from 'react-modal';
 import { z } from 'zod';
 
 import { CopyToClipboard } from './copy-to-clipboard';
+import { Icons } from './icons';
 
 export const EditWebsiteForm = ({
 	data,
@@ -129,7 +133,10 @@ export const EditWebsiteForm = ({
 						variants={modalVariants} // Apply the animation variants
 						initial='hidden' // Set the initial animation state
 						animate='visible' // Set the target animation
-						exit={{ opacity: 0, transition: { duration: 0.1 } }} // Exit gracefully
+						exit={{
+							opacity: 0,
+							transition: { duration: 0.1 },
+						}} // Exit gracefully
 						transition={{
 							type: 'keyframes',
 							delay: 0.1,
@@ -263,9 +270,7 @@ export const EditWebsiteForm = ({
 											) : null}
 											<FormControl className=''>
 												<Select
-													onValueChange={(e) =>
-														field.onChange(e === 'on' ? true : false)
-													}
+													onValueChange={(e) => field.onChange(e === 'on')}
 													value={field.value ? 'on' : 'off'}
 												>
 													<SelectTrigger>

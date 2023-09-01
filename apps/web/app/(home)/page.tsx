@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ExpandingArrow } from '@heimdall/ui';
+import ExpandingArrow from '@/components/expanding-arrow';
 
 export default async function HomePage() {
 	return (

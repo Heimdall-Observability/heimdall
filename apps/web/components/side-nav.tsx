@@ -6,8 +6,10 @@ import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { Fragment } from 'react';
 
+import { Icons } from '@/components/icons';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { SidebarNavItem } from '@/types';
-import { Button, Icons, cn } from '@heimdall/ui';
 
 interface DashboardNavProps {
 	items: SidebarNavItem[];

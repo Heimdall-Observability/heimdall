@@ -2,7 +2,6 @@ import { useRouter } from 'next/navigation';
 
 import { useState } from 'react';
 
-import { websiteDeleteModalAtom } from '@/jotai/store';
 import {
 	AlertDialog,
 	AlertDialogAction,
@@ -12,10 +11,12 @@ import {
 	AlertDialogFooter,
 	AlertDialogHeader,
 	AlertDialogTitle,
-	Icons,
-	toast,
-} from '@heimdall/ui';
+} from '@/components/ui/alert-dialog';
+import { toast } from '@/components/ui/use-toast';
+import { websiteDeleteModalAtom } from '@/jotai/store';
 import { useAtom } from 'jotai';
+
+import { Icons } from './icons';
 
 export function DeleteWebsiteAlert({ id }: { id: string }) {
 	const router = useRouter();

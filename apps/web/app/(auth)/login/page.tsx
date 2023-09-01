@@ -2,9 +2,9 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 import { BackLink } from '@/components/arrow-button';
+import { Icons } from '@/components/icons';
 import { UserAuthForm } from '@/components/user-auth-form';
 import { env } from '@/env.mjs';
-import { Icons, buttonVariants, cn } from '@heimdall/ui';
 
 export const metadata: Metadata = {
 	title: 'Login',

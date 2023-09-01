@@ -6,7 +6,8 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 
 import MobileMenu from '@/components/mobile-menu';
-import { Button, cn } from '@heimdall/ui';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { ExcludeSquare } from '@phosphor-icons/react';
 import { useAnimation } from 'framer-motion';
 import { User } from 'next-auth';

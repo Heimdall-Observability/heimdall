@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { websitesAtom } from '@/jotai/store';
-import { Website as WebsiteType } from '@prisma/client';
+import { Website as WebsiteType } from '@heimdall/types/models';
 import { useAtom } from 'jotai';
 
 import { EmptyPlaceholder } from './empty-placeholder';

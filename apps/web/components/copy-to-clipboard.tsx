@@ -2,7 +2,10 @@
 
 import { ReactElement } from 'react';
 
-import { Icons, cn, toast } from '@heimdall/ui';
+import { toast } from '@/components/ui/use-toast';
+import { cn } from '@/lib/utils';
+
+import { Icons } from './icons';
 
 export const CopyToClipboard = ({
 	text,

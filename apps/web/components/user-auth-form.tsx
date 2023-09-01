@@ -4,8 +4,11 @@ import { useSearchParams } from 'next/navigation';
 
 import { HTMLAttributes, useState } from 'react';
 
-import { Icons, buttonVariants, cn } from '@heimdall/ui';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { signIn } from 'next-auth/react';
+
+import { Icons } from './icons';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
 	className?: string;

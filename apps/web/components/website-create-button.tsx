@@ -1,8 +1,11 @@
 'use client';
 
+import { Button, ButtonProps } from '@/components/ui/button';
+import { toast } from '@/components/ui/use-toast';
 import { userWebsitesAtom, websiteFormAtom } from '@/jotai/store';
-import { Button, ButtonProps, Icons, toast } from '@heimdall/ui';
 import { useAtom } from 'jotai';
+
+import { Icons } from './icons';
 
 export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
 	const [websites] = useAtom(userWebsitesAtom);

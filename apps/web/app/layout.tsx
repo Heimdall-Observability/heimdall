@@ -3,9 +3,8 @@ import { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { fontHeading, fontSans } from '@/lib/fonts';
+import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
-import { cn } from '@heimdall/ui';
-import '@heimdall/ui/styles.css';
 
 import Analytics from '../components/analytics';
 

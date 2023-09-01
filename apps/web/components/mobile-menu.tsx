@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import { JSX, SVGProps, useEffect, useState } from 'react';
 
+import { cn, lockScroll } from '@/lib/utils';
 import styles from '@/styles/mobile-menu.module.css';
-import { cn, lockScroll } from '@heimdall/ui';
 import useDelayedRender from 'use-delayed-render';
 
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
