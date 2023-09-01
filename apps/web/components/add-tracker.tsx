@@ -138,28 +138,25 @@ loglib.record({
 	{
 		name: 'cdn',
 		getCode: (id: string) => `<head>
-        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id=${id'}>'</script>
-		</head>
+        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id='${id}'></script>
+</head>
   `,
 		icon: Icons.htmlLogo,
 		fileName: 'index.html',
 		lang: 'html',
 		description: 'simply copy the following code into your script tag',
 		hideLangSelector: true,
-	}
-,
+	},
 	{
 		name: 'wordpress',
-		getCode: (id: string) =>
-`
-We're not live on wordpress plugin store just yet
-but you can download the plugin from github and install it manually in your wordpress site.
-you can find the plugin here:
-https://github.com/loglib/loglib-wordpress-plugin
-Then you can update the plugin settings with your website id.
-id: ${id}
-`
-,
+		getCode: (id: string) => `
+  We're not live on wordpress plugin store just yet
+  but you can download the plugin from github and install it manually in your wordpress site.
+  you can find the plugin here:
+  https://github.com/loglib/loglib-wordpress-plugin
+  Then you can update the plugin settings with your website id.
+  id: ${id}
+  `,
 		icon: Icons.wordpress,
 		lang: 'text',
 		fileName: 'wordpress-plugin',
@@ -190,15 +187,14 @@ export const AddTracker = ({
 				setSelected(
 					// rome-ignore lint/style/noNonNullAssertion: <explanation>
 					snippets.find(
-						(snippet) => snippet.name ===
-`${selectedFramework}-${selectedLang}`
-
+						(snippet) => snippet.name === `${selectedFramework}-${selectedLang}`
 					)!
 				);
 			} else {
 				setSelected(snippet);
 			}
 		}
+
 		changeLang();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedLang, selectedFramework]);
