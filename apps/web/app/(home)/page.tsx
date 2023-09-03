@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { ExpandingArrow } from '@heimdall/ui';
+import ExpandingArrow from '@/components/expanding-arrow';
 
 export default async function HomePage() {
 	return (
@@ -17,8 +17,8 @@ export default async function HomePage() {
 				<defs>
 					<pattern
 						id='83fd4e5a-9d52-42fc-97b6-718e5d7ee527'
-						width={200}
-						height={200}
+						width={100}
+						height={100}
 						x='50%'
 						y={-1}
 						patternUnits='userSpaceOnUse'
@@ -29,7 +29,7 @@ export default async function HomePage() {
 				<svg x='50%' y={-1} className='overflow-visible fill-gray-50'>
 					<path
 						d='M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z'
-						strokeWidth={0}
+						strokeWidth={0.5}
 					/>
 				</svg>
 				<rect
@@ -41,13 +41,16 @@ export default async function HomePage() {
 			</svg>
 			<Link
 				href='/login'
-				className='group mt-20 flex space-x-1 rounded-full text-blue-900 hover:text-blue-950 border border-blue-500 bg-blue-50 px-10 py-2 text-sm font-medium ring-0 transition-all hover:border-blue-800 hover:bg-blue-100 sm:mt-0'
+				className='group mt-20 flex space-x-1 rounded-full text-primary hover:text-primary/90 border border-primary/50 bg-primary/10 px-10 pr-12 py-2 text-sm font-medium ring-0 transition-all hover:border-primary/80 hover:bg-primary/20 sm:mt-0'
 			>
 				<p>Get started here</p>
 				<ExpandingArrow />
 			</Link>
-			<h1 className='bg-gradient-to-br from-black via-[#171717] to-[#575757] bg-clip-text pb-8 pt-4 text-center text-2xl font-semibold text-transparent md:text-4xl'>
-				Web. Log. Analytics.
+			<h1 className='bg-gradient-to-br from-black via-[#171717] to-[#0074a6] text-heading bg-clip-text pb-8 pt-4 text-center text-2xl font-semibold text-transparent md:text-4xl'>
+				Open Source Monitoring, Privacy Focused.
+			</h1>
+			<h1 className='bg-gradient-to-br font-heading font-semibold md:text-4xl xl:text-5xl 2xl:text-6xl lg:text-5xl text-4xl from-[#0074a6] to-gray-200 bg-clip-text uppercase text-transparent dark:from-gray-200 dark:to-[#0074a6]'>
+				Web Analytics
 			</h1>
 		</>
 	);
