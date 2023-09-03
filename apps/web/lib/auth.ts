@@ -2,11 +2,10 @@ import { env } from '@/env.mjs';
 import { db } from '@/lib/db';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { NextAuthOptions } from 'next-auth';
-import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
-	adapter: DrizzleAdapter(db) as any,
+	adapter: DrizzleAdapter(db),
 	session: {
 		strategy: 'jwt',
 		maxAge: 30 * 24 * 60 * 60,
@@ -16,11 +15,6 @@ export const authOptions: NextAuthOptions = {
 		signIn: '/dashboard',
 	},
 	providers: [
-		GitHubProvider({
-			clientId: env.GITHUB_CLIENT_ID ?? '',
-			clientSecret: env.GITHUB_CLIENT_SECRET ?? '',
-			allowDangerousEmailAccountLinking: true,
-		}),
 		GoogleProvider({
 			clientId: env.GOOGLE_CLIENT_ID ?? '',
 			clientSecret: env.GOOGLE_CLIENT_SECRET ?? '',
@@ -31,7 +25,6 @@ export const authOptions: NextAuthOptions = {
 					response_type: 'code',
 				},
 			},
-			allowDangerousEmailAccountLinking: true,
 		}),
 	],
 	callbacks: {

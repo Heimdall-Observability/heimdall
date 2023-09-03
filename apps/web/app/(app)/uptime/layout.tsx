@@ -34,7 +34,7 @@ export default async function DashboardWebsiteLayout({
 				<div className='flex h-full'>
 					<SideNav items={dashboardConfig.insightsNav} />
 					<main className='flex w-full flex-1 flex-col overflow-hidden'>
-						<DashboardHeader user={user} items={dashboardConfig.mainNav} />
+						<DashboardHeader user={user} items={dashboardConfig.projectNav} />
 						<div className='container'>{children}</div>
 					</main>
 				</div>

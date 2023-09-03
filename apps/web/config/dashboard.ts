@@ -1,7 +1,25 @@
 import { DashboardConfig } from '@/types';
 
 export const dashboardConfig: DashboardConfig = {
-	mainNav: [
+	projectNav: [
+		{
+			title: 'Overview',
+			href: '/logs',
+		},
+		{
+			title: 'Monitoring',
+			href: '/monitoring',
+		},
+		{
+			title: 'Settings',
+			href: '/insights',
+		},
+	],
+	websiteNav: [
+		{
+			title: 'Overview',
+			href: '/logs',
+		},
 		{
 			title: 'Uptime',
 			href: '/uptime',
@@ -10,10 +28,10 @@ export const dashboardConfig: DashboardConfig = {
 			title: 'Insights',
 			href: '/insights',
 		},
-		// {
-		// 	title: 'Logs',
-		// 	href: '/logs',
-		// },
+		{
+			title: 'Logs',
+			href: '/logs',
+		},
 	],
 	uptimeNav: [
 		{

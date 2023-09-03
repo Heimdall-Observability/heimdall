@@ -4,8 +4,12 @@ import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 
 export const getDbUrl = () => {
-	if (process.env.NODE_ENV === 'production' || env.TURSO_DB_AUTH_TOKEN)
+	if (process.env.NODE_ENV === 'production' || env.TURSO_DB_AUTH_TOKEN) {
+		if (!env.TURSO_DB_URL) {
+			throw Error('❌ DATABASE URL MISSING');
+		}
 		return env.TURSO_DB_URL;
+	}
 	const workDir = process.cwd();
 	const dir = workDir.split('/');
 	const dbPath = `file:${dir

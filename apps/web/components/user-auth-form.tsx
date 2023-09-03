@@ -24,15 +24,10 @@ export function UserAuthForm({ className, activeStrategy, ...props }: Props) {
 	const searchParams = useSearchParams();
 	return (
 		<div className={cn('grid gap-4 ', className)} {...props}>
-			<div className='relative'>
-				<div className='absolute inset-0 flex items-center'>
-					<span className='w-full border-t' />
-				</div>
-			</div>
 			{activeStrategy.github && (
 				<button
 					type='button'
-					className={cn(buttonVariants({ variant: 'outline' }))}
+					className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
 					onClick={() => {
 						setIsGitHubLoading(true);
 						signIn('github', {
@@ -52,11 +47,11 @@ export function UserAuthForm({ className, activeStrategy, ...props }: Props) {
 			{activeStrategy.google && (
 				<button
 					type='button'
-					className={cn(buttonVariants({ variant: 'outline' }))}
+					className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
 					onClick={() => {
 						setIsLoading(true);
 						signIn('google', {
-							callbackUrl: '/dashboard',
+							callbackUrl: searchParams?.get('from') || '/dashboard',
 						});
 					}}
 					disabled={isLoading || isGitHubLoading}

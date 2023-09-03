@@ -2,11 +2,14 @@ import { Metadata } from 'next';
 
 import type { ReactNode } from 'react';
 
+import { ClientProvider } from '@/components/client-provider';
+import { Toaster } from '@/components/ui/toaster';
 import { fontHeading, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
-import Analytics from '../components/analytics';
+// import Analytics from '../components/analytics';
 
 const title = 'Heimdall';
 const description = 'Monitor your app performance.';
@@ -62,8 +65,11 @@ export default function RootLayout({
 			)}
 		>
 			<body className='antialiased'>
-				{children}
-				<Analytics />
+				<ClientProvider>
+					{children}
+					<Toaster />
+					<Analytics />
+				</ClientProvider>
 			</body>
 		</html>
 	);

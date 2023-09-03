@@ -19,7 +19,7 @@ export const website = sqliteTable(
   }),
 );
 
-export const websiteRealtions = relations(website, ({ many }) => {
+export const websiteRelations = relations(website, ({ many }) => {
   return {
     teamWebsites: many(teamMember),
   };
