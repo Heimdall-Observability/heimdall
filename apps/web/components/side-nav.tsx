@@ -10,6 +10,7 @@ import { Icons } from '@/components/icons';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { SidebarNavItem } from '@/types';
+import { For } from 'million/react';
 
 interface DashboardNavProps {
 	items: SidebarNavItem[];
@@ -23,41 +24,45 @@ export function SideNav({ items }: DashboardNavProps) {
 	}
 
 	return (
-		<Fragment>
-			<ul className='flex flex-col space-y-4'>
-				<Link href='/' className='hidden items-center md:flex'>
-					<Icons.logo />
-				</Link>
-				{items.map(({ href, disabled, title, icon }, index) => {
-					const Icon = Icons[icon || 'arrowRight'];
-					return (
-						href && (
-							<Link
-								key={href}
-								href={disabled ? '/' : href}
-								className={cn(
-									'flex items-center font-medium transition-colors hover:text-foreground/80',
-									pathname === href ? 'text-foreground' : 'text-foreground/60',
-									disabled && 'cursor-not-allowed opacity-80'
-								)}
-							>
-								<Button
-									aria-label={title}
-									variant='ghost'
-									className='h-10 w-10 rounded-md p-0 ring-gray-300 transition-all hover:ring-1 dark:bg-gray-600'
+		<div className='fixed inset-0 z-[1] hidden h-screen w-24 flex-col justify-between overflow-y-hidden p-2 backdrop-blur md:flex'>
+			<ul className='flex flex-col space-y-8 mt-14'>
+				<For each={items}>
+					{({ id, href, disabled, title, icon }) => {
+						const Icon = Icons[icon || 'arrowRight'];
+						return (
+							href && (
+								<Link
+									key={id}
+									href={disabled ? '/' : href}
+									className={cn(
+										'hover:text-foreground/80 m-4 flex flex-col items-center justify-center text-center font-medium transition-colors',
+										pathname === href
+											? 'text-foreground'
+											: 'text-foreground/60',
+										disabled && 'cursor-not-allowed opacity-80'
+									)}
 								>
-									<Icon className='h-5 w-5 text-gray-600' />
-								</Button>
-							</Link>
-						)
-					);
-				})}
+									<Button
+										aria-label={title}
+										disabled={disabled}
+										variant='ghost'
+										size='icon'
+										className={cn(
+											pathname === href
+												? 'bg-primary/10 hover:bg-primary/10 hover:text-primary text-primary'
+												: 'text-gray-500',
+											'h-8 w-14 rounded-full p-0 font-medium ring-primary/40 transition-all hover:bg-primary/10 hover:ring-1 disabled:cursor-not-allowed disabled:text-muted-foreground/50 disabled:opacity-80'
+										)}
+									>
+										<Icon className='h-5 w-5' />
+									</Button>
+									<span className='mt-1 text-xs'>{title}</span>
+								</Link>
+							)
+						);
+					}}
+				</For>
 			</ul>
-			<ul className='flex flex-col space-y-2'>
-				<Link href='/' className='hidden items-center md:flex'>
-					<Icons.logo />
-				</Link>
-			</ul>
-		</Fragment>
+		</div>
 	);
 }

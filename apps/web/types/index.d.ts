@@ -1,3 +1,5 @@
+import { NextRouter } from 'next/router';
+
 import { Icons } from '@/components/icons';
 import { User } from '@prisma/client';
 
@@ -11,19 +13,18 @@ export type NavLink = {
 };
 
 export type SidebarNavItem = {
+	id: string;
 	title: string;
 	disabled?: boolean;
 	external?: boolean;
-	label?: string;
 	icon?: keyof typeof Icons;
-	useInclude?: boolean;
 } & (
 	| {
-			href: string;
+			href: NextRouter<string> | URL;
 			items?: never;
 	  }
 	| {
-			href?: string;
+			href?: NextRouter<string> | URL;
 			items: NavLink[];
 	  }
 );
@@ -45,7 +46,8 @@ export type DocsConfig = {
 };
 export type DashboardConfig = {
 	mainNav: MainNavItem[];
-	sidebarNav: SidebarNavItem[];
+	uptimeNav: SidebarNavItem[];
+	insightsNav: SidebarNavItem[];
 };
 
 export type SubscriptionPlan = {

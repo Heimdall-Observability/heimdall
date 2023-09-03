@@ -112,13 +112,13 @@ export const Dashboard = ({
 								<TabsList>
 									<TabsTrigger
 										value='insights'
-										className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
+										// className='dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
 									>
 										Insights
 									</TabsTrigger>
 									<TabsTrigger
 										value='events'
-										className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
+										// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
 										onClick={() =>
 											loglib.track('events-tab-clicked', {
 												websiteId: website.id,

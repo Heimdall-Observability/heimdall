@@ -1,3 +1,4 @@
+// import { Inter as FontSans } from 'next/font/google';
 import localFont from 'next/font/local';
 
 export const fontSans = localFont({
@@ -30,6 +31,11 @@ export const fontSans = localFont({
 	],
 	variable: '--font-sans',
 });
+
+// export const fontSans = FontSans({
+// 	subsets: ['latin'],
+// 	variable: '--font-sans',
+// });
 
 // Font files can be collocated inside `pages`
 export const fontHeading = localFont({

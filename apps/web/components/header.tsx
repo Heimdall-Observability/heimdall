@@ -3,14 +3,29 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { useCallback, useRef } from 'react';
+import { ReactNode, useCallback, useRef } from 'react';
 
 import MobileMenu from '@/components/mobile-menu';
 import { Button } from '@/components/ui/button';
+import { UserAccountNav } from '@/components/user-account-nav';
 import { cn } from '@/lib/utils';
+import { MainNavItem } from '@/types';
 import { ExcludeSquare } from '@phosphor-icons/react';
 import { useAnimation } from 'framer-motion';
 import { User } from 'next-auth';
+
+interface MiniHeaderProps {
+	heading: string;
+	text?: string;
+	children?: ReactNode;
+}
+
+interface DashboardHeaderProps {
+	items: MainNavItem[];
+	user: User;
+	showOrgSelect?: boolean;
+	showLogo?: boolean;
+}
 
 const LINKS = [
 	{ name: 'Pricing', href: '/pricing' },
@@ -96,26 +111,32 @@ function SiteHeader({ user }: { user?: User }) {
 	);
 }
 
-function DashboardHeader() {
+function DashboardHeader({ user, items }: DashboardHeaderProps) {
 	return (
 		<header className='sticky top-0 z-40 bg-white'>
 			<div className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
 				<nav className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'>
-					<div className='container mx-auto flex justify-between'>
+					<div className='mx-8 flex justify-between'>
 						<div className='flex items-center justify-center gap-2 align-middle'>
-							<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
 							<Link
 								href='/'
-								aria-label='almond-ui'
+								aria-label='heimdall-home'
 								className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
 							>
-								heimdall
+								<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
 							</Link>
 						</div>
 
-						<Button variant='outline' className='hidden md:block'>
-							<Link href='/login'>Get started</Link>
-						</Button>
+						<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
+							<ul className='hidden lg:flex'>
+								{items.map((link) => (
+									<NavItem key={link.href} href={link.href} text={link.title} />
+								))}
+							</ul>
+							<MobileMenu />
+						</div>
+
+						<UserAccountNav user={user} />
 					</div>
 				</nav>
 			</div>
@@ -123,4 +144,18 @@ function DashboardHeader() {
 	);
 }
 
-export { SiteHeader, DashboardHeader };
+function MiniHeader({ heading, text, children }: MiniHeaderProps) {
+	return (
+		<div className='flex items-center justify-between px-2'>
+			<div className='grid gap-1'>
+				<h1 className='bg-clip-text tracking-tight text-xl font-extrabold md:text-2xl'>
+					{heading}
+				</h1>
+				{text && <p className='text-muted-foreground text-sm'>{text}</p>}
+			</div>
+			{children}
+		</div>
+	);
+}
+
+export { SiteHeader, DashboardHeader, MiniHeader };

@@ -1,7 +1,9 @@
 'use client';
 
 import { Button, ButtonProps } from '@/components/ui/button';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from '@/components/ui/use-toast';
+import { WebsiteForm } from '@/components/website-create-form';
 import { userWebsitesAtom, websiteFormAtom } from '@/jotai/store';
 import { useAtom } from 'jotai';
 
@@ -19,13 +21,20 @@ export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
 				variant: 'destructive',
 			});
 		}
-		setCreateWebsite(true);
+		// setCreateWebsite(true);
 	}
 
 	return (
-		<Button onClick={onClick} {...props}>
-			<Icons.add className='h-4 w-4 ' />
-			<span className=''>New Website</span>
-		</Button>
+		<Dialog>
+			<DialogTrigger>
+				<Button onClick={onClick} {...props}>
+					<Icons.add className='h-4 w-4 ' />
+					<span className=''>New Website</span>
+				</Button>
+			</DialogTrigger>
+			<DialogContent className='sm:max-w-[425px]'>
+				<WebsiteForm />
+			</DialogContent>
+		</Dialog>
 	);
 }
