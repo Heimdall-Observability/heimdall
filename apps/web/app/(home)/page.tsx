@@ -118,10 +118,10 @@ export default async function HomePage() {
 						Gain a global perspective on your API's performance with real-time
 						monitoring
 					</H3>
-					<H5 as='p' variant='secondary' className='mt-4 font-normal'>
+					<p className='max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8'>
 						Synthetic monitoring for your APIs. Check the latency of your APIs
 						from around the world.
-					</H5>
+					</p>
 				</div>
 				<div className='mx-auto grid justify-center gap-4 sm:grid-cols-2 md:max-w-[64rem] md:grid-cols-3'>
 					{features.map((feature) => (
