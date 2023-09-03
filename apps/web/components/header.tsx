@@ -5,8 +5,10 @@ import { usePathname } from 'next/navigation';
 
 import { ReactNode, useCallback, useEffect, useRef } from 'react';
 
+import { BackLink, NextLink } from '@/components/arrow-button';
+import ExpandingArrow from '@/components/expanding-arrow';
 import MobileMenu from '@/components/mobile-menu';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { UserAccountNav } from '@/components/user-account-nav';
 import { cn } from '@/lib/utils';
 import { MainNavItem } from '@/types';
@@ -107,9 +109,15 @@ function SiteHeader({ user }: { user?: User }) {
 						<MobileMenu />
 					</div>
 
-					<Button className='hidden md:block'>
-						<Link href='/login'>Get started</Link>
-					</Button>
+					<Link
+						href='/login'
+						className={cn(
+							buttonVariants({ variant: 'ghost' }),
+							'hover:bg-primary/10 hover:text-primary'
+						)}
+					>
+						Login
+					</Link>
 				</div>
 			</nav>
 		</header>

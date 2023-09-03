@@ -114,4 +114,35 @@ function BackLink({
 	);
 }
 
-export { BackLink };
+function NextLink({
+	to,
+	className,
+	children,
+}: {
+	to: LinkProps['href'];
+} & Pick<ArrowLinkProps, 'className' | 'children'>) {
+	const [ref, state] = useElementState();
+	const shouldReduceMotion = useReducedMotion();
+	return (
+		<MotionLink
+			href={to}
+			className={cn(
+				'flex items-center space-x-1 text-gray-500 focus:outline-none dark:text-slate-400',
+				className
+			)}
+			ref={ref}
+			animate={state}
+			transition={shouldReduceMotion ? { duration: 0 } : {}}
+		>
+			<span className='text-sm font-semibold'>{children}</span>
+			<motion.span
+				variants={shouldReduceMotion ? {} : arrowVariants.right}
+				transition={shouldReduceMotion ? { duration: 0 } : {}}
+			>
+				<ArrowIcon direction='right' />
+			</motion.span>
+		</MotionLink>
+	);
+}
+
+export { BackLink, NextLink };

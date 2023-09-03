@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default async function LoginPage() {
 	const active = {
-		github: !!env.GITHUB_CLIENT_ID,
+		github: false,
 		google: !!env.GOOGLE_CLIENT_ID,
 	};
 

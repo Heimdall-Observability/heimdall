@@ -84,8 +84,11 @@ export const hook = (
 };
 
 export const clearIntervals = () => {
-  window.lli.intervals.forEach((intervalId) => clearInterval(intervalId));
+  window.lli.intervals.forEach((intervalId) =>
+    clearInterval(intervalId as any),
+  );
 };
+
 export const addInterval = (interval: NodeJS.Timer) => {
   window.lli.intervals.push(interval);
 };
