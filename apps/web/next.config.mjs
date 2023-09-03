@@ -32,6 +32,7 @@ const nextConfig = {
       source: '/api/heimdall',
     },
   ],
+  transpilePackages: ['@heimdall/tracker', '@heimdall/api'],
 };
 
 export default million.next(nextConfig, {

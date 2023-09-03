@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ExpandingArrow from '@/components/expanding-arrow';
 import { H3, H5 } from '@/components/typography';
 import { buttonVariants } from '@/components/ui/button';
+import { getCurrentUser } from '@/lib/session';
 import { cn } from '@/lib/utils';
 
 const features = [
@@ -24,6 +25,7 @@ const features = [
 ];
 
 export default async function HomePage() {
+	const user = await getCurrentUser();
 	return (
 		<>
 			<section className='space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32'>
@@ -82,14 +84,14 @@ export default async function HomePage() {
 					</p>
 					<div className='space-x-4 mt-8'>
 						<Link
-							href={'/login'}
+							href={user ? '/dashboard' : '/login'}
 							className={cn(
 								buttonVariants({
 									size: 'lg',
 								})
 							)}
 						>
-							{'Get Started'}
+							{user ? 'Go to dashboard' : 'Get started'}
 						</Link>
 						<Link
 							href='/play'
@@ -100,7 +102,7 @@ export default async function HomePage() {
 								})
 							)}
 						>
-							Playground
+							Live playground
 						</Link>
 					</div>
 				</div>

@@ -15,6 +15,7 @@ import { MainNavItem } from '@/types';
 import { ExcludeSquare } from '@phosphor-icons/react';
 import { useAnimation } from 'framer-motion';
 import { User } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
 interface MiniHeaderProps {
 	heading: string;
@@ -106,18 +107,24 @@ function SiteHeader({ user }: { user?: User }) {
 								<NavItem key={link.href} href={link.href} text={link.name} />
 							))}
 						</ul>
-						<MobileMenu />
+						<MobileMenu user={user} />
 					</div>
 
-					<Link
-						href='/login'
-						className={cn(
-							buttonVariants({ variant: 'ghost' }),
-							'hover:bg-primary/10 hover:text-primary'
+					<div className='md:flex hidden'>
+						{user ? (
+							<UserAccountNav user={user} />
+						) : (
+							<Link
+								href='/login'
+								className={cn(
+									buttonVariants({ variant: 'ghost' }),
+									'hover:bg-primary/10 hover:text-primary'
+								)}
+							>
+								Login
+							</Link>
 						)}
-					>
-						Login
-					</Link>
+					</div>
 				</div>
 			</nav>
 		</header>

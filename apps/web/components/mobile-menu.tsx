@@ -6,6 +6,9 @@ import { JSX, SVGProps, useEffect, useState } from 'react';
 
 import { cn, lockScroll } from '@/lib/utils';
 import styles from '@/styles/mobile-menu.module.css';
+import { LogOutIcon } from 'lucide-react';
+import { User } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import useDelayedRender from 'use-delayed-render';
 
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -57,7 +60,7 @@ function CrossIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 	);
 }
 
-const MobileNav = () => {
+function MobileNav({ user }: { user?: User }) {
 	const [navShow, setNavShow] = useState(false);
 	const { mounted: isMenuMounted, rendered: isMenuRendered } = useDelayedRender(
 		navShow,
@@ -140,28 +143,47 @@ const MobileNav = () => {
 							Docs
 						</Link>
 					</li>
-					<li
-						onClick={onToggleNav}
-						className='border-b border-gray-300 px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
-						style={{ transitionDelay: '255ms' }}
-					>
-						<Link href='/app/settings' className='flex w-auto pb-4'>
-							Settings
-						</Link>
-					</li>
-					<li
-						onClick={onToggleNav}
-						className='border-b border-gray-300 px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
-						style={{ transitionDelay: '400ms' }}
-					>
-						<Link href='/login' className='flex w-auto pb-4'>
-							Login
-						</Link>
-					</li>
+
+					{user ? (
+						<>
+							<li
+								onClick={onToggleNav}
+								className='border-b border-gray-300 px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
+								style={{ transitionDelay: '255ms' }}
+							>
+								<Link href='/dashboard/settings' className='flex w-auto pb-4'>
+									Settings
+								</Link>
+							</li>
+							<li
+								className='border-b border-gray-300 text-muted-foreground flex justify-between px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
+								style={{ transitionDelay: '400ms' }}
+								onClick={(event) => {
+									event.preventDefault();
+									signOut({
+										callbackUrl: `${window.location.origin}/login`,
+									});
+								}}
+							>
+								<p className='flex w-auto pb-4 text-foreground'>Logout</p>
+								<LogOutIcon />
+							</li>
+						</>
+					) : (
+						<li
+							onClick={onToggleNav}
+							className='border-b border-gray-300 px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
+							style={{ transitionDelay: '400ms' }}
+						>
+							<Link href='/login' className='flex w-auto pb-4'>
+								Login
+							</Link>
+						</li>
+					)}
 				</ul>
 			)}
 		</div>
 	);
-};
+}
 
 export default MobileNav;
