@@ -6,7 +6,7 @@ export const getTeams = async () => {
 	if (!user) {
 		throw new Error('User not found');
 	}
-	const teams = await db.query.teamMember
+	return await db.query.teamMember
 		.findMany({
 			where(fields, operators) {
 				return operators.and(
@@ -49,6 +49,5 @@ export const getTeams = async () => {
 				};
 			})
 		);
-	return teams;
 };
 export type Teams = Awaited<ReturnType<typeof getTeams>>;

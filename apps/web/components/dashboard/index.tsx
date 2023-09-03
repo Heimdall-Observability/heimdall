@@ -107,40 +107,40 @@ export const Dashboard = ({
 					)}
 				>
 					<Tabs defaultValue='insights' className='space-y-4'>
-						{!isPublic ? (
-							<div className=' flex items-center justify-between'>
-								<TabsList>
-									<TabsTrigger
-										value='insights'
-										// className='dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
-									>
-										Insights
-									</TabsTrigger>
-									<TabsTrigger
-										value='events'
-										// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
-										onClick={() =>
-											loglib.track('events-tab-clicked', {
-												websiteId: website.id,
-											})
-										}
-									>
-										Events
-									</TabsTrigger>
-								</TabsList>
-								<div>
-									{data && (
-										<Celebrate
-											pageview={data.insight.totalPageViews}
-											uniqVisitor={data.insight.uniqueVisitors}
-											websiteId={website.id}
-											time={timeRange.stringValue}
-											title={website.title ?? undefined}
-										/>
-									)}
-								</div>
-							</div>
-						) : null}
+						{/*{!isPublic ? (*/}
+						{/*	<div className=' flex items-center justify-between'>*/}
+						{/*		<TabsList>*/}
+						{/*			<TabsTrigger*/}
+						{/*				value='insights'*/}
+						{/*				// className='dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'*/}
+						{/*			>*/}
+						{/*				Insights*/}
+						{/*			</TabsTrigger>*/}
+						{/*			<TabsTrigger*/}
+						{/*				value='events'*/}
+						{/*				// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'*/}
+						{/*				onClick={() =>*/}
+						{/*					loglib.track('events-tab-clicked', {*/}
+						{/*						websiteId: website.id,*/}
+						{/*					})*/}
+						{/*				}*/}
+						{/*			>*/}
+						{/*				Events*/}
+						{/*			</TabsTrigger>*/}
+						{/*		</TabsList>*/}
+						{/*		<div>*/}
+						{/*			{data && (*/}
+						{/*				<Celebrate*/}
+						{/*					pageview={data.insight.totalPageViews}*/}
+						{/*					uniqVisitor={data.insight.uniqueVisitors}*/}
+						{/*					websiteId={website.id}*/}
+						{/*					time={timeRange.stringValue}*/}
+						{/*					title={website.title ?? undefined}*/}
+						{/*				/>*/}
+						{/*			)}*/}
+						{/*		</div>*/}
+						{/*	</div>*/}
+						{/*) : null}*/}
 						<div className=' flex justify-between'>
 							<div
 								className=' flex gap-2 items-center'
@@ -310,7 +310,7 @@ export const Dashboard = ({
 										/>
 									</div>
 									<div className='grid gap-4 min-h-max md:grid-cols-2 lg:grid-cols-7 grid-cols-1'>
-										<Card className='md:col-span-4 bg-stone-950'>
+										<Card className='md:col-span-4'>
 											{curTableTab === 'locations' ? (
 												<Fragment>
 													<CardHeader className=' flex flex-row gap-2 items-end'>
@@ -329,13 +329,10 @@ export const Dashboard = ({
 													</CardContent>
 												</Fragment>
 											) : (
-												<Tabs
-													defaultValue='visitors'
-													className=' bg-gradient-to-tr from-stone-950 to-stone-950/40'
-												>
+												<Tabs defaultValue='visitors' className=''>
 													<CardHeader className=' flex flex-row justify-between items-center'>
 														<CardTitle className='text-base'>
-															<TabsList className=' bg-stone-900'>
+															<TabsList className=''>
 																<TabsTrigger value='visitors'>
 																	Visitors
 																</TabsTrigger>
@@ -354,7 +351,7 @@ export const Dashboard = ({
 																}
 																value={isBar ? 'bar-graph' : 'line-graph'}
 															>
-																<TabsList className=' bg-stone-900'>
+																<TabsList className=''>
 																	<TabsTrigger value='line-graph'>
 																		<LineChart size={18} />
 																	</TabsTrigger>
@@ -369,7 +366,7 @@ export const Dashboard = ({
 														<div className='pl-2'>
 															<TabsContent
 																value='visitors'
-																className=' rounded-lg'
+																className='rounded-lg'
 															>
 																<Graph
 																	bar={isBar}

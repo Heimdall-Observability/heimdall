@@ -133,33 +133,33 @@ function SiteHeader({ user }: { user?: User }) {
 
 function DashboardHeader({ user, items }: DashboardHeaderProps) {
 	return (
-		<header className='sticky top-0 z-40 bg-white'>
-			<div className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
-				<nav className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'>
-					<div className='mx-8 flex justify-between'>
-						<div className='flex items-center justify-center gap-2 align-middle'>
-							<Link
-								href='/'
-								aria-label='heimdall-home'
-								className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
-							>
-								<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
-							</Link>
-						</div>
+		<header className='flex bg-background h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
+			<nav className='fixed inset-x-0 top-0 z-10 w-full px-4 lg:p-2 lg:px-0'>
+				<div className='mx-auto md:mx-8 flex justify-between'>
+					<div className='flex items-center justify-center gap-2 align-middle'>
+						<Link
+							href='/'
+							aria-label='heimdall-home'
+							className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
+						>
+							<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+						</Link>
+					</div>
 
-						<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
-							<ul className='hidden lg:flex'>
-								{items.map((link) => (
-									<NavItem key={link.href} href={link.href} text={link.title} />
-								))}
-							</ul>
-							<MobileMenu />
-						</div>
+					<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
+						<ul className='hidden lg:flex'>
+							{items.map((link) => (
+								<NavItem key={link.href} href={link.href} text={link.title} />
+							))}
+						</ul>
+						<MobileMenu user={user} />
+					</div>
 
+					<div className='md:flex hidden'>
 						<UserAccountNav user={user} />
 					</div>
-				</nav>
-			</div>
+				</div>
+			</nav>
 		</header>
 	);
 }
@@ -178,4 +178,22 @@ function MiniHeader({ heading, text, children }: MiniHeaderProps) {
 	);
 }
 
-export { SiteHeader, DashboardHeader, MiniHeader };
+function PublicDashboardHeader() {
+	return (
+		<header className='mt-4 flex items-center justify-between border-b pb-4 dark:border-gray-800'>
+			<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+			<Link
+				href='/'
+				aria-label='almond-ui'
+				className='block whitespace-nowrap text-lg font-semibold transition focus:outline-none'
+			>
+				heimdall
+			</Link>
+			<div className='flex items-center gap-2 font-medium'>
+				<div className='relative col-span-1 select-none flex-col items-center justify-center self-center lg:flex'></div>
+			</div>
+		</header>
+	);
+}
+
+export { SiteHeader, DashboardHeader, MiniHeader, PublicDashboardHeader };

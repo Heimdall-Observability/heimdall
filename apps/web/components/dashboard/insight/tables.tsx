@@ -45,7 +45,7 @@ export const InsightTables = ({
 	}
 
 	return (
-		<Card className=' md:col-span-3 bg-gradient-to-tr from-stone-950 to-stone-900/50 '>
+		<Card className=' md:col-span-3'>
 			<Tabs
 				defaultValue='pages'
 				onValueChange={(val) => {

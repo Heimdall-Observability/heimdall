@@ -11,6 +11,10 @@ export const dashboardConfig: DashboardConfig = {
 			href: '/monitoring',
 		},
 		{
+			title: 'Api Keys',
+			href: '/api-keys',
+		},
+		{
 			title: 'Settings',
 			href: '/insights',
 		},

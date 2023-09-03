@@ -108,7 +108,7 @@ export function Graph({
 							color: 'black',
 						}}
 						label='visitors'
-						cursor={bar ? false : true}
+						cursor={!bar}
 						content={({ active, payload, label }) => {
 							if (active && payload && payload.length) {
 								return (
@@ -129,19 +129,19 @@ export function Graph({
 				<div className=' flex flex-col justify-center gap-2'>
 					<div className='text-2xl font-bold text-center '>
 						{isLoading ? (
-							<p className=' text-sm font-medium italic'>hmm loading...</p>
+							<p className=' text-sm font-medium italic'>loading data...</p>
 						) : (
 							<>
 								<p>No Data Just Yet</p>
 								<p className=' text-sm font-light'>
-									if you haven`&apos;t setup tracker refer to the{' '}
+									if you haven&apos;t setup tracker refer to the{' '}
 									<a
 										href='https://heimdall.francismasha.com/docs'
 										target='_blank'
 										className=' text-blue-700 underline'
 										rel='noreferrer'
 									>
-										docs
+										docs{' '}
 									</a>
 									how to do that.
 								</p>

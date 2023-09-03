@@ -67,7 +67,7 @@ export default async function HomePage() {
 						/>
 					</svg>
 					<Link
-						href='/playground'
+						href='/demo'
 						className='rounded-2xl bg-primary/10 px-4 py-1.5 pr-8 text-sm font-medium group flex space-x-1 hover:text-primary/90 text-primary transition-all ring-0 sm:mt-0'
 						// className='group px-4 py-1.5 pr-8 mt-20 flex space-x-1 rounded-full text-primary hover:text-primary/90 border border-primary/50 bg-primary/10 text-sm font-medium ring-0 transition-all hover:border-primary/80 hover:bg-primary/20 sm:mt-0'
 					>

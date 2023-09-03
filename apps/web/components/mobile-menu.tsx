@@ -14,7 +14,7 @@ import useDelayedRender from 'use-delayed-render';
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 	return (
 		<svg
-			className='absolute h-7 w-7 text-gray-900 dark:text-gray-100'
+			className='absolute h-7 w-7 text-muted-foreground'
 			width='20'
 			height='20'
 			viewBox='0 0 20 20'
@@ -42,7 +42,7 @@ function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 function CrossIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
 	return (
 		<svg
-			className='absolute h-7 w-7 text-gray-900 dark:text-gray-100'
+			className='absolute h-7 w-7 text-muted-foreground'
 			viewBox='0 0 24 24'
 			width='24'
 			height='24'
