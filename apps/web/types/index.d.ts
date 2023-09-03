@@ -45,7 +45,8 @@ export type DocsConfig = {
 	sidebarNav: SidebarNavItem[];
 };
 export type DashboardConfig = {
-	mainNav: MainNavItem[];
+	projectNav: MainNavItem[];
+	websiteNav: MainNavItem[];
 	uptimeNav: SidebarNavItem[];
 	insightsNav: SidebarNavItem[];
 };

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { ReactNode, useCallback, useRef } from 'react';
+import { ReactNode, useCallback, useEffect, useRef } from 'react';
 
 import MobileMenu from '@/components/mobile-menu';
 import { Button } from '@/components/ui/button';
@@ -61,52 +61,57 @@ function SiteHeader({ user }: { user?: User }) {
 	const addShadowToNavbar = useCallback(async () => {
 		if (window.pageYOffset > 10) {
 			navRef.current?.classList.add(
-				...['shadow', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
+				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
 			);
 
 			await control.start('visible');
 		} else {
 			navRef.current?.classList.remove(
-				...['shadow', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
+				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
 			);
 			await control.start('hidden');
 		}
 	}, [control]);
 
+	useEffect(() => {
+		window.addEventListener('scroll', addShadowToNavbar);
+		return () => {
+			window.removeEventListener('scroll', addShadowToNavbar);
+		};
+	}, [addShadowToNavbar]);
+
 	return (
-		<header className='sticky top-0 z-40 bg-white'>
-			<div className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
-				<nav
-					ref={navRef}
-					className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'
-				>
-					<div className='container mx-auto flex justify-between'>
-						<div className='flex items-center justify-center gap-2 align-middle'>
-							<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
-							<Link
-								href='/'
-								aria-label='almond-ui'
-								className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
-							>
-								heimdall
-							</Link>
-						</div>
-
-						<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
-							<ul className='hidden lg:flex'>
-								{LINKS.map((link) => (
-									<NavItem key={link.href} href={link.href} text={link.name} />
-								))}
-							</ul>
-							<MobileMenu />
-						</div>
-
-						<Button variant='outline' className='hidden md:block'>
-							<Link href='/login'>Get started</Link>
-						</Button>
+		<header className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
+			<nav
+				ref={navRef}
+				className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'
+			>
+				<div className='container mx-auto flex justify-between'>
+					<div className='flex items-center justify-center gap-2 align-middle'>
+						<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+						<Link
+							href='/'
+							aria-label='almond-ui'
+							className='block whitespace-nowrap text-lg font-semibold transition focus:outline-none'
+						>
+							heimdall
+						</Link>
 					</div>
-				</nav>
-			</div>
+
+					<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
+						<ul className='hidden lg:flex'>
+							{LINKS.map((link) => (
+								<NavItem key={link.href} href={link.href} text={link.name} />
+							))}
+						</ul>
+						<MobileMenu />
+					</div>
+
+					<Button className='hidden md:block'>
+						<Link href='/login'>Get started</Link>
+					</Button>
+				</div>
+			</nav>
 		</header>
 	);
 }

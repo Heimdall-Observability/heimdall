@@ -11,7 +11,7 @@ export default withAuth(
 
 		if (isAuthPage) {
 			if (isAuth) {
-				return NextResponse.redirect(new URL('/uptime', req.url));
+				return NextResponse.redirect(new URL('/dashboard', req.url));
 			}
 			return null;
 		}
@@ -36,5 +36,11 @@ export default withAuth(
 );
 
 export const config = {
-	matcher: ['/logs/:path*', '/uptime/:path*', '/insights/:path*', '/login'],
+	matcher: [
+		'/logs/:path*',
+		'/uptime/:path*',
+		'/dashboard/:path*',
+		'/insights/:path*',
+		'/login',
+	],
 };
