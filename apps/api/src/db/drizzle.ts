@@ -1,6 +1,7 @@
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 import { schema } from "@heimdall/db";
+import { logger } from "@heimdall/logger";
 
 export const getDbUrl = () => {
   if (process.env.NODE_ENV === "production" || process.env.TURSO_DB_AUTH_TOKEN)
@@ -10,7 +11,7 @@ export const getDbUrl = () => {
   const dbPath = `file:${dir
     .slice(0, dir.length - 2)
     .join("/")}/packages/db/db.sqlite`;
-  console.log("⌗ [Database]:", dbPath);
+  logger.info(`[Database] ${dbPath}}`);
   return dbPath;
 };
 

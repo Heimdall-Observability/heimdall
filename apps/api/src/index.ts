@@ -14,25 +14,26 @@ import { Filter, LoglibEvent, Path } from "./type";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { logger } from "hono/logger";
+import { logger as appLogger } from "hono/logger";
 import jwt from "jsonwebtoken";
+import { logger } from "@heimdall/logger";
 
 const app = new Hono();
 
-app.use("*", logger());
+app.use("*", appLogger());
 app.use("*", cors());
 
 app.post("/", async (c) => {
   const body = await c.req.json();
   const headers = Object.fromEntries(c.req.headers);
   const query = c.req.query();
-  console.log(body);
+  logger.info("body", body);
   if (!body.path) {
     return c.json(null, 200);
   }
   const path: Path = body.path;
   const res = await router({ path, rawBody: body, req: { headers, query } });
-  console.log(path, res);
+  logger.info(path, res);
   return c.json(null, res.status);
 });
 
@@ -73,6 +74,7 @@ app.get("/", async (c) => {
     const filters = JSON.parse(queries.data.filter) as Filter<LoglibEvent>[];
     filters.length &&
       filters.forEach((f) => {
+        // @ts-expect-error
         events = filter(events).where(f.key, f.operator, f.value).execute();
         lastEvents = filter(lastEvents as LoglibEvent[])
           .where(f.key, f.operator, f.value)
@@ -148,6 +150,7 @@ app.get("/v1/hits", async (c) => {
   const websiteId = site.websiteId;
   const startDateObj = new Date(startDate);
   const endDateObj = new Date(endDate);
+
   async function getData() {
     return await client
       .query({
@@ -160,11 +163,12 @@ app.get("/v1/hits", async (c) => {
       })
       .then(async (res) => (await res.json()) as LoglibEvent[]);
   }
+
   const res = await retryFunction(getData, [], 3, 4);
   return c.json(res, 200);
 });
 
-app.get("/v1/inisght", async (c) => {
+app.get("/v1/insight", async (c) => {
   const queries = insightPubApiSchema.safeParse(c.req.query());
   if (!queries.success) {
     return c.json(null, 400);
@@ -207,10 +211,11 @@ app.get("/v1/inisght", async (c) => {
       4,
     );
     const tack = performance.now();
-    console.log(tack - tick, "ms taken to query");
+    logger.info(`${tack - tick}} ms taken to query`);
     const filters = JSON.parse(queries.data.filter) as Filter<LoglibEvent>[];
     filters.length &&
       filters.forEach((f) => {
+        // @ts-expect-error
         events = filter(events).where(f.key, f.operator, f.value).execute();
         lastEvents = filter(lastEvents as LoglibEvent[])
           .where(f.key, f.operator, f.value)
@@ -244,6 +249,6 @@ serve(
     port: 8000,
   },
   (info) => {
-    console.log("listening on port: ", info.port);
+    logger.info(`The app has started successfully ${info.port}}`);
   },
 );

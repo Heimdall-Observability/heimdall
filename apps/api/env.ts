@@ -4,8 +4,10 @@ import "dotenv/config";
 
 export const env = createEnv({
   server: {
-    CLICKHOUSE_HOST: z.string().optional(),
-    CLICKHOUSE_PASSWORD: z.string().optional(),
+    CLICKHOUSE_HOST: z.string(),
+    CLICKHOUSE_PASSWORD: z.string(),
+    CLICKHOUSE_USERNAME: z.string(),
+    CLICKHOUSE_DB: z.string().optional(),
     NEXTAUTH_SECRET: z.string(),
     CLIENT_IP_ADDRESS: z.string().optional(),
 
@@ -17,6 +19,8 @@ export const env = createEnv({
   runtimeEnv: {
     CLICKHOUSE_HOST: process.env.CLICKHOUSE_HOST,
     CLICKHOUSE_PASSWORD: process.env.CLICKHOUSE_PASSWORD,
+    CLICKHOUSE_USERNAME: process.env.CLICKHOUSE_USERNAME,
+    CLICKHOUSE_DB: process.env.CLICKHOUSE_DB,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     CLIENT_IP_ADDRESS: process.env.CLIENT_IP_ADDRESS,
   },

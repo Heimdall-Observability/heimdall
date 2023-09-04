@@ -193,7 +193,7 @@ export const DatePicker = ({
 					<SelectValue placeholder='Select Time' />
 				</SelectTrigger>
 
-				<SelectContent className='dark'>
+				<SelectContent>
 					{/* <SelectLabel>Choose Range</SelectLabel> */}
 					<SelectItem value={'24hr'}>Last 24 Hours</SelectItem>
 					<SelectItem value='yesterday'>Yesterday</SelectItem>

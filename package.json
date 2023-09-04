@@ -6,10 +6,6 @@
     "name": "Francis Masha",
     "email": "francismasha96@gmail.com"
   },
-  "prisma": {
-    "schema": "apps/web/prisma/schema.prisma",
-    "seed": "tsx apps/web/prisma/seed.ts"
-  },
   "scripts": {
     "build": "turbo --filter \"./packages/*\" build",
     "build:tracker": "turbo --filter tracker",

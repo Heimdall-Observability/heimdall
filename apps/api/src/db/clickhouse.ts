@@ -22,7 +22,7 @@ export const hitsQuery = (
           JSONExtract(properties, 'os', 'String')             as os,
           event,
           timestamp
-   from loglib.event
+   from heimdall_logs.event
    WHERE ${
      startDate && `timestamp >= '${startDate}' AND`
    } timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'hits'`;
@@ -42,4 +42,6 @@ export const customEventsQuery = (
 export const client = createClient({
   host: env.CLICKHOUSE_HOST,
   password: env.CLICKHOUSE_PASSWORD,
+  username: env.CLICKHOUSE_USERNAME,
+  database: env.CLICKHOUSE_DB,
 });

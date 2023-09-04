@@ -251,7 +251,7 @@ async function getCustomEventData(
   };
 }
 
-export function loglibDb(db: "sqlite" | "clickhouse") {
+export function loglibDb(db: "sqlite" | "clickhouse"): any {
   return {
     async insertEvent(
       data: LoglibEvent & {

@@ -81,14 +81,17 @@ importers:
   apps/api:
     dependencies:
       '@clickhouse/client':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.2
+        version: 0.2.2
       '@clickhouse/client-web':
-        specifier: ^0.2.1
-        version: 0.2.1
+        specifier: ^0.2.2
+        version: 0.2.2
       '@heimdall/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@heimdall/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
       '@heimdall/setup':
         specifier: workspace:*
         version: link:../../packages/setup
@@ -120,8 +123,8 @@ importers:
         specifier: ^0.28.5
         version: 0.28.5(@libsql/client@0.3.2)(@planetscale/database@1.11.0)(kysely@0.26.3)
       hono:
-        specifier: ^3.5.6
-        version: 3.5.6
+        specifier: ^3.5.7
+        version: 3.5.7
       isbot:
         specifier: ^3.6.13
         version: 3.6.13
@@ -1388,10 +1391,14 @@ packages:
     resolution: {integrity: sha512-tPcodTjrotxozNykyKQH32Lxpa0yoY9i4Sq07xaNAz3EPf51JY7XEPEhmFOmdtXTDBtHtWi0GzWOSTSJulhKuw==}
     dev: false
 
-  /@clickhouse/client-web@0.2.1:
-    resolution: {integrity: sha512-HMaTIxpVgthtTYMBuSBiCIA3sFGs09u1yqo+jPxuOcJiV8eEjdxsRZRdBy3Go2QQHhV4uYSYCm6vjeFMpAxLyg==}
+  /@clickhouse/client-common@0.2.2:
+    resolution: {integrity: sha512-jlom9zLfcDzX9E3off93ZD3CPOkClyM213Y7TN1datkuRGKMvVyj1k0KXaMekhbRev+FTe85CqfoD5eq6qOnPg==}
+    dev: false
+
+  /@clickhouse/client-web@0.2.2:
+    resolution: {integrity: sha512-5zBG4Lb5gNrPNq0NAkyebuTQM/M2T2BHJZQzJJ47oiBS61s19diLoHS0D41EYeyiB223oC5nwWOqKOxQKAyS6g==}
     dependencies:
-      '@clickhouse/client-common': 0.2.1
+      '@clickhouse/client-common': 0.2.2
     dev: false
 
   /@clickhouse/client@0.1.1:
@@ -1406,6 +1413,13 @@ packages:
     engines: {node: '>=16'}
     dependencies:
       '@clickhouse/client-common': 0.2.1
+    dev: false
+
+  /@clickhouse/client@0.2.2:
+    resolution: {integrity: sha512-2faBnDS4x7ZkcOZqi3f6H967kH+nOfJLhBTWWjz0wTSBnEJBXRtePhN/ZY0NJIKc9Ga5w41Pf67mQgm6Dm/1/w==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@clickhouse/client-common': 0.2.2
     dev: false
 
   /@commander-js/extra-typings@9.4.1(commander@9.4.1):
@@ -11116,8 +11130,8 @@ packages:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
     dev: false
 
-  /hono@3.5.6:
-    resolution: {integrity: sha512-ycTOpIZJ6yLbjzoE+ojsesC7G7ZXfGSoCIDyvqmzlHc5Mk4Aj48Ed9R5g7gw3v7rOkS81pjcYIvWef/karq1iA==}
+  /hono@3.5.7:
+    resolution: {integrity: sha512-FKbkgLYpO9tQKkX5dzsmsUKDlat03LSjOjHfP7emsonKpj4bbr4ewWp7wiF8PnH4QUIM8r7XL+Zhrofe//zO6Q==}
     engines: {node: '>=16.0.0'}
     dev: false
 
