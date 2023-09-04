@@ -1,11 +1,52 @@
 import { env } from '@/env.mjs';
 import { db } from '@/lib/db';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
+import { schema } from '@heimdall/db';
 import { NextAuthOptions } from 'next-auth';
+import { AdapterAccount } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
-	adapter: DrizzleAdapter(db),
+	adapter: {
+		...(DrizzleAdapter(db) as any),
+		async linkAccount(rawAccount) {
+			const updatedAccount = await db
+				.insert(schema.accounts)
+				.values(rawAccount)
+				.returning()
+				.get()
+				.catch(async (e) => {
+					const res = await db.query.accounts.findFirst({
+						where(fields, operators) {
+							return operators.and(
+								operators.eq(fields.userId, rawAccount.userId),
+								operators.eq(
+									fields.providerAccountId,
+									rawAccount.providerAccountId
+								)
+							);
+						},
+					});
+					if (!res) {
+						console.log(e);
+						throw Error(e);
+					}
+					return res;
+				});
+			const account: AdapterAccount = {
+				...updatedAccount,
+				type: updatedAccount.type,
+				access_token: updatedAccount.access_token ?? undefined,
+				token_type: updatedAccount.token_type ?? undefined,
+				id_token: updatedAccount.id_token ?? undefined,
+				refresh_token: updatedAccount.refresh_token ?? undefined,
+				scope: updatedAccount.scope ?? undefined,
+				expires_at: updatedAccount.expires_at ?? undefined,
+				session_state: updatedAccount.session_state ?? undefined,
+			};
+			return account;
+		},
+	},
 	session: {
 		strategy: 'jwt',
 		maxAge: 30 * 24 * 60 * 60,
@@ -25,6 +66,7 @@ export const authOptions: NextAuthOptions = {
 					response_type: 'code',
 				},
 			},
+			allowDangerousEmailAccountLinking: true,
 		}),
 	],
 	callbacks: {

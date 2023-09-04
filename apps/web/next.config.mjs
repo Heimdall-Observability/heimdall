@@ -6,7 +6,7 @@ import { env } from './env.mjs';
 import million from 'million/compiler';
 
 const nextConfig = {
-  experimental: { serverActions: true },
+  experimental: { serverActions: true, instrumentationHook: true },
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
@@ -33,6 +33,9 @@ const nextConfig = {
     },
   ],
   transpilePackages: ['@heimdall/tracker', '@heimdall/api'],
+  devIndicators: {
+    buildActivityPosition: 'bottom-right',
+  },
 };
 
 export default million.next(nextConfig, {
