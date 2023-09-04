@@ -41,7 +41,6 @@ export default async function DashboardWebsiteLayout({
 			<StoreSetter store='teams' data={teams} />
 			<div className='flex min-h-screen flex-col bg-gray-50'>
 				<div className='flex h-full'>
-					<TeamNav teams={teams} />
 					<main className='flex w-full flex-1 flex-col overflow-hidden'>
 						<DashboardHeader user={user} items={dashboardConfig.projectNav} />
 						<div className='container'>{children}</div>

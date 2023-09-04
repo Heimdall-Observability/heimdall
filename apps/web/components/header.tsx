@@ -133,8 +133,8 @@ function SiteHeader({ user }: { user?: User }) {
 
 function DashboardHeader({ user, items }: DashboardHeaderProps) {
 	return (
-		<header className='flex bg-background h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
-			<nav className='fixed inset-x-0 top-0 z-10 w-full px-4 lg:p-2 lg:px-0'>
+		<header className='flex bg-background h-12 items-center justify-between gap-6 border-b py-2 md:gap-10'>
+			<nav className='fixed inset-x-0 top-2 md:top-0 z-10 w-full px-4 lg:p-2 lg:px-0'>
 				<div className='mx-auto md:mx-8 flex justify-between'>
 					<div className='flex items-center justify-center gap-2 align-middle'>
 						<Link

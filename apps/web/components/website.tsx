@@ -27,7 +27,7 @@ export function Website({
 }: WebsiteProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	return (
-		<Card key={key} className='@container/card'>
+		<Card key={key} className='@container/card shadow-sm rounded-md'>
 			<div className='card__layer1'></div>
 			<div className='card__layer2'></div>
 			<CardHeader className=''>
