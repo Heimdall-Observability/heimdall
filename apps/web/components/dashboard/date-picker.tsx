@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
 	Popover,
 	PopoverContent,
@@ -27,13 +28,11 @@ import {
 	getYesterday,
 } from '@/lib/time-helper';
 import { cn } from '@/lib/utils';
+import { CalendarIcon } from '@radix-ui/react-icons';
 import { format, subMonths } from 'date-fns';
 import { useAtom } from 'jotai';
 import { CalendarDays } from 'lucide-react';
-import { Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-
-import { Calendar } from './calendar';
 
 export function CalendarDateRangePicker({
 	date,
@@ -59,7 +58,7 @@ export function CalendarDateRangePicker({
 						variant={'outline'}
 						size='sm'
 						className={cn(
-							'w-max justify-start text-left font-normal',
+							'w-max justify-start text-left font-normal bg-background',
 							!date && ' text-stone-800'
 						)}
 					>

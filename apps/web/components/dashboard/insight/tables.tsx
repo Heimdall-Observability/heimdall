@@ -265,8 +265,8 @@ export const InsightTables = ({
 				</TabsContent>
 
 				{/* Referrer */}
-				<TabsContent value='ref' className=' bg-stone-950'>
-					<CardContent className=' bg-stone-950'>
+				<TabsContent value='ref' className=''>
+					<CardContent className=''>
 						{isFilterActive('referrerDomain') ||
 						isFilterActive('utmCampaign') ? (
 							<ClearFilter
@@ -277,7 +277,7 @@ export const InsightTables = ({
 							/>
 						) : null}
 
-						<Tabs defaultValue='referrer' className=' bg-stone-950'>
+						<Tabs defaultValue='referrer' className=''>
 							<TabsList>
 								<TabsTrigger value='referrer'>Referrer</TabsTrigger>
 								<TabsTrigger value='sources'>UTM Sources</TabsTrigger>
@@ -423,8 +423,8 @@ export const InsightTables = ({
 				</TabsContent>
 
 				{/* device */}
-				<TabsContent value='device' className=' bg-stone-950/30'>
-					<CardContent className=' bg-stone-950/30'>
+				<TabsContent value='device' className=''>
+					<CardContent className=''>
 						<Tabs className=' w-full' defaultValue='general'>
 							{isFilterActive('device') ||
 							isFilterActive('os') ||
