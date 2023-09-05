@@ -1,8 +1,8 @@
-import { LoglibEvent } from "../type";
+import { HeimdallEvent } from "../type";
 
 export const getInsight = (
-  events: LoglibEvent[],
-  pastEvents: LoglibEvent[],
+  events: HeimdallEvent[],
+  pastEvents: HeimdallEvent[],
 ) => {
   const {
     newVisitors,
@@ -25,7 +25,10 @@ export const getInsight = (
   };
 };
 
-const transformData = (events: LoglibEvent[], pastEvents: LoglibEvent[]) => {
+const transformData = (
+  events: HeimdallEvent[],
+  pastEvents: HeimdallEvent[],
+) => {
   const uniqueValues = new Set();
   let bounces = 0;
   let duration = 0;
@@ -52,6 +55,7 @@ const transformData = (events: LoglibEvent[], pastEvents: LoglibEvent[]) => {
   const returningVisitors = new Set(
     [...uniqueValues].filter((x) => pastUniqueValues.has(x)),
   ).size;
+
   function getAverageTime(seconds: number) {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
@@ -63,6 +67,7 @@ const transformData = (events: LoglibEvent[], pastEvents: LoglibEvent[]) => {
       } sec`;
     }
   }
+
   return {
     uniqueVisitors: {
       current: uniqueVisitorCount,

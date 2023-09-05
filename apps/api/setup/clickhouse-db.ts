@@ -10,6 +10,7 @@ const client = createClient({
 });
 
 const spinner = ora("Setting up clickhouse db").start();
+// @ts-expect-error
 setupClickhouseDb(client);
 console.log("Done setting up clickhouse db");
 spinner.stop();

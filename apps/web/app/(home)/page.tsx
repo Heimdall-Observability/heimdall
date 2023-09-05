@@ -28,15 +28,8 @@ export default async function HomePage() {
 	const user = await getCurrentUser();
 	return (
 		<>
-			<section className='space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32'>
+			<section className='space-y-6 pb-8 md:pb-12 pt-10 lg:py-32'>
 				<div className='container flex max-w-[64rem] flex-col items-center gap-4 text-center'>
-					<div
-						aria-hidden
-						className='pointer-events-none absolute left-1/2 top-0 z-10 h-[400px] w-[1000px] -translate-x-1/2 -translate-y-1/2 opacity-[0.15]'
-						style={{
-							backgroundImage: 'radial-gradient(#A4A4A3, transparent 50%)',
-						}}
-					/>
 					<svg
 						className='pointer-events-none absolute inset-0 h-full z-[-1] w-full stroke-gray-200 opacity-50 [mask-image:radial-gradient(100%_100%_at_top_center,white,transparent)]'
 						aria-hidden

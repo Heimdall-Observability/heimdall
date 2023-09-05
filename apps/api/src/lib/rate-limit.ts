@@ -12,7 +12,7 @@ export const rateLimitCheck = async (apiKey: string) => {
   const bucket = await kv.get<{ tokens: number; lastRefill: number }>(apiKey);
   const now = Date.now();
   if (!bucket) {
-    kv.set(apiKey, {
+    await kv.set(apiKey, {
       tokens: MAX_TOKENS,
       lastRefill: now,
     });

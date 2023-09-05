@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import { websitesAtom } from '@/jotai/store';
+import { fancyId } from '@/lib/utils';
 import { Website as WebsiteType } from '@heimdall/types/models';
 import { useAtom } from 'jotai';
 
@@ -33,7 +34,7 @@ export default function WebsitesList({
 				<div className='grid grid-cols-1 mt-4 gap-4 sm:grid-cols-2 xl:grid-cols-3'>
 					{websites.map((website) => (
 						<Website
-							key={website.id}
+							key={fancyId()}
 							site={website}
 							visitors={website.visitors}
 							setSelected={setSelected}

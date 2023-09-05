@@ -99,3 +99,7 @@ export function guid(): string {
 		return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
 	});
 }
+
+export function fancyId() {
+	return Math.random().toString(36).substr(2, 9);
+}

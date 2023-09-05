@@ -7,9 +7,9 @@ import { Toaster } from '@/components/ui/toaster';
 import { fontHeading, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
-import { Analytics } from '@vercel/analytics/react';
+import Heimdall from '@heimdall/tracker/react';
 
-// import Analytics from '../components/analytics';
+import Analytics from '../components/analytics';
 
 const title = 'Heimdall';
 const description = 'Monitor your app performance.';
@@ -67,6 +67,15 @@ export default function RootLayout({
 			<body className='antialiased'>
 				<ClientProvider>
 					{children}
+					<Heimdall
+						config={{
+							id: 'heimdall',
+							consent: 'granted',
+							host: 'http://localhost:8000',
+							// env: "prod",
+							debug: true,
+						}}
+					/>
 					<Toaster />
 					<Analytics />
 				</ClientProvider>

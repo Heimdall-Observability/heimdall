@@ -78,7 +78,7 @@ export function CalendarDateRangePicker({
 						)}
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className='w-auto bg-stone-950' align='start'>
+				<PopoverContent className='w-auto' align='start'>
 					<Calendar
 						initialFocus
 						mode='range'
@@ -188,7 +188,7 @@ export const DatePicker = ({
 				value={customTime ? 'custom' : timeRange.stringValue}
 				defaultValue='24hr'
 			>
-				<SelectTrigger className='w-auto px-2 space-x-4 dark:text-white/75'>
+				<SelectTrigger className='w-auto px-2 space-x-4 dark:text-white/75 bg-background h-9'>
 					<CalendarDays className='dark:text-gray-300 text-gray-700 w-5 h-5' />
 					<SelectValue placeholder='Select Time' />
 				</SelectTrigger>

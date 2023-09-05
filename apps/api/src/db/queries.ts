@@ -4,7 +4,7 @@ import { db } from "./drizzle";
 import { schema } from "@heimdall/db";
 import { convertToUTC } from "../lib/utils";
 import { sql } from "drizzle-orm";
-import { LoglibEvent } from "../type";
+import { HeimdallEvent } from "../type";
 
 const hitsQuery = (startDate: string, endDate: string, websiteId: string) =>
   `select id,
@@ -61,7 +61,7 @@ const createEvent = () => {
     payload,
     type,
     pageId,
-  }: LoglibEvent & {
+  }: HeimdallEvent & {
     payload?: string;
     pageId?: string;
     type?: string;
@@ -178,7 +178,7 @@ async function getHitsData(
           ),
           format: "JSONEachRow",
         })
-        .then(async (res) => (await res.json()) as LoglibEvent[]);
+        .then(async (res) => (await res.json()) as HeimdallEvent[]);
     },
   };
 }
@@ -254,7 +254,7 @@ async function getCustomEventData(
 export function loglibDb(db: "sqlite" | "clickhouse"): any {
   return {
     async insertEvent(
-      data: LoglibEvent & {
+      data: HeimdallEvent & {
         payload?: string;
         pageId?: string;
         type?: string;

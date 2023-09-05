@@ -1,4 +1,5 @@
 import { OperatorType } from "./lib/small-filter";
+
 export type Path =
   | "/session"
   | "/pageview"
@@ -15,7 +16,7 @@ export type Filter<T> = {
   operator: OperatorType<T[keyof T]>;
 };
 
-export type LoglibEvent = {
+export type HeimdallEvent = {
   id: string;
   timestamp: string;
   event: "hits" | string;
@@ -35,7 +36,7 @@ export type LoglibEvent = {
   websiteId: string;
 };
 
-export type LoglibTrackerEvent = {
+export type HeimdallTrackerEvent = {
   screenWidth: number;
   language: string;
   currentUrl: string;

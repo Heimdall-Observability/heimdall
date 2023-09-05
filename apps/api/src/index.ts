@@ -10,7 +10,7 @@ import { router } from "./routes";
 import { getInsight } from "./routes/insight";
 import { getTablesData } from "./routes/table";
 import { apiQuery, insightPubApiSchema, insightSchema } from "./schema";
-import { Filter, LoglibEvent, Path } from "./type";
+import { Filter, HeimdallEvent, Path } from "./type";
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
@@ -71,21 +71,21 @@ app.get("/", async (c) => {
     );
     const tack = performance.now();
     console.log(tack - tick, "ms taken to query");
-    const filters = JSON.parse(queries.data.filter) as Filter<LoglibEvent>[];
+    const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
     filters.length &&
       filters.forEach((f) => {
         // @ts-expect-error
         events = filter(events).where(f.key, f.operator, f.value).execute();
-        lastEvents = filter(lastEvents as LoglibEvent[])
+        lastEvents = filter(lastEvents as HeimdallEvent[])
           .where(f.key, f.operator, f.value)
           .execute();
       });
     const insightData = getInsight(
-      events as LoglibEvent[],
-      lastEvents as LoglibEvent[],
+      events as HeimdallEvent[],
+      lastEvents as HeimdallEvent[],
     );
     const tableData = getTablesData(
-      events as LoglibEvent[],
+      events as HeimdallEvent[],
       startDateObj,
       endDateObj,
       timeZone,
@@ -161,7 +161,7 @@ app.get("/v1/hits", async (c) => {
         ),
         format: "JSONEachRow",
       })
-      .then(async (res) => (await res.json()) as LoglibEvent[]);
+      .then(async (res) => (await res.json()) as HeimdallEvent[]);
   }
 
   const res = await retryFunction(getData, [], 3, 4);
@@ -212,21 +212,21 @@ app.get("/v1/insight", async (c) => {
     );
     const tack = performance.now();
     logger.info(`${tack - tick}} ms taken to query`);
-    const filters = JSON.parse(queries.data.filter) as Filter<LoglibEvent>[];
+    const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
     filters.length &&
       filters.forEach((f) => {
         // @ts-expect-error
         events = filter(events).where(f.key, f.operator, f.value).execute();
-        lastEvents = filter(lastEvents as LoglibEvent[])
+        lastEvents = filter(lastEvents as HeimdallEvent[])
           .where(f.key, f.operator, f.value)
           .execute();
       });
     const insightData = getInsight(
-      events as LoglibEvent[],
-      lastEvents as LoglibEvent[],
+      events as HeimdallEvent[],
+      lastEvents as HeimdallEvent[],
     );
     const tableData = getTablesData(
-      events as LoglibEvent[],
+      events as HeimdallEvent[],
       startDateObj,
       endDateObj,
       timeZone,

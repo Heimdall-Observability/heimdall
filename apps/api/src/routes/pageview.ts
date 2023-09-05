@@ -30,7 +30,10 @@ export const createPageview: RouteType = async ({ rawBody, req }) => {
     const { currentUrl, currentRef, queryParams, duration } = data;
     const session = await client
       .query({
-        query: `select * from loglib.event where sessionId = '${sessionId}' limit 1`,
+        query: `select *
+                from heimdall_logs.event
+                where sessionId = '${sessionId}'
+                limit 1`,
         format: "JSONEachRow",
       })
       .then(async (res) => await res.json());
@@ -44,7 +47,7 @@ export const createPageview: RouteType = async ({ rawBody, req }) => {
     const referrerDomain = properties.referrerDomain ?? "unknown";
     try {
       await client.insert({
-        table: "loglib.event",
+        table: "heimdall_logs.event",
         values: [
           {
             id: pageId,
@@ -72,7 +75,7 @@ export const createPageview: RouteType = async ({ rawBody, req }) => {
       });
       return {
         data: {
-          message: "successfully created pageview",
+          message: "Successfully created pageview",
         },
         status: 200,
       };
@@ -101,7 +104,9 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
     const { pageId, data } = body.data;
     const query = await client
       .query({
-        query: `select * from loglib.event where id = '${pageId}'`,
+        query: `select *
+                from heimdall_logs.event
+                where id = '${pageId}'`,
         format: "JSONEachRow",
       })
       .then(async (res) => await res.json());
@@ -114,7 +119,7 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
     try {
       await client
         .insert({
-          table: "loglib.event",
+          table: "heimdall_logs.event",
           values: [
             {
               ...pageview,
@@ -126,7 +131,7 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
         .catch((e) => console.log(e));
       await client
         .insert({
-          table: "loglib.event",
+          table: "heimdall_logs.event",
           values: [
             {
               ...pageview,

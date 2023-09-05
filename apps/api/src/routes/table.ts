@@ -1,9 +1,9 @@
 import { ReferrerName } from "../lib/constants";
 import { getTimeRange } from "../lib/time-helper";
-import { LoglibEvent } from "../type";
+import { HeimdallEvent } from "../type";
 
 export const getTablesData = (
-  events: LoglibEvent[],
+  events: HeimdallEvent[],
   startDate: Date,
   endDate: Date,
   timeZone: string,
@@ -18,7 +18,7 @@ export const getTablesData = (
 
 export type TableData = ReturnType<typeof transformData>;
 
-const transformData = (events: LoglibEvent[]) => {
+const transformData = (events: HeimdallEvent[]) => {
   const hits = events;
   const pageViews: { page: string; visits: number }[] = [];
   const device: { device: string; visits: number }[] = [];
@@ -214,7 +214,7 @@ const transformRef = (ref: string) => {
 };
 
 export const getVisitorsByDate = (
-  events: LoglibEvent[],
+  events: HeimdallEvent[],
   startDate: Date,
   endDate: Date,
   timezone: string,

@@ -12,8 +12,7 @@ export const getNow = () => {
 
 export const getQuery = (query: string) => {
   const q = new URLSearchParams(query.split("?")[1]);
-  const queryObject = Object.fromEntries(q.entries());
-  return queryObject;
+  return Object.fromEntries(q.entries());
 };
 
 // Function to convert timezone time to UTC time
