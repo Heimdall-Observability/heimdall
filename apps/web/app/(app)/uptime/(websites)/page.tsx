@@ -14,7 +14,7 @@ export default async function DashboardPage() {
 			<MiniHeader heading='Websites' text='Manage your websites.'>
 				{websites?.length ? <WebsiteCreateButton /> : null}
 			</MiniHeader>
-			<WebsitesList />
+			<WebsitesList websites={websites} />
 			<WebsiteForm />
 		</DashboardShell>
 	);

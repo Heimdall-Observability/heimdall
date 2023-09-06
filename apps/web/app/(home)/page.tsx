@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ExpandingArrow from '@/components/expanding-arrow';
 import { H3, H5 } from '@/components/typography';
 import { buttonVariants } from '@/components/ui/button';
+import { getCurrentUser } from '@/lib/session';
 import { cn } from '@/lib/utils';
 
 const features = [
@@ -24,17 +25,11 @@ const features = [
 ];
 
 export default async function HomePage() {
+	const user = await getCurrentUser();
 	return (
 		<>
-			<section className='space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32'>
+			<section className='space-y-6 pb-8 md:pb-12 pt-10 lg:py-32'>
 				<div className='container flex max-w-[64rem] flex-col items-center gap-4 text-center'>
-					<div
-						aria-hidden
-						className='pointer-events-none absolute left-1/2 top-0 z-10 h-[400px] w-[1000px] -translate-x-1/2 -translate-y-1/2 opacity-[0.15]'
-						style={{
-							backgroundImage: 'radial-gradient(#A4A4A3, transparent 50%)',
-						}}
-					/>
 					<svg
 						className='pointer-events-none absolute inset-0 h-full z-[-1] w-full stroke-gray-200 opacity-50 [mask-image:radial-gradient(100%_100%_at_top_center,white,transparent)]'
 						aria-hidden
@@ -65,7 +60,7 @@ export default async function HomePage() {
 						/>
 					</svg>
 					<Link
-						href='/playground'
+						href='/demo'
 						className='rounded-2xl bg-primary/10 px-4 py-1.5 pr-8 text-sm font-medium group flex space-x-1 hover:text-primary/90 text-primary transition-all ring-0 sm:mt-0'
 						// className='group px-4 py-1.5 pr-8 mt-20 flex space-x-1 rounded-full text-primary hover:text-primary/90 border border-primary/50 bg-primary/10 text-sm font-medium ring-0 transition-all hover:border-primary/80 hover:bg-primary/20 sm:mt-0'
 					>
@@ -82,14 +77,14 @@ export default async function HomePage() {
 					</p>
 					<div className='space-x-4 mt-8'>
 						<Link
-							href={'/login'}
+							href={user ? '/dashboard' : '/login'}
 							className={cn(
 								buttonVariants({
 									size: 'lg',
 								})
 							)}
 						>
-							{'Get Started'}
+							{user ? 'Go to dashboard' : 'Get started'}
 						</Link>
 						<Link
 							href='/play'
@@ -100,7 +95,7 @@ export default async function HomePage() {
 								})
 							)}
 						>
-							Playground
+							Live playground
 						</Link>
 					</div>
 				</div>

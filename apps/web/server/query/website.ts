@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/lib/session';
 
-import { queires } from './queires';
+import { queries } from './queries';
 
 export const getWebsite = async () => {
 	const user = await getCurrentUser();
@@ -44,14 +44,14 @@ export const getWebsite = async () => {
 	const sites = userWebsites.map(async (web) => {
 		return {
 			...web,
-			visitors: await queires.getTodayVisitorsCount(web.id),
+			visitors: await queries.getTodayVisitorsCount(web.id),
 		};
 	});
 	const teamSites = teamWebsites.map(async (web) => {
 		return {
 			// rome-ignore lint/style/noNonNullAssertion: <explanation>
 			...web.website!,
-			visitors: await queires.getTodayVisitorsCount(web.websiteId as string),
+			visitors: await queries.getTodayVisitorsCount(web.websiteId as string),
 		};
 	});
 	return {

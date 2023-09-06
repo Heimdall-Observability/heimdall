@@ -1,5 +1,10 @@
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 
+import { EmptyPlaceholder } from '@/components/empty-placeholder';
+import { Icons } from '@/components/icons';
+import { WebsiteCreateButton } from '@/components/website-create-button';
+import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
 import {
 	Bar,
@@ -87,10 +92,10 @@ export function Graph({
 					{bar ? (
 						<Bar
 							dataKey='visits'
-							fill='#1b1917'
+							fill='#B9E3FD'
 							color='#000'
 							label='Visitors'
-							stroke='#110F04'
+							stroke='#B9E3FD'
 						/>
 					) : (
 						<Line
@@ -108,7 +113,7 @@ export function Graph({
 							color: 'black',
 						}}
 						label='visitors'
-						cursor={bar ? false : true}
+						cursor={!bar}
 						content={({ active, payload, label }) => {
 							if (active && payload && payload.length) {
 								return (
@@ -129,22 +134,32 @@ export function Graph({
 				<div className=' flex flex-col justify-center gap-2'>
 					<div className='text-2xl font-bold text-center '>
 						{isLoading ? (
-							<p className=' text-sm font-medium italic'>hmm loading...</p>
+							<p className=' text-sm font-medium italic'>loading data...</p>
 						) : (
 							<>
-								<p>No Data Just Yet</p>
-								<p className=' text-sm font-light'>
-									if you haven`&apos;t setup tracker refer to the{' '}
-									<a
-										href='https://heimdall.francismasha.com/docs'
-										target='_blank'
-										className=' text-blue-700 underline'
-										rel='noreferrer'
-									>
-										docs
-									</a>
-									how to do that.
-								</p>
+								<EmptyPlaceholder className=''>
+									<div className='bg-muted/50 flex h-16 w-16 items-center justify-center rounded-full'>
+										{/* @ts-ignore */}
+										<Icons.reports
+											className={cn('h-8 w-8 text-muted-foreground')}
+										/>
+									</div>
+									<EmptyPlaceholder.Title>
+										No Data Just Yet
+									</EmptyPlaceholder.Title>
+									<EmptyPlaceholder.Description>
+										if you haven&apos;t setup tracker refer to the{' '}
+										<a
+											href='https://heimdall.francismasha.com/docs'
+											target='_blank'
+											className=' text-blue-700 underline'
+											rel='noreferrer'
+										>
+											docs
+										</a>{' '}
+										how to do that.
+									</EmptyPlaceholder.Description>
+								</EmptyPlaceholder>
 							</>
 						)}
 					</div>

@@ -1,70 +1,70 @@
 {
-  "name": "@heimdall/tracker",
-  "version": "0.0.1",
-  "description": "A simple tracker for heimdall",
-  "main": "./dist/index.js",
-  "packageManager": "pnpm@8.6.10",
-  "scripts": {
-    "test": "vitest",
-    "dev": "rm -rf /dist & tsup --watch",
-    "build": "rm -rf /dist & tsup"
-  },
-  "exports": {
-    ".": {
-      "browser": "./dist/index.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./react": {
-      "browser": "./dist/react/index.js",
-      "import": "./dist/react/index.js",
-      "require": "./dist/react/index.cjs"
-    }
-  },
-  "typesVersions": {
-    "*": {
-      "*": [
-        "dist/index.d.ts"
-      ],
-      "react": [
-        "dist/react/index.d.ts"
-      ]
-    }
-  },
-  "types": "dist/index.d.ts",
-  "keywords": [
-    "loglib",
-    "event tracker",
-    "web analytics",
-    "analytics"
-  ],
-  "author": "",
-  "license": "MIT",
-  "files": [
-    "dist",
-    "package.json",
-    "LICENSE",
-    "README.md"
-  ],
-  "devDependencies": {
-    "@changesets/changelog-git": "^0.1.14",
-    "@changesets/changelog-github": "^0.4.8",
-    "@changesets/cli": "^2.26.2",
-    "@types/jest": "^29.5.4",
-    "@types/node": "^20.5.7",
-    "@types/react": "^18.2.21",
-    "@types/testing-library__jest-dom": "^5.14.9",
-    "@vitest/browser": "^0.34.3",
-    "happy-dom": "^10.11.2",
-    "react": "^18.2.0",
-    "sinon": "^15.2.0",
-    "terser": "^5.19.3",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2",
-    "vitest": "^0.34.3",
-    "webdriverio": "^8.15.10"
-  },
-  "peerDependencies": {
-    "react": "^16.8||^17||^18"
-  }
+	"name": "@heimdall/tracker",
+	"version": "0.0.1",
+	"description": "A simple tracker for heimdall",
+	"main": "./dist/index.js",
+	"packageManager": "pnpm@8.6.10",
+	"scripts": {
+		"test": "vitest",
+		"dev": "rm -rf /dist & tsup --watch",
+		"build": "rm -rf /dist & tsup"
+	},
+	"exports": {
+		".": {
+			"browser": "./dist/index.js",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./react": {
+			"browser": "./dist/react/index.js",
+			"import": "./dist/react/index.js",
+			"require": "./dist/react/index.cjs"
+		}
+	},
+	"typesVersions": {
+		"*": {
+			"*": [
+				"dist/index.d.ts"
+			],
+			"react": [
+				"dist/react/index.d.ts"
+			]
+		}
+	},
+	"types": "dist/index.d.ts",
+	"keywords": [
+		"heimdall",
+		"event tracker",
+		"web analytics",
+		"analytics"
+	],
+	"author": "",
+	"license": "MIT",
+	"files": [
+		"dist",
+		"package.json",
+		"LICENSE",
+		"README.md"
+	],
+	"devDependencies": {
+		"@changesets/changelog-git": "^0.1.14",
+		"@changesets/changelog-github": "^0.4.8",
+		"@changesets/cli": "^2.26.2",
+		"@types/jest": "^29.5.4",
+		"@types/node": "^20.5.7",
+		"@types/react": "^18.2.21",
+		"@types/testing-library__jest-dom": "^5.14.9",
+		"@vitest/browser": "^0.34.3",
+		"happy-dom": "^10.11.2",
+		"react": "^18.2.0",
+		"sinon": "^15.2.0",
+		"terser": "^5.19.3",
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2",
+		"vitest": "^0.34.3",
+		"webdriverio": "^8.15.10"
+	},
+	"peerDependencies": {
+		"react": "^16.8||^17||^18"
+	}
 }

@@ -1,15 +1,15 @@
 {
-  "name": "@heimdall/types",
-  "private": true,
-  "type": "module",
-  "types": "index.ts",
-  "version": "0.0.1",
-  "main": "index.ts",
-  "exports": {
-    ".": "./index.ts",
-    "./models": "./models.ts"
-  },
-  "dependencies": {
-    "@heimdall/db": "^1.0.0"
-  }
+	"name": "@heimdall/types",
+	"private": true,
+	"type": "module",
+	"types": "index.ts",
+	"version": "0.0.1",
+	"main": "index.ts",
+	"exports": {
+		".": "./index.ts",
+		"./models": "./models.ts"
+	},
+	"dependencies": {
+		"@heimdall/db": "^1.0.0"
+	}
 }

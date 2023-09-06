@@ -113,9 +113,9 @@ export default function App({ Component, pageProps }) {
 	},
 	{
 		name: 'other-frameworks-jsx',
-		getCode: (id: string) => `import {loglib} from "@heimdall/tracker"
+		getCode: (id: string) => `import {heimdall} from "@heimdall/tracker"
 
-loglib.record({
+heimdall.record({
     id: "${id}"
 })
   `,
@@ -125,9 +125,9 @@ loglib.record({
 	},
 	{
 		name: 'other-frameworks-tsx',
-		getCode: (id: string) => `import {loglib} from "@heimdall/tracker"
+		getCode: (id: string) => `import {heimdall} from "@heimdall/tracker"
 
-loglib.record({
+heimdall.record({
     id: "${id}"
 })
     `,
@@ -138,7 +138,7 @@ loglib.record({
 	{
 		name: 'cdn',
 		getCode: (id: string) => `<head>
-        <script src='https://cdn.jsdelivr.net/npm/@loglib/tracker@latest/dist/index.global.js' data-id='${id}'></script><title/>
+        <script src='https://cdn.jsdelivr.net/npm/@heimdall/tracker@latest/dist/index.global.js' data-id='${id}'></script><title/>
 </head>
   `,
 		icon: Icons.htmlLogo,
@@ -153,7 +153,7 @@ loglib.record({
   We're not live on wordpress plugin store just yet
   but you can download the plugin from github and install it manually in your wordpress site.
   you can find the plugin here:
-  https://github.com/loglib/loglib-wordpress-plugin
+  https://github.com/heimdall/heimdall-wordpress-plugin
   Then you can update the plugin settings with your website id.
   id: ${id}
   `,
@@ -224,7 +224,7 @@ export const AddTracker = ({
 							<div className=' flex items-center gap-2'>
 								{/* <div className=" w-2 h-2 bg-gradient-to-tr from-logo to-yellow-600 animate-pulse rounded-full" /> */}
 								<p className=' bg-gradient-radial from-logo my-2 to-yellow-600 bg-clip-text text-sm font-medium text-transparent'>
-									Follow the steps below to add loglib to your website
+									Follow the steps below to add heimdall to your website
 								</p>
 							</div>
 							<Button
@@ -252,12 +252,12 @@ export const AddTracker = ({
 												border: 'none',
 											}}
 										>
-											pnpm add @loglib/tracker
+											pnpm add @heimdall/tracker
 										</SyntaxHighlighter>
 									</span>
 								</span>
 								<span>
-									<CopyToClipboard text='pnpm add @loglib/tracker' />
+									<CopyToClipboard text='pnpm add @heimdall/tracker' />
 								</span>
 							</div>
 						</div>

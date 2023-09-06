@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { loglib } from '@heimdall/tracker';
+import { heimdall } from '@heimdall/tracker';
 import { GetInsightResponse } from '@heimdall/types';
 import {
 	Asterisk,
@@ -45,12 +45,12 @@ export const InsightTables = ({
 	}
 
 	return (
-		<Card className=' md:col-span-3 bg-gradient-to-tr from-stone-950 to-stone-900/50 '>
+		<Card className=' md:col-span-3'>
 			<Tabs
 				defaultValue='pages'
 				onValueChange={(val) => {
 					setCurrentTableTab(val);
-					loglib.track('change-insight-table', {
+					heimdall.track('change-insight-table', {
 						table: val,
 					});
 				}}
@@ -265,8 +265,8 @@ export const InsightTables = ({
 				</TabsContent>
 
 				{/* Referrer */}
-				<TabsContent value='ref' className=' bg-stone-950'>
-					<CardContent className=' bg-stone-950'>
+				<TabsContent value='ref' className=''>
+					<CardContent className=''>
 						{isFilterActive('referrerDomain') ||
 						isFilterActive('utmCampaign') ? (
 							<ClearFilter
@@ -277,7 +277,7 @@ export const InsightTables = ({
 							/>
 						) : null}
 
-						<Tabs defaultValue='referrer' className=' bg-stone-950'>
+						<Tabs defaultValue='referrer' className=''>
 							<TabsList>
 								<TabsTrigger value='referrer'>Referrer</TabsTrigger>
 								<TabsTrigger value='sources'>UTM Sources</TabsTrigger>
@@ -423,8 +423,8 @@ export const InsightTables = ({
 				</TabsContent>
 
 				{/* device */}
-				<TabsContent value='device' className=' bg-stone-950/30'>
-					<CardContent className=' bg-stone-950/30'>
+				<TabsContent value='device' className=''>
+					<CardContent className=''>
 						<Tabs className=' w-full' defaultValue='general'>
 							{isFilterActive('device') ||
 							isFilterActive('os') ||

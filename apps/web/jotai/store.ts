@@ -1,3 +1,4 @@
+import { Usage } from '@/server/actions/billing';
 import { Teams } from '@/server/query';
 import { Website } from '@heimdall/types/models';
 import { atom } from 'jotai';
@@ -18,6 +19,7 @@ export const userWebsitesAtom = atom<(Website & { visitors: number })[]>([]);
 export const teamWebsitesAtom = atom<(Website & { visitors: number })[]>([]);
 export const teamsAtom = atom<Teams>([]);
 export const selectedTeamAtom = atom<Teams[0] | null>(null);
+export const usageAtom = atom<Usage | null>(null);
 
 export const localSettingAtom = atomWithStorage<{
 	graph: string | null;

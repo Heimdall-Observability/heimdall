@@ -1,42 +1,43 @@
-import sinon from "sinon";
-import { context } from "../index";
+import sinon from 'sinon';
 
-describe("request-context", () => {
-  test("When instantiating a new context with initial values, then should get back the context", () => {
-    // Arrange
-    const getCurrentRequestContext = sinon.spy(() => context().getStore());
+import { context } from '../index';
 
-    const initialContext = { requestId: "a" };
+describe('request-context', () => {
+	test('When instantiating a new context with initial values, then should get back the context', () => {
+		// Arrange
+		const getCurrentRequestContext = sinon.spy(() => context().getStore());
 
-    // Act
-    context().run({ ...initialContext }, getCurrentRequestContext);
+		const initialContext = { requestId: 'a' };
 
-    // Assert
-    expect({
-      getStoreSpyReturnValue: getCurrentRequestContext.returnValues[0],
-    }).toEqual({
-      getStoreSpyReturnValue: initialContext,
-    });
-  });
+		// Act
+		context().run({ ...initialContext }, getCurrentRequestContext);
 
-  test("When instantiating a new context and putting a key, then get back the key value", () => {
-    // Arrange
-    const getCurrentRequestContext = sinon.spy(() => context().getStore());
+		// Assert
+		expect({
+			getStoreSpyReturnValue: getCurrentRequestContext.returnValues[0],
+		}).toEqual({
+			getStoreSpyReturnValue: initialContext,
+		});
+	});
 
-    // Act
-    context().run({}, () => {
-      context().getStore().requestId = "a";
+	test('When instantiating a new context and putting a key, then get back the key value', () => {
+		// Arrange
+		const getCurrentRequestContext = sinon.spy(() => context().getStore());
 
-      getCurrentRequestContext();
-    });
+		// Act
+		context().run({}, () => {
+			context().getStore().requestId = 'a';
 
-    // Assert
-    expect({
-      getStoreSpyReturnValue: getCurrentRequestContext.returnValues[0],
-    }).toEqual({
-      getStoreSpyReturnValue: {
-        requestId: "a",
-      },
-    });
-  });
+			getCurrentRequestContext();
+		});
+
+		// Assert
+		expect({
+			getStoreSpyReturnValue: getCurrentRequestContext.returnValues[0],
+		}).toEqual({
+			getStoreSpyReturnValue: {
+				requestId: 'a',
+			},
+		});
+	});
 });

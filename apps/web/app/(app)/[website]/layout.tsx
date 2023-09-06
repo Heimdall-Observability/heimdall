@@ -1,5 +1,9 @@
+import { redirect } from 'next/navigation';
+
 import { ReactNode } from 'react';
 
+import { DashboardHeader } from '@/components/header';
+import { dashboardConfig } from '@/config/dashboard';
 // import {
 // 	DashboardHeader,
 // 	PublicDashboardHeader,
@@ -9,10 +13,18 @@ import { getCurrentUser } from '@/lib/session';
 export default async function layout({ children }: { children: ReactNode }) {
 	const user = await getCurrentUser();
 
+	if (!user) {
+		return redirect('/login');
+	}
+
 	return (
-		<main className='mx-auto max-w-[1820px] space-y-8 md:px-16 px-4 min-h-[99vh]  bg-gradient-to-tr dark:from-stone-950 dark:to-stone-950/50 from-white to-stone-200'>
-			{/*{user ? <DashboardHeader user={user} /> : <PublicDashboardHeader />}*/}
-			<div>{children}</div>
-		</main>
+		<div className='flex min-h-screen flex-col bg-gray-50'>
+			<div className='flex h-full'>
+				<main className='flex w-full flex-1 flex-col overflow-hidden space-y-8'>
+					<DashboardHeader user={user} items={dashboardConfig.projectNav} />
+					<div className='container'>{children}</div>
+				</main>
+			</div>
+		</div>
 	);
 }

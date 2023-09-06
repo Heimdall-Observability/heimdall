@@ -21,6 +21,8 @@ export const env = createEnv({
     CLICKHOUSE_USERNAME: z.string().min(0),
     CLICKHOUSE_DB: z.string().min(0),
     NEXT_PUBLIC_API_URL: z.string().min(1),
+    STRIPE_SECRET_KEY: z.string().min(1),
+    STRIPE_SECRET_KEY_LIVE: z.string().min(1),
   },
 
   /**
@@ -31,6 +33,8 @@ export const env = createEnv({
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
     NEXT_PUBLIC_API_URL: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE: z.string().min(1),
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
   },
 
   /**
@@ -53,5 +57,11 @@ export const env = createEnv({
     CLICKHOUSE_USERNAME: process.env.CLICKHOUSE_USERNAME,
     CLICKHOUSE_DB: process.env.CLICKHOUSE_DB,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
+    STRIPE_SECRET_KEY_LIVE: process.env.STRIPE_SECRET_KEY_LIVE,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE:
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
   },
 });

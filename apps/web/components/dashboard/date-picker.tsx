@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
 	Popover,
 	PopoverContent,
@@ -14,6 +15,7 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
+import { usageAtom } from '@/jotai/store';
 import {
 	getLast24Hour,
 	getLastNinetyDays,
@@ -26,12 +28,11 @@ import {
 	getYesterday,
 } from '@/lib/time-helper';
 import { cn } from '@/lib/utils';
+import { CalendarIcon } from '@radix-ui/react-icons';
 import { format, subMonths } from 'date-fns';
+import { useAtom } from 'jotai';
 import { CalendarDays } from 'lucide-react';
-import { Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from 'react-day-picker';
-
-import { Calendar } from './calendar';
 
 export function CalendarDateRangePicker({
 	date,
@@ -57,7 +58,7 @@ export function CalendarDateRangePicker({
 						variant={'outline'}
 						size='sm'
 						className={cn(
-							'w-max justify-start text-left font-normal',
+							'w-max justify-start text-left font-normal bg-background',
 							!date && ' text-stone-800'
 						)}
 					>
@@ -76,7 +77,7 @@ export function CalendarDateRangePicker({
 						)}
 					</Button>
 				</PopoverTrigger>
-				<PopoverContent className='w-auto bg-stone-950' align='start'>
+				<PopoverContent className='w-auto' align='start'>
 					<Calendar
 						initialFocus
 						mode='range'
@@ -118,6 +119,8 @@ export const DatePicker = ({
 	setCustomTime: (state: boolean) => void;
 	customTime: boolean;
 }) => {
+	const [usage] = useAtom(usageAtom);
+
 	function setTime(value: string) {
 		setCustomTime(false);
 		switch (value) {
@@ -184,12 +187,12 @@ export const DatePicker = ({
 				value={customTime ? 'custom' : timeRange.stringValue}
 				defaultValue='24hr'
 			>
-				<SelectTrigger className='w-auto px-2 space-x-4 dark:text-white/75'>
-					<CalendarDays className=' dark:text-gray-300 text-gray-700' />
+				<SelectTrigger className='w-auto px-2 space-x-4 dark:text-white/75 bg-background h-9'>
+					<CalendarDays className='dark:text-gray-300 text-gray-700 w-5 h-5' />
 					<SelectValue placeholder='Select Time' />
 				</SelectTrigger>
 
-				<SelectContent className='dark'>
+				<SelectContent>
 					{/* <SelectLabel>Choose Range</SelectLabel> */}
 					<SelectItem value={'24hr'}>Last 24 Hours</SelectItem>
 					<SelectItem value='yesterday'>Yesterday</SelectItem>
@@ -200,7 +203,9 @@ export const DatePicker = ({
 					<SelectItem value='thisMonth'>This Month</SelectItem>
 					<SelectItem value='last30'>Last 30 Days</SelectItem>
 					<SelectItem value='last90'>Last 90 Days</SelectItem>
-					<SelectItem value='thisYear'>This Year</SelectItem>
+					{usage && usage.plan.slug !== 'free' && (
+						<SelectItem value='thisYear'>This Year</SelectItem>
+					)}
 					<Separator className='my-2' />
 					<SelectItem value='custom'>Custom</SelectItem>
 				</SelectContent>

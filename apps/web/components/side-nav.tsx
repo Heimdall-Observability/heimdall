@@ -24,7 +24,7 @@ export function SideNav({ items }: DashboardNavProps) {
 	}
 
 	return (
-		<div className='fixed inset-0 z-[1] hidden h-screen w-24 flex-col justify-between overflow-y-hidden p-2 backdrop-blur md:flex'>
+		<aside className='fixed inset-0 z-[1] hidden h-screen w-24 flex-col justify-between overflow-y-hidden p-2 backdrop-blur md:flex'>
 			<ul className='flex flex-col space-y-8 mt-14'>
 				<For each={items}>
 					{({ id, href, disabled, title, icon }) => {
@@ -63,6 +63,6 @@ export function SideNav({ items }: DashboardNavProps) {
 					}}
 				</For>
 			</ul>
-		</div>
+		</aside>
 	);
 }

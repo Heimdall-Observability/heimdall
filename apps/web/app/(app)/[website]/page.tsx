@@ -6,7 +6,7 @@ import { Dashboard } from '@/components/dashboard';
 import { db } from '@/lib/db';
 import { generateToken } from '@/lib/generate-token';
 import { getCurrentUser } from '@/lib/session';
-import { queires } from '@/server/query/queires';
+import { queries } from '@/server/query/queries';
 import { schema } from '@heimdall/db';
 import { eq } from 'drizzle-orm';
 
@@ -49,7 +49,7 @@ export default async function Page({
 		: website.active
 		? false
 		: await (async () => {
-				const haveSession = (await queires.getIsWebsiteActive(params.website))
+				const haveSession = (await queries.getIsWebsiteActive(params.website))
 					.length;
 				if (haveSession) {
 					await db

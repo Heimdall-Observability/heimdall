@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Website as WebsiteType } from '@heimdall/types/models';
-import { LucideSettings, User2 } from 'lucide-react';
+import { LucideSettings, MoreVertical, User2 } from 'lucide-react';
 
 import { Icons } from './icons';
 
@@ -27,14 +27,15 @@ export function Website({
 }: WebsiteProps) {
 	const [isLoading, setIsLoading] = useState(false);
 	return (
-		<Card key={key} className='@container/card'>
+		<Card key={key} className='@container/card shadow-sm rounded-sm'>
 			<div className='card__layer1'></div>
 			<div className='card__layer2'></div>
 			<CardHeader className=''>
 				<div className=' flex items-center justify-between'>
 					<h3 className='text-lg font-semibold'>{site.title}</h3>
-					<LucideSettings
-						className=' cursor-pointer'
+					<MoreVertical
+						className='cursor-pointer'
+						size={18}
 						onClick={() => {
 							setIsOpen(true);
 							setSelected(site.id);
@@ -47,7 +48,7 @@ export function Website({
 				<div>
 					<div className='flex items-center gap-2 text-secondary'>
 						<User2 size={20} className=' ' />
-						<p className='font-semibold'>{visitors} Visitors</p>
+						<p className='font-semibold text-sm'>{visitors} Visitors</p>
 					</div>
 				</div>
 				<Link className=' w-full @[320px]/card:w-fit ' href={`/${site.id}`}>

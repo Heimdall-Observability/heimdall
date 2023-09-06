@@ -1,5 +1,7 @@
-import { loglibDb } from "./queries";
+import { logger } from '@heimdall/logger';
 
-const type = process.env.CLICKHOUSE_HOST ? "clickhouse" : "sqlite";
-console.log("⌗ [Event Database]:", type);
-export const eventDB = loglibDb(type);
+import { heimdallDb } from './queries';
+
+const type = process.env.CLICKHOUSE_HOST ? 'clickhouse' : 'sqlite';
+logger.info(`Event Database ${type}}`);
+export const eventDB = heimdallDb(type);

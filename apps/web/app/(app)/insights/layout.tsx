@@ -24,6 +24,7 @@ export default async function DashboardWebsiteLayout({
 	}
 	const { userWebsites, teamWebsites } = await getWebsite();
 	const websites = userWebsites.concat(teamWebsites);
+
 	return (
 		<>
 			<StoreSetter store='website' data={websites} />

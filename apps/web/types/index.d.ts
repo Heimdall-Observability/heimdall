@@ -29,6 +29,13 @@ export type SidebarNavItem = {
 	  }
 );
 
+export type TeamNavItem = {
+	id: string;
+	name: string;
+	slug: string;
+	image?: string;
+};
+
 export type SiteConfig = {
 	name: string;
 	description: string;

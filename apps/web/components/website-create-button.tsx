@@ -29,7 +29,7 @@ export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
 			<DialogTrigger>
 				<Button onClick={onClick} {...props}>
 					<Icons.add className='h-4 w-4 ' />
-					<span className=''>New Website</span>
+					<span className='hidden md:block'>New Website</span>
 				</Button>
 			</DialogTrigger>
 			<DialogContent className='sm:max-w-[425px]'>

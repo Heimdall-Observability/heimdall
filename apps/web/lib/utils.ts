@@ -41,40 +41,6 @@ export function absoluteUrl(path: string) {
 	return `${env.NEXT_PUBLIC_APP_URL}${path}`;
 }
 
-export function constructMetadata({
-	title = 'Loglib -  Privacy first open source beautiful web analytics.',
-	description = 'Loglib is privacy first open source web analytics you can self host or use our cloud service.',
-	image = 'https://loglib.io/og.png',
-}: {
-	title?: string;
-	description?: string;
-	image?: string;
-}): Metadata {
-	return {
-		title,
-		description,
-		openGraph: {
-			title,
-			description,
-			images: [
-				{
-					url: image,
-				},
-			],
-		},
-		twitter: {
-			card: 'summary_large_image',
-			title,
-			description,
-			images: [image],
-			creator: '@loglib_io',
-		},
-		icons: '/favicon.ico',
-		metadataBase: new URL('https://heimdall.francismasha.com'),
-		themeColor: '#000',
-	};
-}
-
 export function nFormatter(num?: number, digits?: number) {
 	if (!num) return '0';
 	const lookup = [
@@ -132,4 +98,8 @@ export function guid(): string {
 		d = Math.floor(d / 16);
 		return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
 	});
+}
+
+export function fancyId() {
+	return Math.random().toString(36).substr(2, 9);
 }

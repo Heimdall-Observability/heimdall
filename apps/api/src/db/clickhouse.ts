@@ -1,12 +1,13 @@
-import { env } from "../../env";
-import { createClient } from "@clickhouse/client";
+import { createClient } from '@clickhouse/client';
+
+import { env } from '../../env';
 
 export const hitsQuery = (
-  startDate: string,
-  endDate: string,
-  websiteId: string,
+	startDate: string,
+	endDate: string,
+	websiteId: string
 ) =>
-  `select id,
+	`select id,
           sessionId,
           visitorId,
           JSONExtract(properties, 'city', 'String')           as city,
@@ -22,17 +23,17 @@ export const hitsQuery = (
           JSONExtract(properties, 'os', 'String')             as os,
           event,
           timestamp
-   from loglib.event
+   from heimdall_logs.event
    WHERE ${
-     startDate && `timestamp >= '${startDate}' AND`
-   } timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'hits'`;
+			startDate && `timestamp >= '${startDate}' AND`
+		} timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'hits'`;
 
 export const customEventsQuery = (
-  startDate: string,
-  endDate: string,
-  websiteId: string,
+	startDate: string,
+	endDate: string,
+	websiteId: string
 ) =>
-  `select *
+	`select *
    from heimdall_logs.event
    WHERE timestamp >= '${startDate}'
      AND timestamp <= '${endDate}'
@@ -40,6 +41,8 @@ export const customEventsQuery = (
      AND event != 'hits'`;
 
 export const client = createClient({
-  host: env.CLICKHOUSE_HOST,
-  password: env.CLICKHOUSE_PASSWORD,
+	host: env.CLICKHOUSE_HOST,
+	password: env.CLICKHOUSE_PASSWORD,
+	username: env.CLICKHOUSE_USERNAME,
+	database: env.CLICKHOUSE_DB,
 });
