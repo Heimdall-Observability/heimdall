@@ -9,6 +9,7 @@ export default async function layout({ children }: { children: ReactNode }) {
 		name: 'John Doe',
 		email: 'john.doe@anonymous.com',
 	};
+
 	return (
 		<div className='flex min-h-screen flex-col bg-muted'>
 			<div className='flex h-full'>
