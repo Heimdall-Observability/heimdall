@@ -89,7 +89,7 @@ export const RefIcons = {
 		</svg>
 	),
 	instagram: () => <Instagram size={16} />,
-	loglib: () => <Icons.logo className=' h-4 w-4 md:h-4 md:w-4' />,
+	heimdall: () => <Icons.logo className=' h-4 w-4 md:h-4 md:w-4' />,
 	android: () => (
 		<svg
 			viewBox='0 0 24 24'

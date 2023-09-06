@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/select';
 import { Toggle } from '@/components/ui/toggle';
 import COUNTRIES from '@/lib/constants';
-import { loglib } from '@heimdall/tracker';
+import { heimdall } from '@heimdall/tracker';
 import { LoglibCustomEvent } from '@heimdall/types';
 import { Equal, EqualNot, SlidersHorizontal } from 'lucide-react';
 
@@ -124,7 +124,7 @@ export const EventFilter = ({
 			<DialogTrigger>
 				<Button
 					onClick={() => {
-						loglib.track('filter open', {
+						heimdall.track('filter open', {
 							activeFilters: activeFilter.length,
 							eventsCount: data.length,
 						});

@@ -1,6 +1,7 @@
-import { IncomingMessage, ServerResponse } from "http";
-import { generateRequestId, REQUEST_ID_HEADER } from "../constant";
-import { context } from "../../context";
+import { IncomingMessage, ServerResponse } from 'http';
+
+import { context } from '../../context';
+import { REQUEST_ID_HEADER, generateRequestId } from '../constant';
 
 /**
  * This is an express middleware that:
@@ -10,27 +11,27 @@ import { context } from "../../context";
  * **Important:** this should be your first middleware
  */
 export function addRequestId(
-  req: IncomingMessage,
-  res: ServerResponse,
-  next: () => void,
+	req: IncomingMessage,
+	res: ServerResponse,
+	next: () => void
 ) {
-  let requestId = req.headers[REQUEST_ID_HEADER];
+	let requestId = req.headers[REQUEST_ID_HEADER];
 
-  if (!requestId) {
-    requestId = generateRequestId();
-    req.headers[REQUEST_ID_HEADER] = requestId;
-  }
+	if (!requestId) {
+		requestId = generateRequestId();
+		req.headers[REQUEST_ID_HEADER] = requestId;
+	}
 
-  res.setHeader(REQUEST_ID_HEADER, requestId);
+	res.setHeader(REQUEST_ID_HEADER, requestId);
 
-  const currentContext = context().getStore();
+	const currentContext = context().getStore();
 
-  if (currentContext) {
-    // Append to the current context
-    currentContext.requestId = requestId;
-    next();
-    return;
-  }
+	if (currentContext) {
+		// Append to the current context
+		currentContext.requestId = requestId;
+		next();
+		return;
+	}
 
-  context().run({ requestId }, next);
+	context().run({ requestId }, next);
 }

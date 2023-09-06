@@ -1,9 +1,9 @@
-import { record } from "./record";
-import { identify, setConsent, track } from "./methods";
+import { identify, setConsent, track } from './methods';
+import { record } from './record';
 
-export const loglib = {
-  record: record,
-  track: track,
-  identify: identify,
-  setConsent,
+export const heimdall = {
+	record: record,
+	track: track,
+	identify: identify,
+	setConsent,
 };

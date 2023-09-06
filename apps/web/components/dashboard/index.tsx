@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { localSettingAtom } from '@/jotai/store';
 import { getLast24Hour } from '@/lib/time-helper';
 import { cn, fetcher } from '@/lib/utils';
-import { loglib } from '@heimdall/tracker';
+import { heimdall } from '@heimdall/tracker';
 import { TrackClick } from '@heimdall/tracker/react';
 import { GetInsightResponse } from '@heimdall/types';
 import { env } from 'env.mjs';
@@ -30,7 +30,6 @@ import { AddTracker } from '../add-tracker';
 import { Label } from '../ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
-import { Celebrate } from './celebrate';
 import { CalendarDateRangePicker, DatePicker } from './date-picker';
 import Events from './events';
 import { InsightCard } from './insight/card';
@@ -120,7 +119,7 @@ export const Dashboard = ({
 						{/*				value='events'*/}
 						{/*				// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'*/}
 						{/*				onClick={() =>*/}
-						{/*					loglib.track('events-tab-clicked', {*/}
+						{/*					heimdall.track('events-tab-clicked', {*/}
 						{/*						websiteId: website.id,*/}
 						{/*					})*/}
 						{/*				}*/}
@@ -145,7 +144,7 @@ export const Dashboard = ({
 							<div
 								className=' flex gap-2 items-center'
 								onClick={() =>
-									loglib.track('date-picker-clicked', {
+									heimdall.track('date-picker-clicked', {
 										websiteId: website.id,
 									})
 								}
@@ -232,7 +231,7 @@ export const Dashboard = ({
 																			| 'Retaining Visitors'
 																	) => {
 																		setViCardSwitch(v);
-																		loglib.track('visitor-card-switched', {
+																		heimdall.track('visitor-card-switched', {
 																			websiteId: website.id,
 																			switch: viCardSwitch,
 																		});

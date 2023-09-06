@@ -1,30 +1,30 @@
 {
-  "name": "@heimdall/db",
-  "version": "1.0.0",
-  "description": "",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "keywords": [],
-  "author": "Francis Masha",
-  "license": "ISC",
-  "scripts": {
-    "generate": "drizzle-kit generate:sqlite",
-    "studio": "drizzle-kit studio --port 3333",
-    "migrate": "tsx src/migrate.ts",
-    "build": "tsup",
-    "dev": "tsup --watch"
-  },
-  "dependencies": {
-    "@auth/core": "^0.12.0",
-    "@libsql/client": "^0.3.2",
-    "@paralleldrive/cuid2": "^2.2.2",
-    "dotenv": "^16.3.1",
-    "drizzle-kit": "^0.19.13",
-    "drizzle-orm": "^0.28.5",
-    "tsup": "^7.2.0",
-    "tsx": "^3.12.7"
-  },
-  "devDependencies": {
-    "@heimdall/config": "workspace:*"
-  }
+	"name": "@heimdall/db",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"keywords": [],
+	"author": "Francis Masha",
+	"license": "ISC",
+	"scripts": {
+		"generate": "drizzle-kit generate:sqlite",
+		"studio": "drizzle-kit studio --port 3333",
+		"migrate": "tsx src/migrate.ts",
+		"build": "tsup",
+		"dev": "tsup --watch"
+	},
+	"dependencies": {
+		"@auth/core": "^0.12.0",
+		"@libsql/client": "^0.3.2",
+		"@paralleldrive/cuid2": "^2.2.2",
+		"dotenv": "^16.3.1",
+		"drizzle-kit": "^0.19.13",
+		"drizzle-orm": "^0.28.5",
+		"tsup": "^7.2.0",
+		"tsx": "^3.12.7"
+	},
+	"devDependencies": {
+		"@heimdall/config": "workspace:*"
+	}
 }

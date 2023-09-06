@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { loglib } from '@heimdall/tracker';
+import { heimdall } from '@heimdall/tracker';
 import { GetInsightResponse } from '@heimdall/types';
 import {
 	Asterisk,
@@ -50,7 +50,7 @@ export const InsightTables = ({
 				defaultValue='pages'
 				onValueChange={(val) => {
 					setCurrentTableTab(val);
-					loglib.track('change-insight-table', {
+					heimdall.track('change-insight-table', {
 						table: val,
 					});
 				}}
