@@ -60,7 +60,7 @@ declare global {
       record: (config: Partial<Config>) => void;
       track: (name: string, payload?: Record<string, any>) => void;
       identify: (payload: Record<string, string>) => void;
-      setConsent: (concent: "granted" | "denied") => void;
+      setConsent: (consent: "granted" | "denied") => void;
     };
   }
 }

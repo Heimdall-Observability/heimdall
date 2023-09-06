@@ -92,10 +92,10 @@ export function Graph({
 					{bar ? (
 						<Bar
 							dataKey='visits'
-							fill='#1b1917'
+							fill='#B9E3FD'
 							color='#000'
 							label='Visitors'
-							stroke='#110F04'
+							stroke='#B9E3FD'
 						/>
 					) : (
 						<Line

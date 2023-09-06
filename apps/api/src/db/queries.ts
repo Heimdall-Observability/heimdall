@@ -70,7 +70,7 @@ const createEvent = () => {
       clickhouse: async () =>
         await client
           .insert({
-            table: "loglib.event",
+            table: "heimdall_logs.event",
             values: [
               {
                 id,
@@ -251,7 +251,7 @@ async function getCustomEventData(
   };
 }
 
-export function loglibDb(db: "sqlite" | "clickhouse"): any {
+export function heimdallDb(db: "sqlite" | "clickhouse"): any {
   return {
     async insertEvent(
       data: HeimdallEvent & {

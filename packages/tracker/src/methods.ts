@@ -22,7 +22,7 @@ export const identify = (payload: Record<string, string>) => {
   window.llc.consent === "granted" && sendVisitor(payload);
 };
 
-export const setConsent = (concent: "granted" | "denied") => {
-  window.llc.consent = concent;
-  sendVisitor({ concent });
+export const setConsent = (consent: "granted" | "denied") => {
+  window.llc.consent = consent;
+  sendVisitor({ consent });
 };

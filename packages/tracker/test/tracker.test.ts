@@ -179,13 +179,13 @@ describe("events", () => {
 });
 
 describe("Concent", () => {
-  it("should not set userId if concent is denied which is default", () => {
+  it("should not set userId if consent is denied which is default", () => {
     record();
     expect(window.llc.consent).toBe("denied");
     expect(getVisitorId()).toBe("");
   });
 
-  it("should change concent on setConcent", () => {
+  it("should change consent on setConcent", () => {
     setConsent("granted");
     expect(window.llc.consent).toBe("granted");
     expect(getVisitorId()).not.toBe("");
