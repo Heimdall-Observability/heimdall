@@ -38,7 +38,7 @@
 		"web analytics",
 		"analytics"
 	],
-	"author": "",
+	"author": "Francis Masha",
 	"license": "MIT",
 	"files": [
 		"dist",
@@ -66,5 +66,8 @@
 	},
 	"peerDependencies": {
 		"react": "^16.8||^17||^18"
+	},
+	"publishConfig": {
+		"access": "public"
 	}
 }
