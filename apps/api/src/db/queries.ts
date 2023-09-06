@@ -1,4 +1,4 @@
-import { schema } from '@heimdall/db';
+import { schema } from '@heimdall-logs/db';
 import { sql } from 'drizzle-orm';
 
 import { convertToUTC } from '../lib/utils';

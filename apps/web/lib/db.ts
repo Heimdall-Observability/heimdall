@@ -1,5 +1,5 @@
 import { env } from '@/env.mjs';
-import { schema } from '@heimdall/db';
+import { schema } from '@heimdall-logs/db';
 import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 

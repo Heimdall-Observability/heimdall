@@ -1,4 +1,4 @@
-import { OperatorType } from '@heimdall/types';
+import { OperatorType } from '@heimdall-logs/types';
 
 export type TimeRange = {
 	startDate: Date;

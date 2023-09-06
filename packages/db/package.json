@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall/db",
+	"name": "@heimdall-logs/db",
 	"version": "0.0.1",
 	"description": "",
 	"main": "./dist/index.js",
@@ -25,6 +25,6 @@
 		"tsx": "^3.12.8"
 	},
 	"devDependencies": {
-		"@heimdall/config": "0.0.1"
+		"@heimdall-logs/config": "0.0.1"
 	}
 }

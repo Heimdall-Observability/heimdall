@@ -1,5 +1,5 @@
 import { createClient } from '@clickhouse/client';
-import { setupClickhouseDb } from '@heimdall/setup';
+import { setupClickhouseDb } from '@heimdall-logs/setup';
 import ora from 'ora';
 
 const client = createClient({

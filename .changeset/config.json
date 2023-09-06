@@ -9,13 +9,13 @@
 	"updateInternalDependencies": "patch",
 	"ignore": [
 		"web",
-		"@heimdall/api",
-		"@heimdall/types",
-		"@heimdall/db",
-		"@heimdall/config",
-		"@heimdall/setup",
-		"@heimdall/eslint-config",
-		"@heimdall/logger",
-		"@heimdall/request-context"
+		"@heimdall-logs/api",
+		"@heimdall-logs/types",
+		"@heimdall-logs/db",
+		"@heimdall-logs/config",
+		"@heimdall-logs/setup",
+		"@heimdall-logs/eslint-config",
+		"@heimdall-logs/logger",
+		"@heimdall-logs/request-context"
 	]
 }

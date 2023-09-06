@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { User } from '@heimdall/types/models';
+import { User } from '@heimdall-logs/types/models';
 import { AvatarProps } from '@radix-ui/react-avatar';
 
 import { Icons } from './icons';

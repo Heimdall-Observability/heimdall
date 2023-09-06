@@ -25,7 +25,7 @@ import {
 const snippets = [
 	{
 		name: 'nextjs/app-tsx',
-		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall-logs/tracker/react";
 export default function RootLayout({
     children,
   }: {
@@ -51,7 +51,7 @@ export default function RootLayout({
 	},
 	{
 		name: 'nextjs/app-jsx',
-		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall-logs/tracker/react";
 export default function RootLayout({
     children,
   }) {
@@ -75,7 +75,7 @@ export default function RootLayout({
 	},
 	{
 		name: 'nextjs-tsx',
-		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react";
+		getCode: (id: string) => `import Loglib from "@heimdall-logs/tracker/react";
 export default function App({ Component, pageProps }: AppProps) {
      return (
         <>
@@ -95,7 +95,7 @@ export default function App({ Component, pageProps }: AppProps) {
 	},
 	{
 		name: 'nextjs-jsx',
-		getCode: (id: string) => `import Loglib from "@heimdall/tracker/react"
+		getCode: (id: string) => `import Loglib from "@heimdall-logs/tracker/react"
 export default function App({ Component, pageProps }) {
     return (
         <>
@@ -113,7 +113,7 @@ export default function App({ Component, pageProps }) {
 	},
 	{
 		name: 'other-frameworks-jsx',
-		getCode: (id: string) => `import {heimdall} from "@heimdall/tracker"
+		getCode: (id: string) => `import {heimdall} from "@heimdall-logs/tracker"
 
 heimdall.record({
     id: "${id}"
@@ -125,7 +125,7 @@ heimdall.record({
 	},
 	{
 		name: 'other-frameworks-tsx',
-		getCode: (id: string) => `import {heimdall} from "@heimdall/tracker"
+		getCode: (id: string) => `import {heimdall} from "@heimdall-logs/tracker"
 
 heimdall.record({
     id: "${id}"
@@ -138,7 +138,7 @@ heimdall.record({
 	{
 		name: 'cdn',
 		getCode: (id: string) => `<head>
-        <script src='https://cdn.jsdelivr.net/npm/@heimdall/tracker@latest/dist/index.global.js' data-id='${id}'></script><title/>
+        <script src='https://cdn.jsdelivr.net/npm/@heimdall-logs/tracker@latest/dist/index.global.js' data-id='${id}'></script><title/>
 </head>
   `,
 		icon: Icons.htmlLogo,
@@ -252,12 +252,12 @@ export const AddTracker = ({
 												border: 'none',
 											}}
 										>
-											pnpm add @heimdall/tracker
+											pnpm add @heimdall-logs/tracker
 										</SyntaxHighlighter>
 									</span>
 								</span>
 								<span>
-									<CopyToClipboard text='pnpm add @heimdall/tracker' />
+									<CopyToClipboard text='pnpm add @heimdall-logs/tracker' />
 								</span>
 							</div>
 						</div>

@@ -2,7 +2,7 @@ import { authOptions } from '@/lib/auth';
 import { removeWebsiteData } from '@/lib/clickhouse';
 import { db } from '@/lib/db';
 import { websiteFormSchema } from '@/lib/validations/website';
-import { schema } from '@heimdall/db';
+import { schema } from '@heimdall-logs/db';
 import { eq } from 'drizzle-orm';
 import { getServerSession } from 'next-auth';
 import { z } from 'zod';
