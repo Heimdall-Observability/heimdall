@@ -10,7 +10,7 @@ export default async function layout({ children }: { children: ReactNode }) {
 		email: 'john.doe@anonymous.com',
 	};
 	return (
-		<div className='flex min-h-screen flex-col bg-gray-50'>
+		<div className='flex min-h-screen flex-col bg-muted'>
 			<div className='flex h-full'>
 				<main className='flex w-full flex-1 flex-col overflow-hidden space-y-8'>
 					<DashboardHeader user={user} items={dashboardConfig.projectNav} />

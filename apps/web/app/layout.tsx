@@ -71,7 +71,7 @@ export default function RootLayout({
 						config={{
 							id: 'heimdall',
 							consent: 'granted',
-							// host: 'http://localhost:8000',
+							host: 'http://localhost:8000',
 							// env: "prod",
 							debug: true,
 						}}
