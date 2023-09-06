@@ -10,6 +10,6 @@
 		"./models": "./models.ts"
 	},
 	"dependencies": {
-		"@heimdall/db": "^1.0.0"
+		"@heimdall/db": "0.0.1"
 	}
 }

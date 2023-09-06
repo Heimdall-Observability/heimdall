@@ -51,18 +51,18 @@
 		"@changesets/changelog-github": "^0.4.8",
 		"@changesets/cli": "^2.26.2",
 		"@types/jest": "^29.5.4",
-		"@types/node": "^20.5.7",
+		"@types/node": "^20.5.9",
 		"@types/react": "^18.2.21",
-		"@types/testing-library__jest-dom": "^5.14.9",
+		"@types/testing-library__jest-dom": "^6.0.0",
 		"@vitest/browser": "^0.34.3",
 		"happy-dom": "^10.11.2",
 		"react": "^18.2.0",
 		"sinon": "^15.2.0",
-		"terser": "^5.19.3",
+		"terser": "^5.19.4",
 		"tsup": "^7.2.0",
 		"typescript": "^5.2.2",
 		"vitest": "^0.34.3",
-		"webdriverio": "^8.15.10"
+		"webdriverio": "^8.16.4"
 	},
 	"peerDependencies": {
 		"react": "^16.8||^17||^18"
