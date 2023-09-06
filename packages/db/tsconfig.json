@@ -1,7 +1,9 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": "@heimdall/config/tsconfig.base.json",
-	"include": ["src/**/*.ts"],
+	"extends": "@heimdall-logs/config/tsconfig.base.json",
+	"include": [
+		"src/**/*.ts"
+	],
 	"compilerOptions": {
 		"outDir": "dist"
 	}

@@ -1,4 +1,4 @@
-import { logger } from '@heimdall/logger';
+import { logger } from '@heimdall-logs/logger';
 
 import { heimdallDb } from './queries';
 

@@ -17,8 +17,8 @@
     "@auth/drizzle-adapter": "^0.3.2",
     "@chronark/zod-bird": "^0.2.0",
     "@clickhouse/client": "^0.2.2",
-    "@heimdall/db": "0.0.1",
-    "@heimdall/tracker": "0.0.1",
+    "@heimdall-logs/db": "0.0.1",
+    "@heimdall-logs/tracker": "0.0.1",
     "@heroicons/react": "2.0.18",
     "@hookform/resolvers": "^3.3.1",
     "@libsql/client": "^0.3.2",
@@ -146,7 +146,7 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@heimdall/types": "0.0.1",
+    "@heimdall-logs/types": "0.0.1",
     "@next/eslint-plugin-next": "^13.4.19",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/bcrypt": "^5.0.0",

@@ -2,7 +2,7 @@ import { authOptions } from '@/lib/auth';
 import cors from '@/lib/cors';
 import { db } from '@/lib/db';
 import { websiteFormSchema } from '@/lib/validations/website';
-import { schema } from '@heimdall/db';
+import { schema } from '@heimdall-logs/db';
 import { eq } from 'drizzle-orm';
 import { getServerSession } from 'next-auth';
 

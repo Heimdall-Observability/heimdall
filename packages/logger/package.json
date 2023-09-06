@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall/logger",
+	"name": "@heimdall-logs/logger",
 	"version": "0.0.1",
 	"description": "",
 	"main": "./.dist/index.js",
@@ -11,7 +11,7 @@
 		"installDependencies": "npm install"
 	},
 	"dependencies": {
-		"@heimdall/request-context": "0.0.1",
+		"@heimdall-logs/request-context": "0.0.1",
 		"pino": "^8.15.0"
 	},
 	"devDependencies": {

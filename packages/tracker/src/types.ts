@@ -11,7 +11,7 @@ export type Config = {
 	postInterval: number;
 	/** The hostname or array of hostnames to send data to. By default it sends to the api.heimdall.francismasha.com */
 	host: string | string[];
-	/** The user's consent status for tracking. If not granted if uses hashed version of the user ip address as user id. If granted it store userId on local storage. By default it's denied. You can set it globally here or You can change the user consent using the setConsent method exported from the tracker.. @example import {setConsent} from "@heimdall/tracker"
+	/** The user's consent status for tracking. If not granted if uses hashed version of the user ip address as user id. If granted it store userId on local storage. By default it's denied. You can set it globally here or You can change the user consent using the setConsent method exported from the tracker.. @example import {setConsent} from "@heimdall-logs/tracker"
 	 * setConsent("granted") */
 	consent: 'granted' | 'denied';
 	useServerPath?: boolean;

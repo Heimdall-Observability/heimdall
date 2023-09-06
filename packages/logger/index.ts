@@ -1,4 +1,4 @@
-import { context } from '@heimdall/request-context';
+import { context } from '@heimdall-logs/request-context';
 
 import { Logger, LoggerConfiguration } from './definition';
 import PinoLogger from './pino.logger';
