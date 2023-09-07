@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall-logs/types",
+	"name": "@heimdall/types",
 	"private": true,
 	"type": "module",
 	"types": "index.ts",
@@ -10,6 +10,6 @@
 		"./models": "./models.ts"
 	},
 	"dependencies": {
-		"@heimdall-logs/db": "0.0.1"
+		"@heimdall/db": "0.0.1"
 	}
 }

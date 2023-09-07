@@ -4,8 +4,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { heimdall } from '@heimdall-logs/tracker';
-import { GetInsightResponse } from '@heimdall-logs/types';
+import { heimdall } from '@heimdall/tracker';
+import { GetInsightResponse } from '@heimdall/types';
 import {
 	Asterisk,
 	Link2Icon,

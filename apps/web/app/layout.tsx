@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { fontHeading, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
-import Heimdall from '@heimdall-logs/tracker/react';
+import Heimdall from '@heimdall/tracker/react';
 
 import Analytics from '../components/analytics';
 
@@ -69,10 +69,11 @@ export default function RootLayout({
 					{children}
 					<Heimdall
 						config={{
-							id: 'heimdall',
+							id: 'localhost',
 							consent: 'granted',
-							// host: 'http://localhost:8000',
-							// env: "prod",
+							host: 'http://localhost:8000',
+							autoTrack: true,
+							env: 'prod',
 							debug: true,
 						}}
 					/>

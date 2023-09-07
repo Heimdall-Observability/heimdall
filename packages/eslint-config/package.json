@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall-logs/eslint-config",
+	"name": "@heimdall/eslint-config",
 	"license": "MIT",
 	"version": "0.0.1",
 	"private": true,

@@ -32,7 +32,7 @@ const nextConfig = {
       source: '/api/heimdall',
     },
   ],
-  transpilePackages: ['@heimdall-logs/tracker', '@heimdall-logs/api'],
+  transpilePackages: ['@heimdall/tracker', '@heimdall/api'],
   devIndicators: {
     buildActivityPosition: 'bottom-right',
   },

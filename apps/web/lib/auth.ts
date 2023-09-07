@@ -1,7 +1,7 @@
 import { env } from '@/env.mjs';
 import { db } from '@/lib/db';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { schema } from '@heimdall-logs/db';
+import { schema } from '@heimdall/db';
 import { NextAuthOptions } from 'next-auth';
 import { AdapterAccount } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';

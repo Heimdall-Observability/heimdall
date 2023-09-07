@@ -7,9 +7,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { localSettingAtom } from '@/jotai/store';
 import { getLast24Hour } from '@/lib/time-helper';
 import { cn, fetcher } from '@/lib/utils';
-import { heimdall } from '@heimdall-logs/tracker';
-import { TrackClick } from '@heimdall-logs/tracker/react';
-import { GetInsightResponse } from '@heimdall-logs/types';
+import { heimdall } from '@heimdall/tracker';
+import { TrackClick } from '@heimdall/tracker/react';
+import { GetInsightResponse } from '@heimdall/types';
 import { env } from 'env.mjs';
 import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import { useAtom } from 'jotai';
@@ -67,6 +67,8 @@ export const Dashboard = ({
 		}&filter=${JSON.stringify(filters)}&token=${token}`,
 		fetcher
 	);
+
+	console.log('Class: , Function: Dashboard, Line 71 data():', data);
 
 	function addFilter(f: Filter) {
 		setFilters([...filters, f]);
@@ -216,7 +218,7 @@ export const Dashboard = ({
 													: ''
 											}
 											BottomChildren={() => (
-												<div className=' cursor-pointer z-10'>
+												<div className=' cursor-pointer'>
 													<div>
 														<Popover>
 															<PopoverTrigger asChild>
@@ -378,7 +380,7 @@ export const Dashboard = ({
 																	setTimeRange={setTimeRange}
 																/>
 															</TabsContent>
-															<TabsContent value='sessions' className=' '>
+															<TabsContent value='sessions' className=''>
 																<Graph
 																	data={
 																		data ? data.graph.uniqueSessionByDate : []

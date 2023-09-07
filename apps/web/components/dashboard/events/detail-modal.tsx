@@ -2,7 +2,7 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { LoglibCustomEvent } from '@heimdall-logs/types';
+import { LoglibCustomEvent } from '@heimdall/types';
 import { Row } from '@tanstack/react-table';
 
 const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {

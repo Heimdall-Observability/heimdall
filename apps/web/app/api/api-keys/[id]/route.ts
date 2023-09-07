@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/lib/session';
-import { schema } from '@heimdall-logs/db';
+import { schema } from '@heimdall/db';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 

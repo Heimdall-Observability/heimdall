@@ -1,5 +1,5 @@
-import { schema } from '@heimdall-logs/db';
-import { logger } from '@heimdall-logs/logger';
+import { schema } from '@heimdall/db';
+import { logger } from '@heimdall/logger';
 import { createClient } from '@libsql/client';
 import { drizzle } from 'drizzle-orm/libsql';
 

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Website as WebsiteType } from '@heimdall-logs/types/models';
+import { Website as WebsiteType } from '@heimdall/types/models';
 import { LucideSettings, MoreVertical, User2 } from 'lucide-react';
 
 import { Icons } from './icons';

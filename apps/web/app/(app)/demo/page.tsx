@@ -3,16 +3,16 @@ import { generateToken } from '@/lib/generate-token';
 
 const DemoPage = () => {
 	const token = generateToken({
-		website: 'heimdall',
-		name: '',
-		id: 'heimdall',
+		website: 'localhost',
+		name: 'localhost',
+		id: 'localhost',
 	});
 	return (
 		<Dashboard
 			website={{
-				id: 'heimdall',
-				url: 'https://heimdall.francismasha.com',
-				title: 'Heimdall',
+				id: 'localhost',
+				url: 'http://localhost:3000',
+				title: 'localhost',
 			}}
 			showSetup={false}
 			token={token}

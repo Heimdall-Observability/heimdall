@@ -157,7 +157,7 @@ function MobileNav({ user }: { user?: User }) {
 							</li>
 							<li
 								className='border-b border-gray-300 text-muted-foreground flex justify-between px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
-								style={{ transitionDelay: '400ms' }}
+								style={{ transitionDelay: '300ms' }}
 								onClick={(event) => {
 									event.preventDefault();
 									signOut({
@@ -166,7 +166,6 @@ function MobileNav({ user }: { user?: User }) {
 								}}
 							>
 								<p className='flex w-auto pb-4 text-foreground'>Logout</p>
-								<LogOutIcon />
 							</li>
 						</>
 					) : (

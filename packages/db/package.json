@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall-logs/db",
+	"name": "@heimdall/db",
 	"version": "0.0.1",
 	"description": "",
 	"main": "./dist/index.js",
@@ -20,11 +20,11 @@
 		"@paralleldrive/cuid2": "^2.2.2",
 		"dotenv": "^16.3.1",
 		"drizzle-kit": "^0.19.13",
-		"drizzle-orm": "^0.28.5",
+		"drizzle-orm": "^0.28.6",
 		"tsup": "^7.2.0",
 		"tsx": "^3.12.8"
 	},
 	"devDependencies": {
-		"@heimdall-logs/config": "0.0.1"
+		"@heimdall/config": "0.0.1"
 	}
 }

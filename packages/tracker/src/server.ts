@@ -64,16 +64,17 @@ export async function send(
 	const logger = Logger(window.llc.debug);
 	const url = window.llc.host;
 	if (!data || (Array.isArray(data) && data.length === 0)) {
-		logger.log('skipping empty request...');
+		logger.log('Skipping empty request...');
 		return;
 	}
 	if (isDevelopment()) {
-		logger.log('skipping development logs...');
+		logger.log('Skipping development logs');
 		return;
 	}
-	logger.log('sending...', data);
+	logger.log('Sending data:', data);
 	let retryCount = 0;
 	const maxRetries = 3;
+
 	async function sendRequest(host: string) {
 		try {
 			if (!window.llc.useBeacon) {
@@ -109,6 +110,7 @@ export async function send(
 			xhr.send(JSON.stringify(data));
 		}
 	}
+
 	async function retry() {
 		if (retryCount < maxRetries) {
 			retryCount++;
@@ -118,6 +120,7 @@ export async function send(
 			logger.error('Request failed after multiple retries.');
 		}
 	}
+
 	if (Array.isArray(url)) {
 		for (const host of url) {
 			await sendRequest(host);

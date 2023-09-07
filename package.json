@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall-logs/root",
+	"name": "@heimdall/root",
 	"packageManager": "pnpm@8.6.10",
 	"private": true,
 	"author": {
@@ -21,7 +21,7 @@
 		"typecheck": "turbo typecheck",
 		"deploy:api": "turbo --filter api deploy",
 		"migrate": "turbo --filter db migrate",
-		"migrate:clickhouse": "turbo --filter api setup:clickhouse",
+		"migrate:clickhouse": "turbo --filter clickhouse migrate",
 		"studio": "pnpm --filter db studio"
 	},
 	"pnpm": {
@@ -39,7 +39,7 @@
 		"@changesets/changelog-github": "^0.4.8",
 		"@changesets/cli": "^2.26.2",
 		"@commitlint/config-conventional": "^17.7.0",
-		"@heimdall-logs/tsconfig": "0.0.1",
+		"@heimdall/tsconfig": "0.0.1",
 		"@manypkg/cli": "^0.21.0",
 		"@prisma/client": "^5.2.0",
 		"@trivago/prettier-plugin-sort-imports": "^4.2.0",

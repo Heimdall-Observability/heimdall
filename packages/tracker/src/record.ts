@@ -52,7 +52,7 @@ export function record(config?: Partial<Config>) {
 		sdkVersion: packageJson.version,
 	};
 	const logger = Logger(window.llc.debug);
-	logger.log('start recording...', window.llc);
+	logger.log('Start recording:', window.llc);
 
 	//Auto Tracker
 	if (window.llc.autoTrack) {
@@ -60,8 +60,7 @@ export function record(config?: Partial<Config>) {
 		//TODO: Add more auto trackers for d/t events
 	}
 	if (window.llc.env === 'auto') {
-		const env = detectEnvironment();
-		window.llc.env = env;
+		window.llc.env = detectEnvironment();
 	}
 	const eventsInterval = setInterval(() => {
 		sendEvents();

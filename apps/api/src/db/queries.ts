@@ -1,4 +1,5 @@
-import { schema } from '@heimdall-logs/db';
+import { kafka } from '@heimdall/clickhouse';
+import { schema } from '@heimdall/db';
 import { sql } from 'drizzle-orm';
 
 import { convertToUTC } from '../lib/utils';
@@ -7,7 +8,11 @@ import { HeimdallEvent } from '../type';
 import { client } from './clickhouse';
 import { db } from './drizzle';
 
-const hitsQuery = (startDate: string, endDate: string, websiteId: string) =>
+export const hitsQuery = (
+	startDate: string,
+	endDate: string,
+	websiteId: string
+) =>
 	`select id,
           sessionId,
           visitorId,
@@ -68,43 +73,46 @@ const createEvent = () => {
 		type?: string;
 	}) => {
 		return {
-			clickhouse: async () =>
-				await client
-					.insert({
-						table: 'heimdall_logs.event',
-						values: [
-							{
-								id,
-								sessionId,
-								visitorId,
-								websiteId,
-								event,
-								timestamp: new Date()
-									.toISOString()
-									.slice(0, 19)
-									.replace('T', ' '),
-								properties: JSON.stringify({
-									queryParams: queryParams ? JSON.stringify(queryParams) : '{}',
-									referrerDomain,
-									country,
-									city,
-									language,
-									device,
-									os,
-									browser,
-									duration,
-									currentPath,
-									referrerPath,
-									payload,
-									type,
-									pageId,
-								}),
-								sign: 1,
-							},
-						],
-						format: 'JSONEachRow',
-					})
-					.then((res) => res),
+			clickhouse: async () => {
+				const { enabled, sendMessages, connect } = kafka;
+				const value = {
+					id,
+					sessionId,
+					visitorId,
+					websiteId,
+					event,
+					timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+					properties: JSON.stringify({
+						queryParams: queryParams ? JSON.stringify(queryParams) : '{}',
+						referrerDomain,
+						country,
+						city,
+						language,
+						device,
+						os,
+						browser,
+						duration,
+						currentPath,
+						referrerPath,
+						payload,
+						type,
+						pageId,
+					}),
+					sign: 1,
+				};
+				if (enabled) {
+					await connect();
+					await sendMessages([value], 'events');
+				} else {
+					await client
+						.insert({
+							table: 'loglib.event',
+							values: [value],
+							format: 'JSONEachRow',
+						})
+						.then((res) => res);
+				}
+			},
 			sqlite: async () =>
 				db.insert(schema.events).values({
 					id,
@@ -179,7 +187,13 @@ async function getHitsData(
 					),
 					format: 'JSONEachRow',
 				})
-				.then(async (res) => (await res.json()) as HeimdallEvent[]);
+				.then(async (res) => {
+					console.log(
+						'Class: getHitsData, Function: , Line 191 await res():',
+						await res.json()
+					);
+					return (await res.json()) as HeimdallEvent[];
+				});
 		},
 	};
 }

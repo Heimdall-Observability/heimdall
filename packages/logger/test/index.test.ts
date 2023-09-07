@@ -1,4 +1,4 @@
-import { context } from '@heimdall-logs/request-context';
+import { context } from '@heimdall/request-context';
 import sinon from 'sinon';
 
 import { logger } from '../index';

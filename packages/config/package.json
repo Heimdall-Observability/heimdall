@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall-logs/config",
+	"name": "@heimdall/config",
 	"private": true,
 	"version": "0.0.1",
 	"files": [

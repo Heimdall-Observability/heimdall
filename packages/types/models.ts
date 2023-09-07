@@ -1,4 +1,4 @@
-import { schema } from '@heimdall-logs/db';
+import { schema } from '@heimdall/db';
 
 export type Website = typeof schema.website.$inferSelect;
 export type ApiKey = typeof schema.apiKey.$inferSelect;

@@ -6,7 +6,7 @@ import { useState } from 'react';
 
 import { apiKeyGenerateModalAtom } from '@/jotai/store';
 import { apiKeySchema } from '@/lib/validations/api-key';
-import { Website } from '@heimdall-logs/types/models';
+import { Website } from '@heimdall/types/models';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAtom } from 'jotai';

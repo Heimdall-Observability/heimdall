@@ -1,4 +1,4 @@
-import { Team, TeamMember, User } from '@heimdall-logs/types/models';
+import { Team, TeamMember, User } from '@heimdall/types/models';
 
 export type TeamWithUsers = Team & {
 	TeamUser: (TeamMember & {
