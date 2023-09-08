@@ -1,6 +1,6 @@
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/lib/session';
-import { ROLE } from '@heimdall/types/models';
+import { ROLE } from '@heimdall-logs/types/models';
 import { inArray } from 'drizzle-orm';
 import { User } from 'next-auth';
 

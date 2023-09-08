@@ -1,5 +1,5 @@
-import { kafka } from '@heimdall/clickhouse';
-import { schema } from '@heimdall/db';
+import { kafka } from '@heimdall-logs/clickhouse';
+import { schema } from '@heimdall-logs/db';
 import { sql } from 'drizzle-orm';
 
 import { convertToUTC } from '../lib/utils';

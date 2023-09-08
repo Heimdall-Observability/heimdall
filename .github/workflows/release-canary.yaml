@@ -77,7 +77,7 @@ jobs:
               body: `A new canary is available for testing. You can install this latest build in your project with:
 
               \`\`\`sh
-              pnpm add heimdall@${version} @heimdall/tracker@version
+              pnpm add heimdall@${version} @heimdall-logs/tracker@version
               \`\`\`
               `,
             })

@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall/api",
+	"name": "@heimdall-logs/api",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -16,9 +16,9 @@
 	"dependencies": {
 		"@clickhouse/client": "^0.2.2",
 		"@clickhouse/client-web": "^0.2.2",
-		"@heimdall/clickhouse": "0.0.1",
-		"@heimdall/db": "0.0.1",
-		"@heimdall/logger": "0.0.1",
+		"@heimdall-logs/clickhouse": "0.0.1",
+		"@heimdall-logs/db": "0.0.1",
+		"@heimdall-logs/logger": "0.0.1",
 		"@hono/node-server": "^1.1.1",
 		"@libsql/client": "^0.3.2",
 		"@t3-oss/env-core": "^0.6.1",
@@ -42,7 +42,7 @@
 		"zod": "^3.22.2"
 	},
 	"devDependencies": {
-		"@heimdall/types": "0.0.1",
+		"@heimdall-logs/types": "0.0.1",
 		"@types/jsonwebtoken": "^9.0.2"
 	},
 	"exports": {

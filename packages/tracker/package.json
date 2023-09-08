@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall/tracker",
+	"name": "@heimdall-logs/tracker",
 	"version": "0.0.1",
 	"description": "A simple tracker for heimdall",
 	"main": "./dist/index.js",

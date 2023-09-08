@@ -7,7 +7,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { fontHeading, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
-import Heimdall from '@heimdall/tracker/react';
+import Heimdall from '@heimdall-logs/tracker/react';
 
 import Analytics from '../components/analytics';
 

@@ -1,5 +1,5 @@
 {
-	"name": "@heimdall/clickhouse",
+	"name": "@heimdall-logs/clickhouse",
 	"version": "0.0.1",
 	"description": "",
 	"keywords": [],
@@ -20,6 +20,6 @@
 		"zod": "^3.22.2"
 	},
 	"devDependencies": {
-		"@heimdall/config": "0.0.1"
+		"@heimdall-logs/config": "0.0.1"
 	}
 }

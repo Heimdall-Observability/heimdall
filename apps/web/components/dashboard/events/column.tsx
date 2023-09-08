@@ -1,7 +1,7 @@
 'use client';
 
 import COUNTRIES from '@/lib/constants';
-import { LoglibCustomEvent } from '@heimdall/types';
+import { LoglibCustomEvent } from '@heimdall-logs/types';
 import { ColumnDef } from '@tanstack/react-table';
 import {
 	ChevronDown,

@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { getCurrentUser } from '@/lib/session';
 import { apiKeySchema } from '@/lib/validations/api-key';
-import { schema } from '@heimdall/db';
+import { schema } from '@heimdall-logs/db';
 
 export const POST = async (req: Request) => {
 	try {
