@@ -56,10 +56,9 @@ export function TrackView({ name, payload, children }: TrackViewProps) {
 		});
 		observable.observe(ref.current);
 	}, []);
-	const Element = React.cloneElement(children as React.ReactElement, {
+	return React.cloneElement(children as React.ReactElement, {
 		ref,
 	});
-	return Element;
 }
 
 /**

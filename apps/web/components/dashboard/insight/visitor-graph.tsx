@@ -134,33 +134,31 @@ export function Graph({
 				<div className=' flex flex-col justify-center gap-2'>
 					<div className='text-2xl font-bold text-center '>
 						{isLoading ? (
-							<p className=' text-sm font-medium italic'>loading data...</p>
+							<p className='text-sm font-medium animate-pulse'>loading data</p>
 						) : (
-							<>
-								<EmptyPlaceholder className=''>
-									<div className='bg-muted/50 flex h-16 w-16 items-center justify-center rounded-full'>
-										{/* @ts-ignore */}
-										<Icons.reports
-											className={cn('h-8 w-8 text-muted-foreground')}
-										/>
-									</div>
-									<EmptyPlaceholder.Title>
-										No Data Just Yet
-									</EmptyPlaceholder.Title>
-									<EmptyPlaceholder.Description>
-										if you haven&apos;t setup tracker refer to the{' '}
-										<a
-											href='https://heimdall.francismasha.com/docs'
-											target='_blank'
-											className=' text-blue-700 underline'
-											rel='noreferrer'
-										>
-											docs
-										</a>{' '}
-										how to do that.
-									</EmptyPlaceholder.Description>
-								</EmptyPlaceholder>
-							</>
+							<div className='animate-in fade-in-50 flex flex-col mt-12 items-center justify-center text-center'>
+								<div className='bg-muted/50 flex h-16 w-16 items-center justify-center rounded-full'>
+									{/* @ts-ignore */}
+									<Icons.reports
+										className={cn('h-8 w-8 text-muted-foreground')}
+									/>
+								</div>
+								<EmptyPlaceholder.Title>
+									No Data Just Yet
+								</EmptyPlaceholder.Title>
+								<EmptyPlaceholder.Description>
+									if you haven&apos;t setup tracker refer to the{' '}
+									<a
+										href='https://heimdall.francismasha.com/docs'
+										target='_blank'
+										className=' text-blue-700 underline'
+										rel='noreferrer'
+									>
+										docs
+									</a>{' '}
+									how to do that.
+								</EmptyPlaceholder.Description>
+							</div>
 						)}
 					</div>
 				</div>

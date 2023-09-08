@@ -101,15 +101,16 @@ export function getUrl() {
 	if (typeof process === 'undefined') {
 		return 'https://api.heimdall.francismasha.com';
 	}
-	if (process.env.NEXT_PUBLIC_LOGLIB_URL || process.env.LOGLIB_URL) {
-		const url = process.env.NEXT_PUBLIC_LOGLIB_URL ?? process.env.LOGLIB_URL;
+	if (process.env.NEXT_PUBLIC_HEIMDALL_URL || process.env.HEIMDALL_URL) {
+		const url =
+			process.env.NEXT_PUBLIC_HEIMDALL_URL ?? process.env.HEIMDALL_URL;
 		return `${url}/api/heimdall`;
 	}
 	return 'https://api.heimdall.francismasha.com';
 }
 
 export const parseHost = (url: string) => {
-	//this is incase they update the tracker but didn't remove the host
+	// In case they update the tracker but didn't remove the host
 	if (
 		url === 'https://heimdall.francismasha.com' ||
 		url === 'https://www.heimdall.francismasha.com'

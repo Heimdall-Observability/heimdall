@@ -132,9 +132,37 @@ function SiteHeader({ user }: { user?: User }) {
 }
 
 function DashboardHeader({ user, items }: DashboardHeaderProps) {
+	const navRef = useRef<HTMLDivElement>(null);
+	const control = useAnimation();
+
+	const addShadowToNavbar = useCallback(async () => {
+		if (window.pageYOffset > 10) {
+			navRef.current?.classList.add(
+				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
+			);
+
+			await control.start('visible');
+		} else {
+			navRef.current?.classList.remove(
+				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
+			);
+			await control.start('hidden');
+		}
+	}, [control]);
+
+	useEffect(() => {
+		window.addEventListener('scroll', addShadowToNavbar);
+		return () => {
+			window.removeEventListener('scroll', addShadowToNavbar);
+		};
+	}, [addShadowToNavbar]);
+
 	return (
-		<header className='flex bg-background h-12 items-center justify-between gap-6 border-b py-2 md:gap-10'>
-			<nav className='fixed inset-x-0 top-2 md:top-0 z-10 w-full px-4 lg:p-2 lg:px-0'>
+		<header className='flex bg-background h-16 items-center justify-between gap-6 border-b py-0 md:gap-10'>
+			<nav
+				ref={navRef}
+				className='fixed inset-x-0 top-0 z-10 w-full p-3 lg:p-2 lg:px-0'
+			>
 				<div className='mx-auto md:mx-8 flex justify-between'>
 					<div className='flex items-center justify-center gap-2 align-middle'>
 						<Link

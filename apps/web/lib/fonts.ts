@@ -1,4 +1,4 @@
-// import { Inter as FontSans } from 'next/font/google';
+import { Inter as FontSans } from 'next/font/google';
 import localFont from 'next/font/local';
 
 export const fontSans = localFont({
@@ -39,6 +39,6 @@ export const fontSans = localFont({
 
 // Font files can be collocated inside `pages`
 export const fontHeading = localFont({
-	src: '../assets/fonts/CalSans-SemiBold.woff2',
+	src: '../assets/fonts/sf-pro-text-medium-webfont.woff2',
 	variable: '--font-heading',
 });

@@ -34,7 +34,6 @@ export const eventSchema = z.object({
 
 export const createEvents: RouteType = async ({ rawBody, req }) => {
 	const body = eventSchema.safeParse(rawBody);
-	console.log(body, rawBody);
 	if (body.success) {
 		const ipAddress = getIpAddress(req);
 		const { visitorId, websiteId, sessionId, language, events, screenWidth } =
@@ -104,7 +103,7 @@ export const createEvents: RouteType = async ({ rawBody, req }) => {
 		});
 		return {
 			data: {
-				message: 'successfully created events',
+				message: 'Successfully created events',
 			},
 			status: 200,
 		};

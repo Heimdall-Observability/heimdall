@@ -16,7 +16,7 @@ export default async function HomeLayout({ children }: HomeLayoutProps) {
 		<main className='relative flex min-h-screen flex-col items-center justify-center'>
 			<SiteHeader user={user} />
 			{children}
-			<SiteFooter className='z-40 mt-12 bg-background' />
+			<SiteFooter className='z-40 mt-6 md:mt-12 bg-background' />
 		</main>
 	);
 }

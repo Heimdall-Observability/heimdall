@@ -17,7 +17,6 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
   siteUrl: env.NEXTAUTH_URL ?? 'https://heimdall.francismasha.com',
-  generateRobotsTxt: true,
   images: {
     remotePatterns: [
       {

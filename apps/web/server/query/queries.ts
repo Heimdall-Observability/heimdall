@@ -42,7 +42,7 @@ const getTotalEventsCount = async (
 ) => {
 	return {
 		clickhouse: async () => {
-			websiteIds = ['loglib', 'xyz'];
+			websiteIds = ['heimdall_logs', 'xyz'];
 			const sessionsCount = await client
 				.query({
 					query: `select *

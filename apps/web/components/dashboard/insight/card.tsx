@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
 	Tooltip,
 	TooltipContent,
@@ -60,9 +61,9 @@ export function InsightCard({
 						{data.change ? (
 							<div className=' flex text-xs xl:text-sm items-center'>
 								{increase ? (
-									<ArrowUpIcon className=' text-green-500 w-4 xl:w-5' />
+									<ArrowUpIcon className='text-green-500 w-4 xl:w-5' />
 								) : (
-									<ArrowDown className=' text-red-500 w-4 xl:w-5' />
+									<ArrowDown className='text-red-500 w-4 xl:w-5' />
 								)}
 								<div>
 									{' '}
@@ -78,13 +79,16 @@ export function InsightCard({
 					</div>
 				</CardContent>
 			) : (
-				<CardContent className=' h-24 w-full animate-pulse'>
-					<div className='flex flex-col justify-center gap-2'>
-						<div className='text-2xl font-bold'>
-							<div className='bg-gray-200 dark:bg-gray-800 h-7 w-24 '></div>
+				<CardContent className='px-4'>
+					<div className='flex flex-col justify-center gap-5'>
+						<div className='text-2xl xl:text-3xl font-bold'>
+							<Skeleton className='w-20 h-6 rounded-md bg-gray-200 dark:bg-gray-800' />
 						</div>
-						<div className='text-2xl font-bold'>
-							<div className='bg-gray-200 dark:bg-gray-800 h-4 w-9 '></div>
+						<div className=' flex justify-between items-center'>
+							<div className=' flex text-xs xl:text-sm items-center'>
+								<Skeleton className='w-9 h-4 rounded-md bg-gray-200 dark:bg-gray-800' />
+							</div>
+							{BottomChildren ? <BottomChildren /> : null}
 						</div>
 					</div>
 				</CardContent>

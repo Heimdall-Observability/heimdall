@@ -69,10 +69,11 @@ export default function RootLayout({
 					{children}
 					<Heimdall
 						config={{
-							id: 'heimdall',
+							id: 'localhost',
 							consent: 'granted',
 							host: 'http://localhost:8000',
-							// env: "prod",
+							autoTrack: true,
+							env: 'prod',
 							debug: true,
 						}}
 					/>

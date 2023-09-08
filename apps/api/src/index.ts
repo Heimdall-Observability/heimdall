@@ -7,8 +7,9 @@ import jwt from 'jsonwebtoken';
 
 import { env } from '../env';
 import { eventDB } from './db';
-import { client, hitsQuery } from './db/clickhouse';
+import { client } from './db/clickhouse';
 import { db } from './db/drizzle';
+import { hitsQuery } from './db/queries';
 import { rateLimitCheck } from './lib/rate-limit';
 import { retryFunction } from './lib/retry';
 import { filter } from './lib/small-filter';
@@ -70,12 +71,32 @@ app.get('/', async (c) => {
 			3,
 			4
 		);
+		console.log('Class: , Function: , Line 74 events():', events);
 		const tack = performance.now();
 		console.log(tack - tick, 'ms taken to query');
 		const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
+		console.log(filters, 'filters');
+		//add utm as a key in session
+		events = events.map((s) => {
+			const queryParams = JSON.parse(s.queryParams);
+			const utmCampaign = queryParams?.utm_campaign ?? '';
+			const utmSource = queryParams?.utm_source ?? '';
+			return { ...s, utmCampaign, utmSource };
+		});
+		console.log('Class: , Function: , Line 85 events():', events);
+
+		//add utm as a key in session
+		lastEvents = lastEvents.map((s) => {
+			const queryParams = JSON.parse(s.queryParams);
+			const utmCampaign = queryParams?.utm_campaign ?? '';
+			const utmSource = queryParams?.utm_source ?? '';
+			return { ...s, utmCampaign, utmSource };
+		});
+
+		console.log('Class: , Function: , Line 95 lastEvents():', lastEvents);
+
 		filters.length &&
 			filters.forEach((f) => {
-				// @ts-expect-error
 				events = filter(events).where(f.key, f.operator, f.value).execute();
 				lastEvents = filter(lastEvents as HeimdallEvent[])
 					.where(f.key, f.operator, f.value)
@@ -179,9 +200,9 @@ app.get('/v1/insight', async (c) => {
 	const isRateLimited = await rateLimitCheck(apiKey);
 	if (isRateLimited) {
 		return c.json(
-			JSON.stringify({
+			{
 				message: 'Rate limit exceeded',
-			}),
+			},
 			429
 		);
 	}
@@ -190,6 +211,30 @@ app.get('/v1/insight', async (c) => {
 			return operators.and(operators.eq(fields.token, apiKey));
 		},
 	});
+	if (new Date().getTime() >= site.expiresAt.getTime()) {
+		return c.json(
+			{
+				message: 'API key expired!',
+			},
+			400
+		);
+	}
+	if (site.createdAt >= site.expiresAt) {
+		return c.json(
+			{
+				message: 'API Token Expired!',
+			},
+			400
+		);
+	}
+	if (!site) {
+		return c.json(
+			{
+				message: 'Unauthorized',
+			},
+			401
+		);
+	}
 	const websiteId = site.websiteId;
 	const today = new Date();
 	const startDateObj = new Date(
@@ -216,7 +261,6 @@ app.get('/v1/insight', async (c) => {
 		const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
 		filters.length &&
 			filters.forEach((f) => {
-				// @ts-expect-error
 				events = filter(events).where(f.key, f.operator, f.value).execute();
 				lastEvents = filter(lastEvents as HeimdallEvent[])
 					.where(f.key, f.operator, f.value)
