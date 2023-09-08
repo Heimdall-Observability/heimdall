@@ -108,40 +108,40 @@ export const Dashboard = ({
 					)}
 				>
 					<Tabs defaultValue='insights' className='space-y-4'>
-						{/*{!isPublic ? (*/}
-						{/*	<div className=' flex items-center justify-between'>*/}
-						{/*		<TabsList>*/}
-						{/*			<TabsTrigger*/}
-						{/*				value='insights'*/}
-						{/*				// className='dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'*/}
-						{/*			>*/}
-						{/*				Insights*/}
-						{/*			</TabsTrigger>*/}
-						{/*			<TabsTrigger*/}
-						{/*				value='events'*/}
-						{/*				// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'*/}
-						{/*				onClick={() =>*/}
-						{/*					heimdall.track('events-tab-clicked', {*/}
-						{/*						websiteId: website.id,*/}
-						{/*					})*/}
-						{/*				}*/}
-						{/*			>*/}
-						{/*				Events*/}
-						{/*			</TabsTrigger>*/}
-						{/*		</TabsList>*/}
-						{/*		<div>*/}
-						{/*			{data && (*/}
-						{/*				<Celebrate*/}
-						{/*					pageview={data.insight.totalPageViews}*/}
-						{/*					uniqVisitor={data.insight.uniqueVisitors}*/}
-						{/*					websiteId={website.id}*/}
-						{/*					time={timeRange.stringValue}*/}
-						{/*					title={website.title ?? undefined}*/}
-						{/*				/>*/}
-						{/*			)}*/}
-						{/*		</div>*/}
-						{/*	</div>*/}
-						{/*) : null}*/}
+						{!isPublic ? (
+							<div className=' flex items-center justify-between'>
+								<TabsList>
+									<TabsTrigger
+										value='insights'
+										// className='dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
+									>
+										Insights
+									</TabsTrigger>
+									<TabsTrigger
+										value='events'
+										// className=' dark:data-[state=active]:text-emphasis data-[state=active]:text-emphasis'
+										onClick={() =>
+											heimdall.track('events-tab-clicked', {
+												websiteId: website.id,
+											})
+										}
+									>
+										Events
+									</TabsTrigger>
+								</TabsList>
+								{/*<div>*/}
+								{/*	{data && (*/}
+								{/*		<Celebrate*/}
+								{/*			pageview={data.insight.totalPageViews}*/}
+								{/*			uniqVisitor={data.insight.uniqueVisitors}*/}
+								{/*			websiteId={website.id}*/}
+								{/*			time={timeRange.stringValue}*/}
+								{/*			title={website.title ?? undefined}*/}
+								{/*		/>*/}
+								{/*	)}*/}
+								{/*</div>*/}
+							</div>
+						) : null}
 						<div className=' flex justify-between'>
 							<div
 								className=' flex gap-2 items-center'

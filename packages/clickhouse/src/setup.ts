@@ -48,7 +48,7 @@ export const setupClickhouseDb = async (
 	});
 
 	await client.exec({
-		query: `CREATE MATERIALIZED VIEW IF NOT EXISTS heimdall_logs.event_queue_mv TO loglib.event AS
+		query: `CREATE MATERIALIZED VIEW IF NOT EXISTS heimdall_logs.event_queue_mv TO heimdall_logs.event AS
         SELECT id,
         event,
         sessionId,

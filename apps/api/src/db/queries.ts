@@ -106,7 +106,7 @@ const createEvent = () => {
 				} else {
 					await client
 						.insert({
-							table: 'loglib.event',
+							table: 'heimdall_logs.event',
 							values: [value],
 							format: 'JSONEachRow',
 						})
@@ -266,7 +266,7 @@ async function getCustomEventData(
 	};
 }
 
-export function heimdallDb(db: 'sqlite' | 'clickhouse'): any {
+export function heimdallDb(db: 'sqlite' | 'clickhouse') {
 	return {
 		async insertEvent(
 			data: HeimdallEvent & {
@@ -277,7 +277,7 @@ export function heimdallDb(db: 'sqlite' | 'clickhouse'): any {
 		) {
 			const hits = createEvent();
 			const insert = await hits(data);
-			return insert[db]();
+			return await insert[db]();
 		},
 		async getHits(
 			startDateObj: Date,
@@ -285,8 +285,6 @@ export function heimdallDb(db: 'sqlite' | 'clickhouse'): any {
 			pastEndDateObj: Date,
 			websiteId: string
 		) {
-			console.log('db client');
-			console.log(db);
 			const query1 = await getHitsData(startDateObj, endDateObj, websiteId);
 			const query2 = await getHitsData(endDateObj, pastEndDateObj, websiteId);
 			return await Promise.all([query1[db](), query2[db]()]);

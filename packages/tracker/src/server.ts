@@ -64,7 +64,7 @@ export async function send(
 	const logger = Logger(window.llc.debug);
 	const url = window.llc.host;
 	if (!data || (Array.isArray(data) && data.length === 0)) {
-		logger.log('Skipping empty request...');
+		logger.log('Skipping empty request');
 		return;
 	}
 	if (isDevelopment()) {

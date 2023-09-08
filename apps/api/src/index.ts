@@ -97,7 +97,6 @@ app.get('/', async (c) => {
 
 		filters.length &&
 			filters.forEach((f) => {
-				// @ts-expect-error
 				events = filter(events).where(f.key, f.operator, f.value).execute();
 				lastEvents = filter(lastEvents as HeimdallEvent[])
 					.where(f.key, f.operator, f.value)
@@ -262,7 +261,6 @@ app.get('/v1/insight', async (c) => {
 		const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
 		filters.length &&
 			filters.forEach((f) => {
-				// @ts-expect-error
 				events = filter(events).where(f.key, f.operator, f.value).execute();
 				lastEvents = filter(lastEvents as HeimdallEvent[])
 					.where(f.key, f.operator, f.value)
