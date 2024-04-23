@@ -1,5 +1,3 @@
-import { Metadata } from 'next';
-
 import { env } from '@/env.mjs';
 import axios from 'axios';
 import { type ClassValue, clsx } from 'clsx';
@@ -102,4 +100,13 @@ export function guid(): string {
 
 export function fancyId() {
 	return Math.random().toString(36).substr(2, 9);
+}
+
+// Grab favicon from a URL
+// use fetch to grag from `https://favicon-fetcher.victr.workers.dev/${url}`
+export async function getFavicon(url: string) {
+	const response = await fetcher(
+		`https://favicon-fetcher.victr.workers.dev/${url}`
+	);
+	return response;
 }

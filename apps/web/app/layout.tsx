@@ -3,12 +3,14 @@ import { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
 import { ClientProvider } from '@/components/client-provider';
+import { TailwindIndicator } from '@/components/tailwind-indicator';
 import { Toaster } from '@/components/ui/toaster';
-import { fontHeading, fontSans } from '@/lib/fonts';
+import { fontHeading, fontMono, fontNumeric, fontSans } from '@/lib/fonts';
 import { cn } from '@/lib/utils';
 import '@/styles/globals.css';
 import Heimdall from '@heimdall-logs/tracker/react';
 
+// import '@/styles/syntax-highlighter.module.css';
 import Analytics from '../components/analytics';
 
 const title = 'Heimdall';
@@ -59,9 +61,11 @@ export default function RootLayout({
 			lang='en'
 			suppressHydrationWarning
 			className={cn(
-				'min-h-screen font-sans text-black',
+				'min-[100dvh] font-sans text-black',
 				fontSans.variable,
-				fontHeading.variable
+				fontHeading.variable,
+				fontNumeric.variable,
+				fontMono.variable
 			)}
 		>
 			<body className='antialiased'>
@@ -69,16 +73,19 @@ export default function RootLayout({
 					{children}
 					<Heimdall
 						config={{
-							id: 'localhost',
+							id: 'heimdall',
 							consent: 'granted',
-							host: 'http://localhost:8000',
+							host: '/api/heimdall',
+							collector: '/api/trace',
+							// host: 'http://localhost:8000',
 							autoTrack: true,
-							env: 'prod',
-							debug: true,
+							// env: 'prod',
+							// debug: true,
 						}}
 					/>
 					<Toaster />
 					<Analytics />
+					<TailwindIndicator />
 				</ClientProvider>
 			</body>
 		</html>

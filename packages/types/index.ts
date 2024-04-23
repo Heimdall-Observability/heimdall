@@ -80,7 +80,7 @@ export type GetInsightResponse = {
 	};
 };
 
-export type LoglibEvent = {
+export type HeimdallEvent = {
 	id: string;
 	timestamp: string;
 	event: 'hits' | string;
@@ -102,7 +102,7 @@ export type LoglibEvent = {
 	type?: string;
 };
 
-export type LoglibCustomEvent = {
+export type HeimdallCustomEvent = {
 	currentPath: string | undefined;
 	id: string;
 	timestamp: string;
@@ -122,6 +122,34 @@ export type LoglibCustomEvent = {
 	type: string;
 	payload: Record<string, string> | null;
 	sessionId: string;
+};
+
+export type HeimdallTraces = {
+	Timestamp: string;
+	TraceId: string;
+	SpanId: string;
+	ParentSpanId: string;
+	SpanName: string;
+	SpanKind: string;
+	ServiceName: string;
+	ResourceAttributes: Record<string, string>;
+	SpanAttributes: Record<string, string>;
+	Duration: string;
+	StatusCode: string;
+	StatusMessage: string;
+	ScopeName: string;
+	ScopeVersion: string;
+	Events: {
+		Timestamp: Array<string>;
+		Name: Array<string>;
+		Attributes: Array<Record<string, string>>;
+	};
+	Links: {
+		TraceId: Array<string>;
+		SpanId: Array<string>;
+		TraceState: Array<string>;
+		Attributes: Array<Record<string, string>>;
+	};
 };
 
 type StringOperator = 'is' | 'isNot' | 'contains' | 'notContains';

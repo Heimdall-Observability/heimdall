@@ -4,17 +4,7 @@ import {
 	DeleteKeys,
 	GenerateKeys,
 } from '@/components/api-key-generate-buttons';
-import { GenerateApiKey } from '@/components/api-key-generate-modal';
-import { MiniHeader } from '@/components/header';
-import { DashboardShell } from '@/components/shell';
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import {
 	Table,
 	TableBody,
@@ -70,8 +60,8 @@ const apiKeys = async () => {
 					<TableBody>
 						{keys.map((key) => (
 							<TableRow key={key.id}>
-								<TableCell className='font-medium'>{key.name}</TableCell>
-								<TableCell className='font-medium'>
+								<TableCell>{key.name}</TableCell>
+								<TableCell>
 									{
 										websites.find((website) => website.id === key.websiteId)
 											?.title

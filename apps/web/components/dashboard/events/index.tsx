@@ -1,7 +1,7 @@
 'use client';
 
 import { fetcher } from '@/lib/utils';
-import { LoglibCustomEvent } from '@heimdall-logs/types';
+import { HeimdallCustomEvent } from '@heimdall-logs/types';
 import { env } from 'env.mjs';
 import useSWR from 'swr';
 
@@ -18,17 +18,13 @@ const Events = ({
 	endDate: Date;
 	websiteId: string;
 }) => {
-	console.log(websiteId, 'event');
 	const url = env.NEXT_PUBLIC_API_URL;
-	const { data, isLoading } = useSWR<LoglibCustomEvent[]>(
+	const { data, isLoading } = useSWR<HeimdallCustomEvent[]>(
 		`${url}/events?websiteId=${websiteId}&startDate=${startDate}&endDate=${endDate}`,
 		fetcher
 	);
-	if (!isLoading) {
-		console.log(data, 'event ata');
-	}
 	return (
-		<div className=' no-scrollbar'>
+		<div className='no-scrollbar'>
 			<DataTable
 				columns={columns}
 				data={data ?? []}

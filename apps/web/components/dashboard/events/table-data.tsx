@@ -90,13 +90,13 @@ function DataTable<TData, TValue>({
 
 	return (
 		<AnimatePresence>
-			<p className=' text-sm my-2'>
+			<p className=' my-2 text-sm'>
 				Showing <strong>{table.getRowModel().rows?.length}</strong> of
 				<strong> {data.length} </strong>
 				events
 			</p>
-			<motion.div className='rounded-md border dark:border-gray-800 scrollbar-hide'>
-				<div className='flex items-center py-4 px-2 justify-between'>
+			<motion.div className='scrollbar-hide rounded-xl border bg-card dark:border-gray-800'>
+				<div className='flex items-center justify-between px-2 py-4'>
 					<Input
 						placeholder='Search Events...'
 						value={
@@ -110,7 +110,7 @@ function DataTable<TData, TValue>({
 					{/* @ts-ignore */}
 					<EventFilter data={data} setData={setLocalData} />
 				</div>
-				<Table className=' scrollbar-hide'>
+				<Table className='scrollbar-hide'>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
 							<TableRow>
@@ -168,21 +168,21 @@ function DataTable<TData, TValue>({
 						) : isLoading ? (
 							<TableRow
 								className={
-									'h-6 gap-2 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse'
+									'h-6 animate-pulse gap-2 rounded-md bg-gray-200 dark:bg-muted/50'
 								}
 							>
 								<TableCell
 									colSpan={columns.length}
-									className=' h-6 gap-2 bg-gray-200 dark:bg-gray-800 animate-pulse text-center'
+									className=' h-6 animate-pulse gap-2 bg-gray-200 text-center dark:bg-muted/50'
 								>
-									Loading Data ...
+									Loading Data
 								</TableCell>
 							</TableRow>
 						) : (
 							<TableRow>
 								<TableCell
 									colSpan={columns.length}
-									className='h-24 text-center'
+									className='h-36 text-center'
 								>
 									No results.
 								</TableCell>
@@ -191,7 +191,7 @@ function DataTable<TData, TValue>({
 					</TableBody>
 				</Table>
 			</motion.div>
-			<div className=' flex items-center justify-center my-2 gap-6'>
+			<div className=' my-2 flex items-center justify-center gap-6'>
 				{pagination.pageSize < data.length && (
 					<Button
 						onClick={() => {

@@ -1,4 +1,4 @@
-import { Inter as FontSans } from 'next/font/google';
+import { Roboto_Mono as FontNumeric, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 
 export const fontSans = localFont({
@@ -41,4 +41,16 @@ export const fontSans = localFont({
 export const fontHeading = localFont({
 	src: '../assets/fonts/sf-pro-text-medium-webfont.woff2',
 	variable: '--font-heading',
+});
+
+export const fontNumeric = FontNumeric({
+	subsets: ['latin'],
+	weight: '400',
+	variable: '--font-numeric',
+});
+
+export const fontMono = JetBrains_Mono({
+	weight: '400',
+	subsets: ['latin'],
+	variable: '--font-jetbrains',
 });

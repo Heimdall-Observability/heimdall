@@ -28,7 +28,7 @@ export function TeamNav({ teams }: DashboardNavProps) {
 
 	return (
 		<div className='fixed inset-0 z-[1] hidden h-screen w-24 flex-col justify-between overflow-y-hidden p-2 backdrop-blur md:flex'>
-			<ul className='flex flex-col space-y-4 mt-14'>
+			<ul className='mt-14 flex flex-col space-y-4'>
 				<For each={teams}>
 					{({ id, slug, name, image }) => {
 						const userInitials = name ?? 'SA';
@@ -39,7 +39,7 @@ export function TeamNav({ teams }: DashboardNavProps) {
 								key={id}
 								href={url}
 								className={cn(
-									'hover:text-foreground/80 m-2 flex flex-col items-center justify-center text-center font-medium transition-colors',
+									'm-2 flex flex-col items-center justify-center text-center font-medium transition-colors hover:text-foreground/80',
 									pathname === slug ? 'text-foreground' : 'text-foreground/60'
 								)}
 							>
@@ -48,7 +48,7 @@ export function TeamNav({ teams }: DashboardNavProps) {
 										<AvatarImage src={image} alt={name} />
 									) : (
 										<AvatarFallback>
-											<span className='text-sm lowerrcase text-primary-foreground '>
+											<span className='lowerrcase text-sm text-primary-foreground '>
 												{userInitials.length > 2
 													? userInitials.split('').slice(0, 2)
 													: userInitials}

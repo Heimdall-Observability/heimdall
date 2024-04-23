@@ -2,10 +2,11 @@
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import COUNTRIES from '@/lib/constants';
-import { LoglibCustomEvent } from '@heimdall-logs/types';
+import { fancyId } from '@/lib/utils';
+import { HeimdallCustomEvent } from '@heimdall-logs/types';
 import { Row } from '@tanstack/react-table';
 
-const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
+const renderSubComponent = ({ row }: { row: Row<HeimdallCustomEvent> }) => {
 	const data = row.original;
 	const automaticProperties = {
 		Browser: data.browser,
@@ -34,7 +35,7 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 		...customProperties,
 	};
 	return (
-		<div className=' w-full dark:border-gray-800 '>
+		<div className='w-full dark:border-muted-foreground/20 bg-muted/60 rounded-xl'>
 			<Tabs defaultValue='all'>
 				<TabsList>
 					<TabsTrigger value='all'>All Properties</TabsTrigger>
@@ -42,12 +43,12 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 					<TabsTrigger value='custom'>Custom Properties</TabsTrigger>
 				</TabsList>
 				<TabsContent value='all'>
-					<div className='grid grid-cols-3 gap-4 py-4 px-2 place-content-center '>
+					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
 						{Object.keys(allProperties).map((key) => {
 							return (
 								<div
-									className=' flex border-b dark:border-gray-800 py-2 gap-2'
-									key={key}
+									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
+									key={fancyId()}
 								>
 									<div className='font-bold'>{key}:</div>
 
@@ -62,12 +63,12 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 					</div>
 				</TabsContent>
 				<TabsContent value='auto'>
-					<div className='grid grid-cols-3 gap-4 py-4 px-2 place-content-center '>
+					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
 						{Object.keys(automaticProperties).map((key) => {
 							return (
 								<div
-									className=' flex border-b dark:border-gray-800 py-2 gap-2'
-									key={key}
+									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
+									key={fancyId()}
 								>
 									<div className='font-bold'>{key}:</div>
 									<div>
@@ -79,12 +80,12 @@ const renderSubComponent = ({ row }: { row: Row<LoglibCustomEvent> }) => {
 					</div>
 				</TabsContent>
 				<TabsContent value='custom'>
-					<div className='grid grid-cols-3 gap-4 py-4 px-2 place-content-center '>
+					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
 						{Object.keys(customProperties).map((key) => {
 							return (
 								<div
-									className=' flex border-b dark:border-gray-800 py-2 gap-2'
-									key={key}
+									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
+									key={fancyId()}
 								>
 									<div className='font-bold'>{key}:</div>
 									<div>{JSON.stringify(customProperties[key])}</div>

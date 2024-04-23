@@ -96,7 +96,7 @@ function BackLink({
 		<MotionLink
 			href={to}
 			className={cn(
-				'flex items-center space-x-1 text-gray-500 focus:outline-none dark:text-slate-400',
+				'flex items-center space-x-1 text-muted-foreground focus:outline-none',
 				className
 			)}
 			ref={ref}
@@ -109,7 +109,7 @@ function BackLink({
 			>
 				<ArrowIcon direction='left' />
 			</motion.span>
-			<span className='text-sm font-semibold'>{children}</span>
+			<span className='text-sm'>{children}</span>
 		</MotionLink>
 	);
 }
@@ -127,14 +127,14 @@ function NextLink({
 		<MotionLink
 			href={to}
 			className={cn(
-				'flex items-center space-x-1 text-gray-500 focus:outline-none dark:text-slate-400',
+				'flex items-center space-x-1 text-muted-foreground focus:outline-none',
 				className
 			)}
 			ref={ref}
 			animate={state}
 			transition={shouldReduceMotion ? { duration: 0 } : {}}
 		>
-			<span className='text-sm font-semibold'>{children}</span>
+			<span className='text-sm'>{children}</span>
 			<motion.span
 				variants={shouldReduceMotion ? {} : arrowVariants.right}
 				transition={shouldReduceMotion ? { duration: 0 } : {}}

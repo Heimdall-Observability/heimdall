@@ -25,7 +25,7 @@ export function Nav({ items }: DashboardNavProps) {
 						key={title}
 						href={disabled ? '/' : href}
 						className={cn(
-							'hover:text-foreground/80 flex items-center font-medium transition-colors',
+							'flex items-center font-medium transition-colors hover:text-foreground/80',
 							pathname === href ? 'text-foreground' : 'text-foreground/60',
 							disabled && 'cursor-not-allowed opacity-80'
 						)}

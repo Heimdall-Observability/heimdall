@@ -1,7 +1,7 @@
 import { env } from '@/env.mjs';
 import { schema } from '@heimdall-logs/db';
 import { createClient } from '@libsql/client';
-import { drizzle } from 'drizzle-orm/libsql';
+import { LibSQLDatabase, drizzle } from 'drizzle-orm/libsql';
 
 export const getDbUrl = () => {
 	if (process.env.NODE_ENV === 'production' || env.TURSO_DB_AUTH_TOKEN) {

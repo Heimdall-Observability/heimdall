@@ -2,7 +2,11 @@ import { Config } from 'tailwindcss';
 import { fontFamily } from 'tailwindcss/defaultTheme';
 
 const tailwindConfig = {
-	content: ['./components/**/*.{ts,tsx}', './app/**/*.{ts,tsx}'],
+	content: [
+		'./components/**/*.{ts,tsx}',
+		'./app/**/*.{ts,tsx}',
+		'./node_modules/@almond-ui/core/src/theme/styles/*.ts',
+	],
 	darkMode: ['class'],
 	theme: {
 		container: {
@@ -24,6 +28,7 @@ const tailwindConfig = {
 		// },
 		extend: {
 			colors: {
+				emphasis: 'hsl(var(--primary))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -59,13 +64,78 @@ const tailwindConfig = {
 				},
 			},
 			fontFamily: {
-				sans: ['var(--font-sans)', ...fontFamily.sans],
-				heading: ['var(--font-heading)', ...fontFamily.sans],
+				sans: [
+					'var(--font-sans)',
+					'Inter',
+					'BlinkMacSystemFont',
+					'-apple-system',
+					'Segoe UI',
+					'Roboto',
+					'Oxygen',
+					'Ubuntu',
+					'Cantarell',
+					'Fira Sans',
+					'Droid Sans',
+					'Helvetica Neue',
+					'Helvetica',
+					'Arial',
+					'sans-serif',
+				],
+				mono: [
+					'var(--font-mono) !important',
+					'Roboto Mono',
+					'SFMono-Regular',
+					'Menlo',
+					'Monaco',
+					'Consolas',
+					'Liberation Mono',
+					'Courier New',
+					'monospace',
+					...fontFamily.mono,
+				],
 			},
+			fontSize: {
+				h1: [
+					'32px',
+					{
+						lineHeight: '44px',
+						fontWeight: '500',
+					},
+				],
+				h2: [
+					'24px',
+					{
+						lineHeight: '32px',
+						fontWeight: '500',
+					},
+				],
+				h3: [
+					'18px',
+					{
+						lineHeight: '28px',
+						fontWeight: '500',
+					},
+				],
+				h4: [
+					'16px',
+					{
+						lineHeight: '20px',
+						fontWeight: '500',
+					},
+				],
+			},
+			// fontFamily: {
+			// 	sans: ['var(--font-sans)', ...fontFamily.sans],
+			// 	heading: ['var(--font-heading)', ...fontFamily.sans],
+			// 	numeric: ['var(--font-numeric)', ...fontFamily.sans],
+			// },
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
+			},
+			lineHeight: {
+				DEFAULT: '24px',
 			},
 			keyframes: {
 				'accordion-down': {
@@ -145,6 +215,7 @@ const tailwindConfig = {
 	plugins: [
 		require('tailwindcss-animate'),
 		require('@tailwindcss/typography'),
+		require('tailwind-scrollbar')({ nocompatible: true }),
 		require('@tailwindcss/container-queries'),
 	],
 } satisfies Config;

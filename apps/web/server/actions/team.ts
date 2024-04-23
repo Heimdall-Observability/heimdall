@@ -303,7 +303,7 @@ export const updateTeamUser = async (
 	},
 	teamId: string
 ) => {
-	protectedAction(
+	await protectedAction(
 		async () => {
 			await db
 				.update(schema.teamMember)

@@ -58,3 +58,29 @@ export type EventRes = {
 	timestamp: string;
 	websiteId: string;
 };
+
+export type TraceRes = {
+	Timestamp: string;
+	TraceId: string;
+	SpanId: string;
+	ParentSpanId: string;
+	SpanName: string;
+	SpanKind: string;
+	ServiceName: string;
+	ResourceAttributes: Record<string, string>;
+	SpanAttributes: Record<string, string>;
+	Duration: string;
+	StatusCode: string;
+	StatusMessage: string;
+	Events: {
+		Timestamp: Array<string>;
+		Name: Array<string>;
+		Attributes: Array<Record<string, string>>;
+	};
+	Links: {
+		TraceId: Array<string>;
+		SpanId: Array<string>;
+		TraceState: Array<string>;
+		Attributes: Array<Record<string, string>>;
+	};
+};

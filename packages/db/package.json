@@ -15,16 +15,19 @@
 		"dev": "tsup --watch"
 	},
 	"dependencies": {
-		"@auth/core": "^0.13.0",
-		"@libsql/client": "^0.3.2",
+		"@auth/core": "^0.16.0",
+		"@libsql/client": "^0.3.5",
 		"@paralleldrive/cuid2": "^2.2.2",
 		"dotenv": "^16.3.1",
 		"drizzle-kit": "^0.19.13",
 		"drizzle-orm": "^0.28.6",
+		"drizzle-zod": "^0.5.1",
 		"tsup": "^7.2.0",
-		"tsx": "^3.12.8"
+		"tsx": "^3.13.0",
+		"zod": "^3.22.2"
 	},
 	"devDependencies": {
-		"@heimdall-logs/config": "0.0.1"
+		"@heimdall-logs/config": "0.0.1",
+		"@heimdall-logs/logger": "0.0.1"
 	}
 }

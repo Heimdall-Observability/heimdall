@@ -91,7 +91,7 @@ function MobileNav({ user }: { user?: User }) {
 	return (
 		<div className='sm:hidden'>
 			<button
-				className={cn(styles.burger, 'visible md:hidden text-muted-foreground')}
+				className={cn(styles.burger, 'visible text-muted-foreground md:hidden')}
 				aria-label='Toggle menu'
 				type='button'
 				onClick={onToggleNav}
@@ -156,7 +156,7 @@ function MobileNav({ user }: { user?: User }) {
 								</Link>
 							</li>
 							<li
-								className='border-b border-gray-300 text-muted-foreground flex justify-between px-8 text-lg font-medium text-gray-900 dark:border-gray-700 dark:text-gray-100'
+								className='flex justify-between border-b border-gray-300 px-8 text-lg font-medium text-gray-900 text-muted-foreground dark:border-gray-700 dark:text-gray-100'
 								style={{ transitionDelay: '300ms' }}
 								onClick={(event) => {
 									event.preventDefault();

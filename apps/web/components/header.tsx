@@ -3,19 +3,16 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { ReactNode, useCallback, useEffect, useRef } from 'react';
+import { ReactNode } from 'react';
 
-import { BackLink, NextLink } from '@/components/arrow-button';
-import ExpandingArrow from '@/components/expanding-arrow';
+import { BackLink } from '@/components/arrow-button';
 import MobileMenu from '@/components/mobile-menu';
-import { Button, buttonVariants } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { UserAccountNav } from '@/components/user-account-nav';
 import { cn } from '@/lib/utils';
 import { MainNavItem } from '@/types';
 import { ExcludeSquare } from '@phosphor-icons/react';
-import { useAnimation } from 'framer-motion';
 import { User } from 'next-auth';
-import { useSession } from 'next-auth/react';
 
 interface MiniHeaderProps {
 	heading: string;
@@ -26,12 +23,16 @@ interface MiniHeaderProps {
 interface DashboardHeaderProps {
 	items: MainNavItem[];
 	user: User;
-	showOrgSelect?: boolean;
-	showLogo?: boolean;
+	className?: string;
+}
+
+interface Props {
+	className?: string;
+	user?: User;
 }
 
 const LINKS = [
-	{ name: 'Pricing', href: '/pricing' },
+	// { name: 'Pricing', href: '/pricing' },
 	{ name: 'Changelog', href: '/changelog' },
 	{ name: 'Docs', href: '/docs' },
 ];
@@ -57,137 +58,83 @@ function NavItem({ href, text }: { href: string; text: string }) {
 	);
 }
 
-function SiteHeader({ user }: { user?: User }) {
-	const navRef = useRef<HTMLDivElement>(null);
-	const control = useAnimation();
-
-	const addShadowToNavbar = useCallback(async () => {
-		if (window.pageYOffset > 10) {
-			navRef.current?.classList.add(
-				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
-			);
-
-			await control.start('visible');
-		} else {
-			navRef.current?.classList.remove(
-				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
-			);
-			await control.start('hidden');
-		}
-	}, [control]);
-
-	useEffect(() => {
-		window.addEventListener('scroll', addShadowToNavbar);
-		return () => {
-			window.removeEventListener('scroll', addShadowToNavbar);
-		};
-	}, [addShadowToNavbar]);
-
+function SiteHeader({ user, className }: Props) {
 	return (
-		<header className='flex h-12 items-center justify-between gap-6 border-b py-0 md:gap-10'>
-			<nav
-				ref={navRef}
-				className='fixed inset-x-0 top-0 z-10 w-full p-4 lg:p-2 lg:px-0'
-			>
-				<div className='container mx-auto flex justify-between'>
-					<div className='flex items-center justify-center gap-2 align-middle'>
-						<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
-						<Link
-							href='/'
-							aria-label='almond-ui'
-							className='block whitespace-nowrap text-lg font-semibold transition focus:outline-none'
-						>
-							heimdall
-						</Link>
-					</div>
+		<header
+			className={cn(
+				'flex w-full items-center justify-between gap-2',
+				className
+			)}
+		>
+			<div className='flex items-center justify-center gap-2 align-middle'>
+				<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+				<Link
+					href='/'
+					aria-label='almond-ui'
+					className='block whitespace-nowrap text-lg font-semibold transition focus:outline-none'
+				>
+					heimdall
+				</Link>
+			</div>
 
-					<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
-						<ul className='hidden lg:flex'>
-							{LINKS.map((link) => (
-								<NavItem key={link.href} href={link.href} text={link.name} />
-							))}
-						</ul>
-						<MobileMenu user={user} />
-					</div>
+			<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
+				<ul className='hidden lg:flex'>
+					{LINKS.map((link) => (
+						<NavItem key={link.href} href={link.href} text={link.name} />
+					))}
+				</ul>
+				<MobileMenu user={user} />
+			</div>
 
-					<div className='md:flex hidden'>
-						{user ? (
-							<UserAccountNav user={user} />
-						) : (
-							<Link
-								href='/login'
-								className={cn(
-									buttonVariants({ variant: 'ghost' }),
-									'hover:bg-primary/10 hover:text-primary'
-								)}
-							>
-								Login
-							</Link>
+			<div className='hidden md:flex'>
+				{user ? (
+					<UserAccountNav user={user} />
+				) : (
+					<Link
+						href='/login'
+						className={cn(
+							buttonVariants({ variant: 'ghost' }),
+							'hover:bg-primary/10 hover:text-primary'
 						)}
-					</div>
-				</div>
-			</nav>
+					>
+						Login
+					</Link>
+				)}
+			</div>
 		</header>
 	);
 }
 
-function DashboardHeader({ user, items }: DashboardHeaderProps) {
-	const navRef = useRef<HTMLDivElement>(null);
-	const control = useAnimation();
-
-	const addShadowToNavbar = useCallback(async () => {
-		if (window.pageYOffset > 10) {
-			navRef.current?.classList.add(
-				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
-			);
-
-			await control.start('visible');
-		} else {
-			navRef.current?.classList.remove(
-				...['border-b', 'backdrop-blur-xl', 'bg-white/70', 'dark:bg-gray-900']
-			);
-			await control.start('hidden');
-		}
-	}, [control]);
-
-	useEffect(() => {
-		window.addEventListener('scroll', addShadowToNavbar);
-		return () => {
-			window.removeEventListener('scroll', addShadowToNavbar);
-		};
-	}, [addShadowToNavbar]);
-
+function DashboardHeader({ user, items, className }: DashboardHeaderProps) {
 	return (
-		<header className='flex bg-background h-16 items-center justify-between gap-6 border-b py-0 md:gap-10'>
-			<nav
-				ref={navRef}
-				className='fixed inset-x-0 top-0 z-10 w-full p-3 lg:p-2 lg:px-0'
-			>
-				<div className='mx-auto md:mx-8 flex justify-between'>
-					<div className='flex items-center justify-center gap-2 align-middle'>
-						<Link
-							href='/'
-							aria-label='heimdall-home'
-							className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
-						>
-							<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
-						</Link>
-					</div>
+		<header
+			className={cn(
+				'flex w-full items-center justify-between gap-2',
+				className
+			)}
+		>
+			<div className='flex items-center justify-center gap-2 align-middle'>
+				<Link
+					href='/'
+					aria-label='heimdall-home'
+					className='block whitespace-nowrap text-xl font-medium transition focus:outline-none'
+				>
+					<ExcludeSquare size={32} color='#0074a6' weight='duotone' />
+				</Link>
+			</div>
 
-					<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
-						<ul className='hidden lg:flex'>
-							{items.map((link) => (
-								<NavItem key={link.href} href={link.href} text={link.title} />
-							))}
-						</ul>
-						<MobileMenu user={user} />
-					</div>
+			<div className='ml-[-0.60rem] lg:flex lg:items-center lg:justify-center'>
+				<ul className='hidden lg:flex'>
+					{items.map((link) => (
+						<NavItem key={link.href} href={link.href} text={link.title} />
+					))}
+				</ul>
+				<MobileMenu user={user} />
+			</div>
 
-					<div className='md:flex hidden'>
-						<UserAccountNav user={user} />
-					</div>
-				</div>
-			</nav>
+			<div className='hidden md:flex'>
+				<UserAccountNav user={user} />
+			</div>
 		</header>
 	);
 }
@@ -196,10 +143,10 @@ function MiniHeader({ heading, text, children }: MiniHeaderProps) {
 	return (
 		<div className='flex items-center justify-between px-2'>
 			<div className='grid gap-1'>
-				<h1 className='bg-clip-text tracking-tight text-xl font-extrabold md:text-2xl'>
+				<h1 className='bg-clip-text text-xl font-extrabold tracking-tight md:text-2xl'>
 					{heading}
 				</h1>
-				{text && <p className='text-muted-foreground text-sm'>{text}</p>}
+				{text && <p className='text-sm text-muted-foreground'>{text}</p>}
 			</div>
 			{children}
 		</div>
@@ -224,4 +171,35 @@ function PublicDashboardHeader() {
 	);
 }
 
-export { SiteHeader, DashboardHeader, MiniHeader, PublicDashboardHeader };
+function MobileDashboardHeader({
+	user,
+	items,
+	className,
+}: DashboardHeaderProps) {
+	return (
+		<header
+			className={cn(
+				'flex w-full items-center justify-between gap-2 md:hidden p-4',
+				className
+			)}
+		>
+			<div className='flex items-center justify-center gap-2 align-middle'>
+				<BackLink className='' to='/'>
+					back to home
+				</BackLink>
+			</div>
+
+			<div className=''>
+				<UserAccountNav user={user} />
+			</div>
+		</header>
+	);
+}
+
+export {
+	SiteHeader,
+	DashboardHeader,
+	MiniHeader,
+	PublicDashboardHeader,
+	MobileDashboardHeader,
+};

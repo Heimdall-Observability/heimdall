@@ -25,8 +25,8 @@ export const Location = ({
 	}
 
 	return (
-		<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-7 grid-cols-1 my-4'>
-			<Card className=' md:col-span-3 bg-gradient-to-tr from-stone-950 to-stone-900/80'>
+		<div className='my-4 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7'>
+			<Card className=' bg-gradient-to-tr from-stone-950 to-stone-900/80 md:col-span-3'>
 				<CardContent className=' bg-stone-950 py-4'>
 					<Tabs className=' w-full' defaultValue='country'>
 						{isFilterActive('country') || isFilterActive('city') ? (
@@ -37,7 +37,7 @@ export const Location = ({
 								}}
 							/>
 						) : null}
-						<TabsList className=' border-gray-400 ml-auto'>
+						<TabsList className=' ml-auto border-gray-400'>
 							<TabsTrigger value='country'>Country</TabsTrigger>
 							<TabsTrigger value='city'>City</TabsTrigger>
 						</TabsList>
@@ -69,7 +69,7 @@ export const Location = ({
 								Row={(location: any) => (
 									<TableRow>
 										<TableCell
-											className=' flex items-center gap-1 cursor-pointer'
+											className=' flex cursor-pointer items-center gap-1'
 											onClick={() =>
 												addFilter({
 													key: 'country',
@@ -121,7 +121,7 @@ export const Location = ({
 								Row={(location: any) => (
 									<TableRow>
 										<TableCell
-											className=' flex items-center gap-1 cursor-pointer'
+											className=' flex cursor-pointer items-center gap-1'
 											onClick={() =>
 												addFilter({
 													key: 'country',
@@ -160,7 +160,7 @@ export const Location = ({
 					</Tabs>
 				</CardContent>
 			</Card>
-			<Card className='md:col-span-4 bg-stone-950'>
+			<Card className='bg-stone-950 md:col-span-4'>
 				<CardContent>
 					<LocationMap data={data ? data.data.locations.country : []} />
 				</CardContent>

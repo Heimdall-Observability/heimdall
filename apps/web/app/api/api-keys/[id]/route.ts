@@ -9,6 +9,7 @@ const apiKeysCtxSchema = z.object({
 		id: z.string(),
 	}),
 });
+
 export const DELETE = async (
 	_: Request,
 	context: z.infer<typeof apiKeysCtxSchema>
@@ -37,9 +38,14 @@ export const DELETE = async (
 			return new Response(null, {
 				status: 401,
 			});
+
 		await db
 			.delete(schema.apiKey)
 			.where(eq(schema.apiKey.id, context.params.id));
+
+		return new Response(null, {
+			status: 202,
+		});
 	} catch {
 		return new Response(null, {
 			status: 500,

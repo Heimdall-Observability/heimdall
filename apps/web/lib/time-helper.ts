@@ -1,3 +1,9 @@
+export const getLast15Minutes = () => {
+	const minutes = new Date();
+	minutes.setMilliseconds(new Date().getMilliseconds() - 1000 * 60 * 60 * 6);
+	return minutes;
+};
+
 export const getLast24Hour = () => {
 	const today = new Date();
 	today.setMilliseconds(new Date().getMilliseconds() - 1000 * 60 * 60 * 24);
@@ -82,6 +88,5 @@ export const getThisYear = () => {
 };
 
 export const getTimeRange = (startDate: Date, endDate: Date) => {
-	const diff = endDate.getTime() - startDate.getTime();
-	return diff;
+	return endDate.getTime() - startDate.getTime();
 };

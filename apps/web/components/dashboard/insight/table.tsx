@@ -57,7 +57,7 @@ export function InsightTable<T>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [term, data]);
 	return (
-		<ScrollArea className=' md:h-96 xl:h-[450px] h-80'>
+		<ScrollArea className=' h-80 md:h-96 xl:h-[450px]'>
 			<Table>
 				<TableCaption>{tip}</TableCaption>
 				<TableHeader>
@@ -67,10 +67,10 @@ export function InsightTable<T>({
 					</TableRow>
 					{!isLoading && !hideSearchBar && data?.length && (
 						<TableHead colSpan={2} className=' px-0'>
-							<div className='flex h-10 w-full items-center rounded-md border  border-stone-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-stone-800 dark:bg-stone-950 dark:ring-offset-stone-950 dark:placeholder:text-stone-400 dark:focus-visible:ring-stone-800 relative'>
+							<div className='relative flex h-10 w-full items-center rounded-md  border border-stone-200 bg-white px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-stone-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-400 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-stone-800 dark:bg-stone-950 dark:ring-offset-stone-950 dark:placeholder:text-stone-400 dark:focus-visible:ring-stone-800'>
 								<input
 									onChange={(e) => setTerm(e.target.value)}
-									className=' bg-transparent flex-grow focus:outline-none outline-none'
+									className=' grow bg-transparent outline-none focus:outline-none'
 									placeholder={searchPlaceholder}
 									value={term}
 								/>

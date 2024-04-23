@@ -1,0 +1,37 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
+
+exporters:
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  logging:
+processors:
+  batch:
+  spanmetrics:
+  #    metrics_exporter: prometheus
+  # temporary measure until description is fixed in .NET
+  transform:
+    metric_statements:
+      - context: metric
+        statements:
+          - set(description, "Measures the duration of inbound HTTP requests") where name == "http.server.duration"
+
+service:
+  pipelines:
+    traces:
+      receivers: [ otlp ]
+      processors: [ spanmetrics, batch ]
+      exporters: [ logging, jaeger ]
+    metrics:
+      receivers: [ otlp ]
+      processors: [ transform, batch ]
+      exporters: [ logging ]

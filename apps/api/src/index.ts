@@ -25,6 +25,21 @@ const app = new Hono();
 app.use('*', appLogger());
 app.use('*', cors());
 
+logger.configureLogger(
+	{
+		prettyPrint: Boolean({
+			doc: 'Whether the logger should be configured to pretty print the output',
+			format: 'Boolean',
+			default: true,
+			nullable: false,
+			env: 'PRETTY_PRINT_LOG',
+		}),
+	},
+	true
+);
+
+app.get('/ping', (c) => c.text('pong'));
+
 app.post('/', async (c) => {
 	const body = await c.req.json();
 	const headers = Object.fromEntries(c.req.headers);
@@ -51,7 +66,7 @@ app.get('/', async (c) => {
 			if (err) {
 				throw err;
 			}
-			//@ts-ignore
+			//@ts-expect-error
 			if (decoded.website !== websiteId) {
 				throw Error;
 			}
@@ -71,7 +86,6 @@ app.get('/', async (c) => {
 			3,
 			4
 		);
-		console.log('Class: , Function: , Line 74 events():', events);
 		const tack = performance.now();
 		console.log(tack - tick, 'ms taken to query');
 		const filters = JSON.parse(queries.data.filter) as Filter<HeimdallEvent>[];
@@ -83,7 +97,6 @@ app.get('/', async (c) => {
 			const utmSource = queryParams?.utm_source ?? '';
 			return { ...s, utmCampaign, utmSource };
 		});
-		console.log('Class: , Function: , Line 85 events():', events);
 
 		//add utm as a key in session
 		lastEvents = lastEvents.map((s) => {
@@ -92,8 +105,6 @@ app.get('/', async (c) => {
 			const utmSource = queryParams?.utm_source ?? '';
 			return { ...s, utmCampaign, utmSource };
 		});
-
-		console.log('Class: , Function: , Line 95 lastEvents():', lastEvents);
 
 		filters.length &&
 			filters.forEach((f) => {
@@ -135,6 +146,23 @@ app.get('/events', async (c) => {
 			endDateObj,
 			websiteId
 		);
+		const events = res.sort(
+			(a, b) =>
+				new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+		);
+		return c.json(events, 200);
+	} catch {
+		return c.json(null, 500);
+	}
+});
+
+//TODO: should be changed the json to be parsed from clickhouse than js
+app.get('/traces', async (c) => {
+	const startDateObj = new Date(c.req.query('startDate'));
+	const endDateObj = new Date(c.req.query('endDate'));
+	const websiteId = c.req.query('websiteId');
+	try {
+		const res = await eventDB.getTraces(startDateObj, endDateObj, websiteId);
 		const events = res.sort(
 			(a, b) =>
 				new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()

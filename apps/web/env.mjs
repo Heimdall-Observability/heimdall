@@ -35,6 +35,7 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: z.string().min(1),
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE: z.string().min(1),
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: z.string().min(1),
   },
 
   /**
@@ -63,5 +64,6 @@ export const env = createEnv({
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
   },
 });

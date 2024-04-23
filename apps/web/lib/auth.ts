@@ -2,13 +2,14 @@ import { env } from '@/env.mjs';
 import { db } from '@/lib/db';
 import { DrizzleAdapter } from '@auth/drizzle-adapter';
 import { schema } from '@heimdall-logs/db';
+import { LibSQLDatabase } from 'drizzle-orm/libsql';
 import { NextAuthOptions } from 'next-auth';
 import { AdapterAccount } from 'next-auth/adapters';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
 	adapter: {
-		...(DrizzleAdapter(db) as any),
+		...(DrizzleAdapter(db as any) as any),
 		async linkAccount(rawAccount) {
 			const updatedAccount = await db
 				.insert(schema.accounts)

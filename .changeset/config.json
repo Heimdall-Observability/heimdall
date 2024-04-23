@@ -12,7 +12,7 @@
 		"@heimdall-logs/types",
 		"@heimdall-logs/db",
 		"@heimdall-logs/config",
-		"@heimdall-logs/setup",
+		"@heimdall-logs/clickhouse",
 		"@heimdall-logs/eslint-config",
 		"@heimdall-logs/logger",
 		"@heimdall-logs/request-context"

@@ -20,10 +20,10 @@ export default async function LoginPage() {
 
 	return (
 		<div className='container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0'>
-			<div className='hidden h-full bg-slate-100 lg:block' />
+			<div className='hidden h-full bg-muted lg:block' />
 			<div className={loginStyles.main} />
 			<RightSection activeStrategy={active} />
-			<BackLink className='absolute hidden md:flex left-8 top-8' to='/'>
+			<BackLink className='absolute left-8 top-8 hidden md:flex' to='/'>
 				back to home
 			</BackLink>
 			<div className='hidden md:block lg:p-8'>
@@ -34,7 +34,7 @@ export default async function LoginPage() {
 						<p className='text-sm text-muted-foreground'>
 							to continue to Heimdall
 						</p>
-						<UserAuthForm activeStrategy={active} className='w-[400px] mt-12' />
+						<UserAuthForm activeStrategy={active} className='mt-12 w-[400px]' />
 					</div>
 				</div>
 			</div>

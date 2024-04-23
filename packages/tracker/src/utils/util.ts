@@ -99,14 +99,14 @@ export function q(e: ServerEvents) {
 
 export function getUrl() {
 	if (typeof process === 'undefined') {
-		return 'https://api.heimdall.francismasha.com';
+		return 'https://api.francismasha.com';
 	}
 	if (process.env.NEXT_PUBLIC_HEIMDALL_URL || process.env.HEIMDALL_URL) {
 		const url =
 			process.env.NEXT_PUBLIC_HEIMDALL_URL ?? process.env.HEIMDALL_URL;
 		return `${url}/api/heimdall`;
 	}
-	return 'https://api.heimdall.francismasha.com';
+	return 'https://api.francismasha.com';
 }
 
 export const parseHost = (url: string) => {
@@ -115,7 +115,7 @@ export const parseHost = (url: string) => {
 		url === 'https://heimdall.francismasha.com' ||
 		url === 'https://www.heimdall.francismasha.com'
 	) {
-		return 'https://heimdall.francismasha.com/api/heimdall';
+		return 'https://api.francismasha.com';
 	} else {
 		return url;
 	}

@@ -3,11 +3,12 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "tsx watch src/index.ts",
+		"dev": "dotenv -e ../../.env -- tsx watch src/index.ts",
+		"start": "bun run src/index.ts",
 		"build": "tsup",
 		"setup:geo": "tsx setup/geo.ts",
 		"setup:clickhouse": "dotenv tsx setup/clickhouse-db.ts",
-		"serve": "pm2 start dist/index.js"
+		"serve": "pm2 start dist/index.js --name heimdall"
 	},
 	"main": "src/index.ts",
 	"module": "src/index.ts",
@@ -19,31 +20,31 @@
 		"@heimdall-logs/clickhouse": "0.0.1",
 		"@heimdall-logs/db": "0.0.1",
 		"@heimdall-logs/logger": "0.0.1",
-		"@hono/node-server": "^1.1.1",
-		"@libsql/client": "^0.3.2",
+		"@hono/node-server": "^1.2.0",
+		"@libsql/client": "^0.3.5",
 		"@t3-oss/env-core": "^0.6.1",
-		"@types/request-ip": "^0.0.38",
-		"@types/tar": "^6.1.5",
-		"@vercel/kv": "^0.2.2",
+		"@types/request-ip": "^0.0.39",
+		"@types/tar": "^6.1.6",
+		"@vercel/kv": "^0.2.3",
 		"detect-browser": "^5.3.0",
 		"dotenv": "^16.3.1",
 		"drizzle-orm": "^0.28.6",
-		"hono": "^3.5.8",
-		"isbot": "^3.6.13",
+		"hono": "^3.7.3",
+		"isbot": "^3.7.0",
 		"jsonwebtoken": "^9.0.2",
 		"kafkajs": "^2.2.4",
 		"kysely": "^0.26.3",
 		"kysely-planetscale": "^1.4.0",
-		"maxmind": "^4.3.11",
+		"maxmind": "^4.3.14",
 		"ora": "^7.0.1",
 		"request-ip": "^3.3.0",
 		"tar": "^6.2.0",
-		"tsx": "^3.12.8",
+		"tsx": "^3.13.0",
 		"zod": "^3.22.2"
 	},
 	"devDependencies": {
 		"@heimdall-logs/types": "0.0.1",
-		"@types/jsonwebtoken": "^9.0.2"
+		"@types/jsonwebtoken": "^9.0.3"
 	},
 	"exports": {
 		".": {

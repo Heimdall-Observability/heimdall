@@ -72,6 +72,7 @@ export const teamWebsitesRelations = relations(teamWebsites, ({ one }) => {
 		}),
 	};
 });
+
 export const teamMemberRelations = relations(teamMember, ({ one }) => {
 	return {
 		team: one(team, {

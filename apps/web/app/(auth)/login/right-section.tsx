@@ -23,27 +23,27 @@ interface Props {
 export default function RightSection({ activeStrategy }: Props) {
 	return (
 		<>
-			<BackLink className='absolute md:hidden flex right-8 bottom-8' to='/'>
+			<BackLink className='absolute bottom-8 right-8 flex md:hidden' to='/'>
 				back to home
 			</BackLink>
 			<div className='absolute left-[159px] top-[30px] md:hidden'>
 				<div className='absolute left-0 top-0 h-14 w-48'>
-					<div className='absolute left-0 top-0 text-2xl font-bold text-gray-900'>
+					<div className='absolute left-0 top-0 text-2xl font-bold text-card-foreground'>
 						<CurrentTimeDisplay />
 					</div>
-					<div className='absolute left-0 top-[40px] text-xs font-medium leading-tight text-slate-500'>
+					<div className='absolute left-0 top-[40px] text-xs font-medium leading-tight text-muted-foreground'>
 						<CurrentDateDisplay />
 					</div>
 				</div>
 
 				<div className='absolute left-0 top-[246px] h-52 w-48'>
 					<div className='absolute left-0 top-[57.60px] h-40 w-48'>
-						<div className='absolute left-0 top-[48px] w-48 text-sm font-medium leading-snug text-slate-500'>
+						<div className='absolute left-0 top-[48px] w-48 text-sm font-medium leading-snug text-muted-foreground'>
 							Web analytics for your business. <br />
 							<br />
 							Continue For Free.
 						</div>
-						<h4 className='absolute left-0 top-0 text-3xl font-bold text-gray-900'>
+						<h4 className='absolute left-0 top-0 text-3xl font-bold text-card-foreground'>
 							Heimdall
 						</h4>
 					</div>

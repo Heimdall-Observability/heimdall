@@ -1,11 +1,10 @@
-import { HonoRequest } from 'hono';
-import { CityResponse, Reader } from 'maxmind';
-import maxmind from 'maxmind';
+import maxmind, { CityResponse, Reader } from 'maxmind';
 import path from 'path';
 
 import { ApiRequest } from '../../routes/type';
 
 let lookup: Reader<CityResponse> | null;
+
 export async function getLocation(ip: string, req: ApiRequest) {
 	//vercel
 	if (req.headers['x-vercel-ip-country']) {
@@ -29,7 +28,6 @@ export async function getLocation(ip: string, req: ApiRequest) {
 			city: city,
 		};
 	}
-	console.log('maxmind');
 	if (!ip) {
 		return {
 			country: 'unknown',

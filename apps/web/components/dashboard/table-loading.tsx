@@ -15,7 +15,7 @@ const TableLoading = ({
 			<TableBody className=' animate-pulse'>
 				<TableRow
 					className={cn(
-						'h-6 gap-2 bg-gray-200 dark:bg-gray-800 rounded-md',
+						'h-6 gap-2 rounded-md bg-gray-200 dark:bg-muted/50',
 						className
 					)}
 				>
@@ -27,13 +27,13 @@ const TableLoading = ({
 		return (
 			<TableRow
 				className={cn(
-					'h-6 gap-2 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse',
+					'h-6 animate-pulse gap-2 rounded-md bg-gray-200 dark:bg-muted/50',
 					className
 				)}
 			>
 				<TableCell
 					colSpan={cellCount}
-					className=' h-6 gap-2 bg-gray-200 dark:bg-gray-800 animate-pulse text-center'
+					className=' h-6 animate-pulse gap-2 bg-gray-200 text-center dark:bg-muted/50'
 				>
 					Loading Data ...
 				</TableCell>

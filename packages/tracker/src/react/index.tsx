@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 
 import { heimdall } from '../lib';
 import { record } from '../record';
+import { trace } from '../trace';
 import { Config, Internal } from '../types';
 
 interface Props {
@@ -22,9 +23,10 @@ declare global {
  * @param {Partial<Config>} [config] - The configuration options for the tracker. See {@link Config} for overview
  * @see [Documentation](https://heimdall.francismasha.com/docs) for details.
  */
-function LogLib({ config }: Props) {
+function Heimdall({ config }: Props) {
 	useEffect(() => {
 		record(config);
+		trace(config).then(() => console.log('trace setup successful'));
 	}, []);
 	return null;
 }
@@ -72,4 +74,4 @@ export function TrackClick({ name, payload, children }: TrackViewProps) {
 	});
 }
 
-export default LogLib;
+export default Heimdall;

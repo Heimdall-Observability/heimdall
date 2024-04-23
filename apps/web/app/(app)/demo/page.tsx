@@ -3,16 +3,27 @@ import { generateToken } from '@/lib/generate-token';
 
 const DemoPage = () => {
 	const token = generateToken({
-		website: 'localhost',
-		name: 'localhost',
-		id: 'localhost',
+		website: 'heimdall',
+		name: '',
+		id: 'heimdall',
 	});
+
 	return (
 		<Dashboard
+			// website={{
+			//   id: 'localhost',
+			//   url: 'http://localhost:3000',
+			//   title: 'localhost',
+			// }}
 			website={{
-				id: 'localhost',
-				url: 'http://localhost:3000',
-				title: 'localhost',
+				id: 'heimdall',
+				url: 'https://heimdall.francismasha.com',
+				title: 'Heimdall',
+				// plan: "plus",
+				// userId: "",
+				// createdAt: new Date(),
+				// public: false,
+				// active: true
 			}}
 			showSetup={false}
 			token={token}

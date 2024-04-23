@@ -24,7 +24,7 @@ import {
 	Layout,
 	LayoutGrid,
 	Loader2,
-	type XIcon as LucideIcon,
+	LogOut,
 	type LucideProps,
 	MoreVertical,
 	PieChart,
@@ -36,6 +36,8 @@ import {
 	Settings,
 	Trash,
 	Twitter,
+	Users,
+	Users2,
 	Wallet,
 	Webhook,
 	X,
@@ -137,6 +139,7 @@ export const Icons = {
 	subscriptions: Layers,
 	layout: Layout,
 	key: KeyIcon,
+	logout: LogOut,
 	arrowNext: ({ ...props }: LucideProps) => (
 		<svg
 			width='16'
@@ -264,12 +267,14 @@ export const Icons = {
 	),
 	twitter: Twitter,
 	check: Check,
+	users: Users2,
 	frequency: ({ ...props }: LucideProps) => (
 		<svg
 			id='root'
 			viewBox='0 0 16 16'
 			fill='none'
 			xmlns='http://www.w3.org/2000/svg'
+			stroke='currentColor'
 			{...props}
 		>
 			<circle cx='8.00039' cy='8.00039' r='1.6' fill='#646E87' />

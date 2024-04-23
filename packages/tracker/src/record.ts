@@ -28,6 +28,7 @@ export function record(config?: Partial<Config>) {
 		postInterval: 5,
 		host: getUrl(),
 		consent: 'denied',
+		id: 'default',
 	};
 	if (config?.host) {
 		if (Array.isArray(config.host)) {

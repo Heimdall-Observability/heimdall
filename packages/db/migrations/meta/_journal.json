@@ -15,6 +15,13 @@
 			"when": 1693761203679,
 			"tag": "0001_material_liz_osborn",
 			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "5",
+			"when": 1694489824817,
+			"tag": "0002_small_micromax",
+			"breakpoints": true
 		}
 	]
 }

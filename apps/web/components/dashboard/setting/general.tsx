@@ -18,7 +18,7 @@ export const GeneralSetting = () => {
 
 	const [timeZone] = useState(Intl.DateTimeFormat().resolvedOptions().timeZone);
 	return (
-		<form className=' space-y-2 flex flex-col items-start'>
+		<form className=' flex flex-col items-start space-y-2'>
 			<Label>Timezone</Label>
 			<Select
 				onValueChange={(v) => {

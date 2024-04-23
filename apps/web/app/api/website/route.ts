@@ -29,7 +29,6 @@ export const GET = async (_: Request) => {
 export const POST = async (request: Request) => {
 	try {
 		const session = await getServerSession(authOptions);
-		console.log(session, 'sessions');
 		if (!session) {
 			return new Response('Unauthorized', { status: 403 });
 		}

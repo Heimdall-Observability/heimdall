@@ -34,6 +34,7 @@ export function UserAuthForm({ className, activeStrategy, ...props }: Props) {
 							callbackUrl: searchParams?.get('from') || '/dashboard',
 						});
 					}}
+					aria-disabled={isLoading || isGitHubLoading}
 					disabled={isLoading || isGitHubLoading}
 				>
 					{isGitHubLoading ? (
@@ -47,14 +48,21 @@ export function UserAuthForm({ className, activeStrategy, ...props }: Props) {
 			{activeStrategy.google && (
 				<button
 					type='button'
-					className={cn(buttonVariants({ variant: 'outline', size: 'lg' }))}
+					className={cn(
+						buttonVariants({
+							variant: 'outline',
+							size: 'lg',
+						}),
+						'bg-card'
+					)}
 					onClick={() => {
 						setIsLoading(true);
 						signIn('google', {
 							callbackUrl: searchParams?.get('from') || '/dashboard',
 						});
 					}}
-					disabled={isLoading || isGitHubLoading}
+					aria-disabled={isLoading || isGitHubLoading}
+					// disabled={isLoading || isGitHubLoading}
 				>
 					{isLoading ? (
 						<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />

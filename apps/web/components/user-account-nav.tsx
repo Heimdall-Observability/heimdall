@@ -2,10 +2,12 @@
 
 import Link from 'next/link';
 
+import ThemeSwitch from '@/components/theme-switch';
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -31,13 +33,21 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 					<div className='flex flex-col space-y-1 leading-none'>
 						{user.name && <p className='font-medium'>{user.name}</p>}
 						{user.email && (
-							<p className='text-muted-foreground w-[200px] truncate text-sm'>
+							<p className='w-[200px] truncate text-sm text-muted-foreground'>
 								{user.email}
 							</p>
 						)}
 					</div>
 				</div>
 				<DropdownMenuSeparator />
+
+				<DropdownMenuLabel className='font-normal'>
+					<div className='flex flex-row items-center justify-between space-y-1'>
+						<span>Theme</span>
+						<ThemeSwitch />
+					</div>
+				</DropdownMenuLabel>
+
 				<DropdownMenuItem
 					asChild
 					className=' cursor-pinter flex items-center gap-2'

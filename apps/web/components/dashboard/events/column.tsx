@@ -1,7 +1,8 @@
 'use client';
 
 import COUNTRIES from '@/lib/constants';
-import { LoglibCustomEvent } from '@heimdall-logs/types';
+import dayjs from '@/lib/dayjsTime';
+import { HeimdallCustomEvent } from '@heimdall-logs/types';
 import { ColumnDef } from '@tanstack/react-table';
 import {
 	ChevronDown,
@@ -10,7 +11,7 @@ import {
 	UnfoldVertical,
 } from 'lucide-react';
 
-export const columns: ColumnDef<LoglibCustomEvent>[] = [
+export const columns: ColumnDef<HeimdallCustomEvent>[] = [
 	{
 		id: 'expander',
 		header: () => <UnfoldVertical />,
@@ -28,12 +29,12 @@ export const columns: ColumnDef<LoglibCustomEvent>[] = [
 		header: ({ column }) => {
 			return (
 				<span
-					className='flex items-center group gap-2'
+					className='group flex items-center gap-2'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Event Name
 					<ChevronsUpDown
-						className='mr-2 opacity-0 group-hover:opacity-100 transition-all ease-in-out'
+						className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 						size={15}
 					/>
 				</span>
@@ -46,37 +47,41 @@ export const columns: ColumnDef<LoglibCustomEvent>[] = [
 		header: ({ column }) => {
 			return (
 				<span
-					className='flex items-center group gap-2'
+					className='group flex items-center gap-2'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Time
 					<ChevronsUpDown
-						className='mr-2 opacity-0 group-hover:opacity-100 transition-all ease-in-out'
+						className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 						size={15}
 					/>
 				</span>
 			);
 		},
 		cell: ({ row }) => {
-			const diff =
-				Date.now() - Date.parse(row.original.timestamp as unknown as string);
-			const hours = Math.floor(diff / (1000 * 60 * 60));
-			const minutes = Math.floor(diff / (1000 * 60));
-			const seconds = Math.floor(diff / 1000);
-			const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-			if (days > 0) {
-				return `${days} days ago`;
-			}
-			if (hours > 0) {
-				return `${hours} hours ago`;
-			}
-			if (minutes > 0) {
-				return `${minutes} minutes ago`;
-			}
-			if (seconds > 0) {
-				return `${seconds} seconds ago`;
-			}
-			return 'Just now';
+			const relativeTime = dayjs(
+				row.original.timestamp as unknown as string
+			).fromNow();
+			return dayjs(row.original.timestamp as unknown as string).fromNow();
+			// const diff =
+			// 	Date.now() - Date.parse(row.original.timestamp as unknown as string);
+			// const hours = Math.floor(diff / (1000 * 60 * 60));
+			// const minutes = Math.floor(diff / (1000 * 60));
+			// const seconds = Math.floor(diff / 1000);
+			// const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+			// if (days > 0) {
+			// 	return `${days} days ago`;
+			// }
+			// if (hours > 0) {
+			// 	return `${hours} hours ago`;
+			// }
+			// if (minutes > 0) {
+			// 	return `${minutes} minutes ago`;
+			// }
+			// if (seconds > 0) {
+			// 	return `${seconds} seconds ago`;
+			// }
+			// return 'Just now';
 		},
 	},
 	{
@@ -85,12 +90,12 @@ export const columns: ColumnDef<LoglibCustomEvent>[] = [
 		header: ({ column }) => {
 			return (
 				<span
-					className='flex items-center group gap-2'
+					className='group flex items-center gap-2'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					City
 					<ChevronsUpDown
-						className='mr-2 opacity-0 group-hover:opacity-100 transition-all ease-in-out'
+						className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 						size={15}
 					/>
 				</span>
@@ -103,12 +108,12 @@ export const columns: ColumnDef<LoglibCustomEvent>[] = [
 		header: ({ column }) => {
 			return (
 				<span
-					className='flex items-center group gap-2'
+					className='group flex items-center gap-2'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					Country
 					<ChevronsUpDown
-						className='mr-2 opacity-0 group-hover:opacity-100 transition-all ease-in-out'
+						className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 						size={15}
 					/>
 				</span>
@@ -124,12 +129,12 @@ export const columns: ColumnDef<LoglibCustomEvent>[] = [
 		header: ({ column }) => {
 			return (
 				<span
-					className='flex items-center group gap-2'
+					className='group flex items-center gap-2'
 					onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 				>
 					OS
 					<ChevronsUpDown
-						className='mr-2 opacity-0 group-hover:opacity-100 transition-all ease-in-out'
+						className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 						size={15}
 					/>
 				</span>

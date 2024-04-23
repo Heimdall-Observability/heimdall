@@ -15,7 +15,7 @@ export function EmptyPlaceholder({
 	return (
 		<div
 			className={cn(
-				'animate-in fade-in-50 flex min-h-[400px] flex-col items-center justify-center rounded-md border border-dashed p-8 text-center',
+				'flex min-h-[400px] flex-col items-center justify-center rounded-xl border border-dashed p-8 text-center animate-in fade-in-50',
 				className
 			)}
 			{...props}
@@ -43,7 +43,7 @@ EmptyPlaceholder.Icon = function EmptyPlaceHolderIcon({
 		return null;
 	}
 	return (
-		<div className='bg-primary/10 flex h-20 w-20 items-center justify-center rounded-full'>
+		<div className='flex h-20 w-20 items-center justify-center rounded-full bg-primary/10'>
 			{/* @ts-ignore */}
 			<Icon className={cn('h-10 w-10 text-primary', className)} {...props} />
 		</div>
@@ -76,7 +76,7 @@ EmptyPlaceholder.Description = function EmptyPlaceholderDescription({
 	return (
 		<p
 			className={cn(
-				'text-muted-foreground mb-8 mt-2 text-center text-sm font-normal leading-6',
+				'mb-8 mt-2 text-center text-sm font-normal leading-6 text-muted-foreground',
 				className
 			)}
 			{...props}

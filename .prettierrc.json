@@ -7,7 +7,10 @@
 	"tabWidth": 2,
 	"useTabs": true,
 	"jsxSingleQuote": true,
-	"plugins": ["@trivago/prettier-plugin-sort-imports"],
+	"plugins": [
+		"prettier-plugin-tailwindcss",
+		"@trivago/prettier-plugin-sort-imports"
+	],
 	"importOrder": [
 		"^(next/(.*)$)|^(next$)",
 		"^(react/(.*)$)|^(react$)",
@@ -18,7 +21,8 @@
 		"^constants/(.*)$",
 		"^data/(.*)$",
 		"^styles/(.*)$",
-		"^[./]"
+		"^[./]",
+		"^nprogress/nprogress.css$"
 	],
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true,

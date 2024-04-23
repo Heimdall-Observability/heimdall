@@ -2,10 +2,10 @@ import { redirect } from 'next/navigation';
 
 import { ReactNode } from 'react';
 
-import { DashboardHeader } from '@/components/header';
+import BottomNavigation from '@/components/bottom-navigation';
+import { MobileDashboardHeader } from '@/components/header';
 import { SideNav } from '@/components/side-nav';
 import { StoreSetter } from '@/components/store-setter';
-import { TeamNav } from '@/components/team-nav';
 import { dashboardConfig } from '@/config/dashboard';
 import { getCurrentUser } from '@/lib/session';
 import { getTeams } from '@/server/query';
@@ -39,12 +39,16 @@ export default async function DashboardWebsiteLayout({
 			<StoreSetter store='teamWebsites' data={teamWebsites} />
 			<StoreSetter store='userWebsites' data={userWebsites} />
 			<StoreSetter store='teams' data={teams} />
-			<div className='flex min-h-screen flex-col bg-gray-50'>
-				<div className='flex h-full'>
-					<main className='flex w-full flex-1 flex-col overflow-hidden'>
-						<DashboardHeader user={user} items={dashboardConfig.projectNav} />
-						<div className='container'>{children}</div>
-					</main>
+			<div className='flex min-h-screen flex-col bg-muted/50 pb-12'>
+				<div className='flex w-full h-full flex-1 flex-col space-y-0 overflow-hidden'>
+					<MobileDashboardHeader
+						user={user}
+						items={dashboardConfig.projectNav}
+					/>
+					<SideNav items={dashboardConfig.sideNav} user={user} />
+					<main className='container'>{children}</main>
+					{/*<BottomNav />*/}
+					<BottomNavigation items={dashboardConfig.sideNav} />
 				</div>
 			</div>
 		</>

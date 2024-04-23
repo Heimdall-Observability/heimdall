@@ -20,7 +20,7 @@ export const CelebrateSetting = () => {
 					The goals are calculated in the last 24 hours.
 				</AlertDescription>
 			</Alert>
-			<div className=' flex flex-col space-y-2 mt-4'>
+			<div className=' mt-4 flex flex-col space-y-2'>
 				<Label>Enable Celebrations</Label>
 				<Switch
 					onCheckedChange={(checked) => {
@@ -32,7 +32,7 @@ export const CelebrateSetting = () => {
 					checked={cSetting.enabled}
 				/>
 			</div>
-			<div className=' space-y-2 mt-4'>
+			<div className=' mt-4 space-y-2'>
 				<Label>Unique Visitors Goal</Label>
 
 				<Input

@@ -45,7 +45,7 @@ export const InsightTables = ({
 	}
 
 	return (
-		<Card className=' md:col-span-3'>
+		<Card className=' md:col-span-3 shadow-none'>
 			<Tabs
 				defaultValue='pages'
 				onValueChange={(val) => {
@@ -55,7 +55,7 @@ export const InsightTables = ({
 					});
 				}}
 			>
-				<TabsList className='md:w-full space-x-2 md:justify-start grid grid-cols-4'>
+				<TabsList className='grid grid-cols-4 space-x-2 md:w-full md:justify-start border-none rounded-xl'>
 					<TabsTrigger value='pages' className=' space-x-2 '>
 						<PanelTop size={16} />
 						<p>Pages</p>
@@ -74,7 +74,7 @@ export const InsightTables = ({
 					</TabsTrigger>
 				</TabsList>
 				<TabsContent value='pages' className=' p-0'>
-					<div className=' px-6 h-full p-0'>
+					<div className=' h-full p-0 px-6'>
 						{isFilterActive('currentPath') ? (
 							<ClearFilter onClick={() => clearFilter('currentPath')} />
 						) : null}
@@ -92,7 +92,7 @@ export const InsightTables = ({
 							Row={(d) => (
 								<TableRow>
 									<TableCell
-										className=' flex items-center gap-1 cursor-pointer'
+										className=' flex cursor-pointer items-center gap-1'
 										onClick={() =>
 											addFilter({
 												key: 'currentPath',
@@ -137,7 +137,7 @@ export const InsightTables = ({
 									}}
 								/>
 							) : null}
-							<TabsList className=' border-gray-400 ml-auto'>
+							<TabsList className=' ml-auto'>
 								<TabsTrigger value='country'>Country</TabsTrigger>
 								<TabsTrigger value='city'>City</TabsTrigger>
 							</TabsList>
@@ -171,7 +171,7 @@ export const InsightTables = ({
 									Row={(location) => (
 										<TableRow>
 											<TableCell
-												className=' flex items-center gap-1 cursor-pointer'
+												className=' flex cursor-pointer items-center gap-1'
 												onClick={() =>
 													addFilter({
 														key: 'country',
@@ -223,7 +223,7 @@ export const InsightTables = ({
 									Row={(location) => (
 										<TableRow>
 											<TableCell
-												className=' flex items-center gap-1 cursor-pointer'
+												className='flex cursor-pointer items-center gap-1'
 												onClick={() =>
 													addFilter({
 														key: 'country',
@@ -308,9 +308,9 @@ export const InsightTables = ({
 													data: 'session',
 												});
 											}}
-											className=' cursor-pointer'
+											className='cursor-pointer'
 										>
-											<TableCell className='flex gap-2 items-center z-10'>
+											<TableCell className='z-10 flex items-center gap-2'>
 												{RefIcons[
 													refs.referrer.toLowerCase() as keyof typeof RefIcons
 												] ? (
@@ -319,7 +319,7 @@ export const InsightTables = ({
 													<DefaultIcons url={refs.referrerDomain} />
 												)}
 												<Link
-													className=' hover:underline'
+													className='hover:underline'
 													href={refs.referrerDomain}
 												>
 													{refs.referrer.split('.').length > 1
@@ -360,7 +360,7 @@ export const InsightTables = ({
 											}}
 											className=' cursor-pointer'
 										>
-											<TableCell className='flex gap-1 items-center'>
+											<TableCell className='flex items-center gap-1'>
 												{RefIcons[
 													refs.utmSource.toLowerCase() as keyof typeof RefIcons
 												] ? (
@@ -401,7 +401,7 @@ export const InsightTables = ({
 											}}
 											className=' cursor-pointer'
 										>
-											<TableCell className='flex gap-1 items-center'>
+											<TableCell className='flex items-center gap-1'>
 												{RefIcons[
 													refs.utmCampaign?.toLowerCase() as keyof typeof RefIcons
 												] ? (
@@ -437,7 +437,7 @@ export const InsightTables = ({
 									}}
 								/>
 							) : null}
-							<TabsList className=' border-gray-400 ml-auto'>
+							<TabsList className=' ml-auto border-gray-400'>
 								<TabsTrigger value='general'>Devices</TabsTrigger>
 								<TabsTrigger value='os'>OS</TabsTrigger>
 								<TabsTrigger value='browser'>Browser</TabsTrigger>
@@ -457,7 +457,7 @@ export const InsightTables = ({
 									Row={(d) => (
 										<TableRow>
 											<TableCell
-												className=' flex items-center gap-1 cursor-pointer'
+												className=' flex cursor-pointer items-center gap-1'
 												onClick={() =>
 													addFilter({
 														key: 'device',
@@ -490,7 +490,7 @@ export const InsightTables = ({
 									Row={(d) => (
 										<TableRow>
 											<TableCell
-												className=' flex items-center gap-1 cursor-pointer'
+												className='flex cursor-pointer items-center gap-1'
 												onClick={() =>
 													addFilter({
 														key: 'device',
@@ -516,13 +516,13 @@ export const InsightTables = ({
 										nameLabel: 'OS',
 										valueLabel: 'visits',
 									}}
-									searchPlaceholder='search Browser...'
+									searchPlaceholder='Search Browser...'
 									tip='Your browsers and how many time your website is visited from them :)'
 									hideSearchBar={data && data?.data.browser.length < 10}
 									Row={(d) => (
 										<TableRow>
 											<TableCell
-												className=' flex items-center gap-1 cursor-pointer'
+												className=' flex cursor-pointer items-center gap-1'
 												onClick={() =>
 													addFilter({
 														key: 'device',

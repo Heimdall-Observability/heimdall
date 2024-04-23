@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 import { EmptyPlaceholder } from '@/components/empty-placeholder';
 import { Icons } from '@/components/icons';
-import { WebsiteCreateButton } from '@/components/website-create-button';
 import { cn } from '@/lib/utils';
 import { LucideIcon } from 'lucide-react';
 import {
@@ -56,7 +55,6 @@ export function Graph({
 						);
 						const stringDate = e.activePayload?.[0].payload.date.split(' ');
 						const endDate = new Date(e.activePayload?.[0].payload.originalDate);
-						console.log(stringDate, 'string date', startDate[1]);
 						if (stringDate[1] === 'AM' || stringDate[1] === 'PM') {
 							endDate.setHours(endDate.getHours() + 1);
 						} else if (stringDate[1]) {
@@ -117,12 +115,12 @@ export function Graph({
 						content={({ active, payload, label }) => {
 							if (active && payload && payload.length) {
 								return (
-									<div className='custom-tooltip dark:bg-black bg-white/10 px-2 border rounded-md border-gray-700 py-2'>
-										<div className=' flex items-center gap-2 dark:text-emphasis text-black'>
+									<div className='custom-tooltip rounded-md border bg-background p-2 dark:bg-muted'>
+										<div className=' dark:text-emphasis flex items-center gap-2 text-emphasis'>
 											<Icon size={16} />
 											<p className=' font-medium'>{`${payload[0]?.value} ${name}`}</p>
 										</div>
-										<p className='text-gray-400 text-sm'>{label}</p>
+										<p className='text-sm text-gray-400'>{label}</p>
 									</div>
 								);
 							}
@@ -132,12 +130,12 @@ export function Graph({
 				</ParentDiv>
 			) : (
 				<div className=' flex flex-col justify-center gap-2'>
-					<div className='text-2xl font-bold text-center '>
+					<div className='text-center text-2xl font-bold '>
 						{isLoading ? (
-							<p className='text-sm font-medium animate-pulse'>loading data</p>
+							<p className='animate-pulse text-sm font-medium'>Loading data</p>
 						) : (
-							<div className='animate-in fade-in-50 flex flex-col mt-12 items-center justify-center text-center'>
-								<div className='bg-muted/50 flex h-16 w-16 items-center justify-center rounded-full'>
+							<div className='mt-12 flex flex-col items-center justify-center text-center animate-in fade-in-50'>
+								<div className='flex h-16 w-16 items-center justify-center rounded-full bg-muted/50'>
 									{/* @ts-ignore */}
 									<Icons.reports
 										className={cn('h-8 w-8 text-muted-foreground')}
@@ -151,7 +149,7 @@ export function Graph({
 									<a
 										href='https://heimdall.francismasha.com/docs'
 										target='_blank'
-										className=' text-blue-700 underline'
+										className=' text-primary underline'
 										rel='noreferrer'
 									>
 										docs

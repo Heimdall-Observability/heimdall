@@ -45,7 +45,7 @@ export default function Search({ disabled }: { disabled?: boolean }) {
 					name='search'
 					id='search'
 					disabled={disabled}
-					className='block h-10 w-full rounded-md bg-background pl-9 sm:text-sm'
+					className='block h-10 w-full  rounded-md bg-background pl-9 shadow-none sm:text-sm'
 					placeholder='Search...'
 					spellCheck={false}
 					onChange={(e) => handleSearch(e.target.value)}
@@ -53,9 +53,9 @@ export default function Search({ disabled }: { disabled?: boolean }) {
 			</div>
 
 			{isPending && (
-				<div className='absolute right-0 top-0 bottom-0 flex items-center justify-center'>
+				<div className='absolute inset-y-0 right-0 flex items-center justify-center'>
 					<svg
-						className='animate-spin -ml-1 mr-3 h-5 w-5 text-gray-700'
+						className='-ml-1 mr-3 h-5 w-5 animate-spin text-gray-700'
 						xmlns='http://www.w3.org/2000/svg'
 						fill='none'
 						viewBox='0 0 24 24'
