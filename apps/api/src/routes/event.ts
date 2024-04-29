@@ -46,7 +46,7 @@ export const createEvents: RouteType = async ({ rawBody, req }) => {
 		events.map(async (event) => {
 			await client
 				.insert({
-					table: 'heimdall_logs.event',
+					table: 'default.event',
 					values: {
 						id: event.id,
 						sessionId,

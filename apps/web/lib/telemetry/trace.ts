@@ -20,6 +20,8 @@ interface Props {
 	serviceName?: string;
 }
 
+const COLLECTOR_STRING = 'http://localhost:4318/v1/traces';
+
 export function trace({ collectorString, serviceName }: Props) {
 	let resource = new Resource({
 		[SemanticResourceAttributes.SERVICE_NAME]: serviceName ?? 'Heimdall',
@@ -38,7 +40,7 @@ export function trace({ collectorString, serviceName }: Props) {
 			new OTLPTraceExporter({
 				url:
 					// NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ||
-					collectorString ?? 'https://otelcol.francismasha.com/v1/traces',
+					collectorString ?? 'http://localhost:4318/v1/traces',
 			})
 		)
 	);

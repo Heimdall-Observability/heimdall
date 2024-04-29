@@ -19,10 +19,8 @@ export function flush() {
 
 export function checkDoNotTrackClass(e: Event) {
 	const target = e.target as HTMLButtonElement;
-	if (target.hasAttribute('doNotTrack')) {
-		return true;
-	}
-	return false;
+	return target.hasAttribute('doNotTrack');
+
 }
 
 export const getUrlParams = () => {

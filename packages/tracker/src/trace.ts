@@ -19,7 +19,8 @@ import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
 import { SessionIdProcessor } from './session-id-processor';
 import { Config } from './types';
 
-const COLLECTOR_STRING = 'https://otelcol.francismasha.com/v1/traces';
+// const COLLECTOR_STRING = 'https://otelcol.francismasha.com/v1/traces';
+const COLLECTOR_STRING = 'http://localhost:4318/v1/traces';
 
 export async function trace({ collector, id }: Partial<Config>) {
 	const { ZoneContextManager } = await import('@opentelemetry/context-zone');

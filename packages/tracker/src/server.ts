@@ -1,11 +1,6 @@
 import { Logger } from './utils/logger';
-import {
-	flush,
-	getSessionDuration,
-	getUrlParams,
-	getVisitorId,
-	isDevelopment,
-} from './utils/util';
+import { flush, getSessionDuration, getUrlParams, getVisitorId, isDevelopment } from './utils/util';
+
 
 export function sendPageView(currentRef: string, currentUrl: string) {
 	const dataToSend = {
@@ -59,10 +54,11 @@ export function sendVisitor(payload: Record<string, string>) {
 export async function send(
 	data: Record<string, any> | Array<Record<string, any>>,
 	onSuccess?: () => void,
-	onError?: () => void
+	onError?: () => void,
+	path?: string
 ) {
 	const logger = Logger(window.llc.debug);
-	const url = window.llc.host;
+	const url = path ? window.llc.host + path : window.llc.host;
 	if (!data || (Array.isArray(data) && data.length === 0)) {
 		logger.log('Skipping empty request');
 		return;

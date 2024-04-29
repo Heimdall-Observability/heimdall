@@ -9,7 +9,7 @@ export const getTodayVisitorsCount = (websiteId: string) => {
 		clickhouse: async () => {
 			const sessionsCount = await client.query({
 				query: `select visitorId as id
-                from heimdall_logs.event
+                from default.event
                 where websiteId = '${websiteId}'
                   AND timestamp >= '${before24Hour
 										.toISOString()
@@ -42,11 +42,11 @@ const getTotalEventsCount = async (
 ) => {
 	return {
 		clickhouse: async () => {
-			websiteIds = ['heimdall_logs', 'xyz'];
+			websiteIds = ['default', 'xyz'];
 			const sessionsCount = await client
 				.query({
 					query: `select *
-                  from heimdall_logs.event
+                  from default.event
                   where websiteId IN (${websiteIds.map((w) => `'${w}'`)})
                     AND timestamp >= '${startDate
 											.toISOString()

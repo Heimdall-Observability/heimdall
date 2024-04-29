@@ -32,7 +32,7 @@ export const createPageview: RouteType = async ({ rawBody, req }) => {
 		const session = await client
 			.query({
 				query: `select *
-                from heimdall_logs.event
+                from default.event
                 where sessionId = '${sessionId}'
                 limit 1`,
 				format: 'JSONEachRow',
@@ -48,7 +48,7 @@ export const createPageview: RouteType = async ({ rawBody, req }) => {
 		const referrerDomain = properties.referrerDomain ?? 'unknown';
 		try {
 			await client.insert({
-				table: 'heimdall_logs.event',
+				table: 'default.event',
 				values: [
 					{
 						id: pageId,
@@ -106,7 +106,7 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
 		const query = await client
 			.query({
 				query: `select *
-                from heimdall_logs.event
+                from default.event
                 where id = '${pageId}'`,
 				format: 'JSONEachRow',
 			})
@@ -120,7 +120,7 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
 		try {
 			await client
 				.insert({
-					table: 'heimdall_logs.event',
+					table: 'default.event',
 					values: [
 						{
 							...pageview,
@@ -132,7 +132,7 @@ export const updatePageDuration: RouteType = async ({ rawBody }) => {
 				.catch((e) => console.log(e));
 			await client
 				.insert({
-					table: 'heimdall_logs.event',
+					table: 'default.event',
 					values: [
 						{
 							...pageview,

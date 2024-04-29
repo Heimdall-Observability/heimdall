@@ -16,7 +16,7 @@ export const createVisitor: RouteType = async ({ rawBody }) => {
 		try {
 			const { websiteId, id, data } = body.data;
 			await client.insert({
-				table: 'heimdall_logs.visitor',
+				table: 'default.visitor',
 				values: {
 					id,
 					identifiedId: data.identifiedId ?? id,

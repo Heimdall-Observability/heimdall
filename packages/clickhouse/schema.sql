@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS heimdall_logs.event
+CREATE TABLE IF NOT EXISTS default.event
 (
     id         String,
     event      String,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS heimdall_logs.event
 ) ENGINE = CollapsingMergeTree(sign)
       ORDER BY (id, websiteId, timestamp, event);
 
-CREATE TABLE IF NOT EXISTS heimdall_logs.event_queue
+CREATE TABLE IF NOT EXISTS default.event_queue
 (
     id         String,
     event      String,
@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS heimdall_logs.event_queue
           kafka_max_block_size = 1048576,
           kafka_handle_error_mode = 'stream';
 
-CREATE MATERIALIZED VIEW heimdall_logs.event_queue_mv TO heimdall_logs.event AS
+CREATE MATERIALIZED VIEW default.event_queue_mv TO default.event AS
 SELECT id,
        event,
        sessionId,
@@ -36,9 +36,9 @@ SELECT id,
        timestamp,
        websiteId,
        sign
-FROM heimdall_logs.event_queue;
+FROM default.event_queue;
 
-CREATE MATERIALIZED VIEW heimdall_logs.event_errors_mv
+CREATE MATERIALIZED VIEW default.event_errors_mv
             (
              error String,
              raw String
@@ -49,5 +49,5 @@ CREATE MATERIALIZED VIEW heimdall_logs.event_errors_mv
 AS
 SELECT _error       AS error,
        _raw_message AS raw
-FROM heimdall_logs.event_queue
+FROM default.event_queue
 WHERE length(_error) > 0;

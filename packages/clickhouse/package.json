@@ -12,14 +12,14 @@
 		"build": "tsup"
 	},
 	"dependencies": {
-		"@clickhouse/client": "^0.2.2",
-		"@t3-oss/env-core": "^0.6.1",
-		"dotenv": "^16.3.1",
+		"@clickhouse/client": "^1.0.1",
+		"@t3-oss/env-core": "^0.10.1",
+		"dotenv": "^16.4.5",
 		"kafkajs": "^2.2.4",
-		"tsx": "^3.13.0",
-		"zod": "^3.22.2"
+		"tsx": "^4.7.3",
+		"zod": "^3.23.4"
 	},
 	"devDependencies": {
-		"@heimdall-logs/config": "0.0.1"
+		"@heimdall-logs/config": "workspace:*"
 	}
 }

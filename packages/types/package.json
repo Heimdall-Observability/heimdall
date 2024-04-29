@@ -10,6 +10,6 @@
 		"./models": "./models.ts"
 	},
 	"dependencies": {
-		"@heimdall-logs/db": "0.0.1"
+		"@heimdall-logs/db": "workspace:*"
 	}
 }

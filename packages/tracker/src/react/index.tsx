@@ -1,17 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 
+
+
 import { heimdall } from '../lib';
 import { record } from '../record';
 import { trace } from '../trace';
 import { Config, Internal } from '../types';
 
+
 interface Props {
-	config?: Partial<Config>;
+	config: Config;
 }
 
 declare global {
 	interface Window {
-		llc: Config;
+		llc: NonNullable<Config>;
 		lli: Internal;
 		i: any;
 		logLib: typeof heimdall;

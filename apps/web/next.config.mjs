@@ -6,7 +6,13 @@ import { env } from './env.mjs';
 import million from 'million/compiler';
 
 const nextConfig = {
-  experimental: { serverActions: true, instrumentationHook: true },
+  experimental: {
+    serverComponentsExternalPackages: ['libsql'],
+  },
+  logging: {
+    level: 'verbose',
+    fullUrl: true,
+  },
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',

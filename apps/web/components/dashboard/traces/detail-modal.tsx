@@ -17,9 +17,9 @@ const renderSubComponent = ({ row }: { row: Row<HeimdallTraces> }) => {
 		'Parent span ID': data.ParentSpanId,
 		'Instrumentation scope': data.ScopeName,
 		'Instrumentation scope version': data.ScopeVersion,
-		Events: data['Events.Attributes'].length,
-		Status: data.StatusCode,
-		'Status message': data.StatusMessage,
+		// Events: data['Events.Attributes'].length,
+		// Status: data.StatusCode,
+		// 'Status message': data.StatusMessage,
 	};
 
 	const attributes = {
@@ -45,87 +45,146 @@ const renderSubComponent = ({ row }: { row: Row<HeimdallTraces> }) => {
 
 	return (
 		<div className='w-full dark:border-muted-foreground/20 bg-muted/60 rounded-xl'>
-			<Tabs defaultValue='metadata'>
-				<TabsList>
-					<TabsTrigger value='metadata'>Metadata</TabsTrigger>
-					<TabsTrigger value='attributes'>Attributes</TabsTrigger>
-					<TabsTrigger value='resourceAttributes'>
-						Resource Attributes
-					</TabsTrigger>
-					<TabsTrigger value='timings'>Timings</TabsTrigger>
-				</TabsList>
-				<TabsContent value='metadata'>
-					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
-						{Object.keys(metadata).map((key) => {
-							return (
-								<div
-									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
-									key={fancyId()}
-								>
-									<div className='font-bold'>{key}:</div>
+			{/*<Tabs defaultValue='metadata'>*/}
+			{/*	<TabsList>*/}
+			{/*		<TabsTrigger value='metadata'>Metadata</TabsTrigger>*/}
+			{/*		<TabsTrigger value='attributes'>Attributes</TabsTrigger>*/}
+			{/*		<TabsTrigger value='resourceAttributes'>*/}
+			{/*			Resource Attributes*/}
+			{/*		</TabsTrigger>*/}
+			{/*		<TabsTrigger value='timings'>Timings</TabsTrigger>*/}
+			{/*	</TabsList>*/}
+			{/*	<TabsContent value='metadata'>*/}
+			<div className='grid md:grid-cols-6 place-content-center gap-4 px-2 py-4'>
+				<div className='col-span-2'>
+					<h3 className='font-semibold text-base text-primary'>Metadata</h3>
+					{Object.keys(metadata).map((key) => {
+						return (
+							<div
+								className='flex items-center justify-between gap-2 border-b py-2 dark:border-muted-foreground/20'
+								key={fancyId()}
+							>
+								<div className='font-semibold'>{key}:</div>
 
-									<div>
-										{JSON.stringify(metadata[key as keyof typeof metadata])}
-									</div>
+								<div className='text-xs'>
+									{JSON.stringify(metadata[key as keyof typeof metadata])}
 								</div>
-							);
-						})}
-					</div>
-				</TabsContent>
-				<TabsContent value='attributes'>
-					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
+							</div>
+						);
+					})}
+				</div>
+				<div className='col-span-2 flex flex-col justify-between'>
+					<div>
+						<h3 className='font-semibold text-base text-primary'>Attributes</h3>
 						{Object.keys(attributes).map((key) => {
 							return (
 								<div
-									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
+									className='flex items-center justify-between gap-2 border-b py-2 dark:border-muted-foreground/20'
 									key={fancyId()}
 								>
-									<div className='font-bold'>{key}:</div>
-									<div>
+									<div className='font-semibold'>{key}:</div>
+									<div className='text-xs truncate'>
 										{JSON.stringify(attributes[key as keyof typeof attributes])}
 									</div>
 								</div>
 							);
 						})}
 					</div>
-				</TabsContent>
-				<TabsContent value='resourceAttributes'>
-					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
-						{Object.keys(resourceAttributes).map((key) => {
-							return (
-								<div
-									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
-									key={fancyId()}
-								>
-									<div className='font-bold'>{key}:</div>
-									<div>
-										{JSON.stringify(
-											resourceAttributes[key as keyof typeof resourceAttributes]
-										)}
-									</div>
-								</div>
-							);
-						})}
-					</div>
-				</TabsContent>
-				<TabsContent value='timings'>
-					<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>
+
+					<div>
+						<h3 className='font-semibold text-base text-primary'>Timings</h3>
 						{Object.keys(timings).map((key) => {
 							return (
 								<div
-									className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'
+									className='flex items-center justify-between gap-2 border-b py-2 dark:border-muted-foreground/20'
 									key={fancyId()}
 								>
-									<div className='font-bold'>{key}:</div>
-									<div>
+									<div className='font-semibold'>{key}:</div>
+									<div className='text-xs'>
 										{JSON.stringify(timings[key as keyof typeof timings])}
 									</div>
 								</div>
 							);
 						})}
 					</div>
-				</TabsContent>
-			</Tabs>
+				</div>
+
+				<div className='col-span-2'>
+					<h3 className='font-semibold text-base text-primary'>
+						Resource Attributes
+					</h3>
+					{Object.keys(resourceAttributes).map((key) => {
+						return (
+							<div
+								className=' flex items-center justify-between gap-2 border-b py-2 dark:border-muted-foreground/20'
+								key={fancyId()}
+							>
+								<div className='font-semibold'>{key}:</div>
+								<div>
+									{JSON.stringify(
+										resourceAttributes[key as keyof typeof resourceAttributes]
+									)}
+								</div>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+			{/*	</TabsContent>*/}
+			{/*	<TabsContent value='attributes'>*/}
+			{/*		<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>*/}
+			{/*			{Object.keys(attributes).map((key) => {*/}
+			{/*				return (*/}
+			{/*					<div*/}
+			{/*						className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'*/}
+			{/*						key={fancyId()}*/}
+			{/*					>*/}
+			{/*						<div className='font-bold'>{key}:</div>*/}
+			{/*						<div>*/}
+			{/*							{JSON.stringify(attributes[key as keyof typeof attributes])}*/}
+			{/*						</div>*/}
+			{/*					</div>*/}
+			{/*				);*/}
+			{/*			})}*/}
+			{/*		</div>*/}
+			{/*	</TabsContent>*/}
+			{/*	<TabsContent value='resourceAttributes'>*/}
+			{/*		<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>*/}
+			{/*			{Object.keys(resourceAttributes).map((key) => {*/}
+			{/*				return (*/}
+			{/*					<div*/}
+			{/*						className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'*/}
+			{/*						key={fancyId()}*/}
+			{/*					>*/}
+			{/*						<div className='font-bold'>{key}:</div>*/}
+			{/*						<div>*/}
+			{/*							{JSON.stringify(*/}
+			{/*								resourceAttributes[key as keyof typeof resourceAttributes]*/}
+			{/*							)}*/}
+			{/*						</div>*/}
+			{/*					</div>*/}
+			{/*				);*/}
+			{/*			})}*/}
+			{/*		</div>*/}
+			{/*	</TabsContent>*/}
+			{/*	<TabsContent value='timings'>*/}
+			{/*		<div className='grid grid-cols-3 place-content-center gap-4 px-2 py-4 '>*/}
+			{/*			{Object.keys(timings).map((key) => {*/}
+			{/*				return (*/}
+			{/*					<div*/}
+			{/*						className=' flex gap-2 border-b py-2 dark:border-muted-foreground/20'*/}
+			{/*						key={fancyId()}*/}
+			{/*					>*/}
+			{/*						<div className='font-bold'>{key}:</div>*/}
+			{/*						<div>*/}
+			{/*							{JSON.stringify(timings[key as keyof typeof timings])}*/}
+			{/*						</div>*/}
+			{/*					</div>*/}
+			{/*				);*/}
+			{/*			})}*/}
+			{/*		</div>*/}
+			{/*	</TabsContent>*/}
+			{/*</Tabs>*/}
 		</div>
 	);
 };

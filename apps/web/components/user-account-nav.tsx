@@ -50,7 +50,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
 
 				<DropdownMenuItem
 					asChild
-					className=' cursor-pinter flex items-center gap-2'
+					className='cursor-pointer flex items-center gap-2'
 				>
 					<Link href='/dashboard' className='w-full cursor-pointer'>
 						Dashboard

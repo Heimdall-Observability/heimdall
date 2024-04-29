@@ -1,14 +1,11 @@
 'use client';
 
 import dayjs from '@/lib/dayjsTime';
+import { durationToReadableUnits, formatDate } from '@/lib/utils';
 import { HeimdallTraces } from '@heimdall-logs/types';
 import { ColumnDef } from '@tanstack/react-table';
-import {
-	ChevronDown,
-	ChevronRight,
-	ChevronsUpDown,
-	UnfoldVertical,
-} from 'lucide-react';
+import { ChevronDown, ChevronRight, ChevronsUpDown, UnfoldVertical } from 'lucide-react';
+
 
 function removeQueryString(url: string | URL) {
 	const urlObj = new URL(url);
@@ -20,16 +17,12 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 	{
 		id: 'expander',
 		header: () => <UnfoldVertical />,
-		cell: ({ row }) => {
-			return (
-				<div className='flex w-[6px] flex-row'>
+		cell: ({ row }) => (
 					<span onClick={() => row.toggleExpanded}>
 						{!row.getIsExpanded() ? <ChevronRight /> : <ChevronDown />}
 					</span>
-				</div>
-			);
+			)
 		},
-	},
 	{
 		id: 'timestamp',
 		accessorKey: 'Timestamp',
@@ -40,7 +33,7 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 						className='group flex items-center gap-2'
 						onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 					>
-						Start time
+						Timestamp
 						<ChevronsUpDown
 							className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 							size={15}
@@ -51,12 +44,10 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 		},
 		cell: ({ row }) => {
 			const relativeTime = dayjs(row.original.Timestamp as unknown as string)
-				.local()
-				.format('YYYY-MM-DD HH:mm:ss');
-			return dayjs(row.original.Timestamp as unknown as string)
-				.local()
-				.tz('Africa/Nairobi')
-				.format('MMM DD HH:mm:ss.SSS');
+        .local()
+        .tz('Africa/Nairobi')
+        .format('MMM DD HH:mm:ss.SSS');
+			return relativeTime;
 		},
 	},
 	{
@@ -69,7 +60,7 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 						className='group flex items-center gap-2'
 						onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
 					>
-						Name
+						Entry
 						<ChevronsUpDown
 							className='mr-2 opacity-0 transition-all ease-in-out group-hover:opacity-100'
 							size={15}
@@ -80,10 +71,11 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className='flex w-[350px] flex-col'>
+				<div className='flex flex-col'>
 					<div className='text-sm'>{row.original.SpanName}</div>
 					<div className='text-xs text-muted-foreground'>
 						{removeQueryString(row.original.SpanAttributes?.['http.url'])}
+            {/*{row.original.SpanAttributes?.['http.url']}*/}
 					</div>
 				</div>
 			);
@@ -107,9 +99,8 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return (
-				<div className='text-sm'>{+row.original.Duration / 1000_000} ms</div>
-			);
+      const duration = durationToReadableUnits(+row.original.Duration);
+      return <span className='text-sm'>{duration}</span>;
 		},
 	},
 	{

@@ -37,7 +37,7 @@ const {
 
 diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ERROR);
 
-const COLLECTOR_STRING = 'https://otelcol.francismasha.com/v1/traces';
+const COLLECTOR_STRING = 'http://localhost:4318/v1/traces';
 
 const heimdallExporter = new OTLPTraceExporter({
 	url: COLLECTOR_STRING,

@@ -9,29 +9,31 @@ receivers:
             - "https://*"
 
 exporters:
-  jaeger:
-    endpoint: jaeger:14250
-    tls:
-      insecure: true
-  logging:
+  # Clickhouse exporter
+  clickhouse:
+    endpoint:
+    ttl_days: 3
+    database: default
+    username: default
+    password: 
+    logs_table_name: otel_logs
+    traces_table_name: otel_traces
+    metrics_table_name: otel_metrics
+    timeout: 5s
+    retry_on_failure:
+      enabled: true
+      initial_interval: 5s
+      max_interval: 30s
+      max_elapsed_time: 300s
+
 processors:
   batch:
-  spanmetrics:
-  #    metrics_exporter: prometheus
-  # temporary measure until description is fixed in .NET
-  transform:
-    metric_statements:
-      - context: metric
-        statements:
-          - set(description, "Measures the duration of inbound HTTP requests") where name == "http.server.duration"
+    timeout: 5s
+    send_batch_size: 100000
 
 service:
   pipelines:
     traces:
       receivers: [ otlp ]
-      processors: [ spanmetrics, batch ]
-      exporters: [ logging, jaeger ]
-    metrics:
-      receivers: [ otlp ]
-      processors: [ transform, batch ]
-      exporters: [ logging ]
+      processors: [ batch ]
+      exporters: [ clickhouse ]

@@ -44,7 +44,7 @@ export const createSession: RouteType = async ({ req, rawBody }) => {
 			const device = os ? getDevice(screenWidth, os) ?? 'desktop' : 'unknown';
 			await client
 				.insert({
-					table: 'heimdall_logs.event',
+					table: 'default.event',
 					values: [
 						{
 							id: pageId,

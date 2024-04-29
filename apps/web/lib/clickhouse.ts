@@ -16,7 +16,7 @@ export const getIsWebsiteActive = async ({
 	await client
 		.query({
 			query: `select id
-              from heimdall_logs.event
+              from default.event
               where websiteId = '${websiteId}' limit 1`,
 			format: 'JSONEachRow',
 		})
@@ -28,7 +28,7 @@ export const removeWebsiteData = async ({
 	websiteId: string;
 }) => {
 	const res = await client.query({
-		query: `ALTER TABLE heimdall_logs.event DELETE WHERE websiteId = '${websiteId}'`,
+		query: `ALTER TABLE default.event DELETE WHERE websiteId = '${websiteId}'`,
 	});
 	console.log(res);
 	return res;

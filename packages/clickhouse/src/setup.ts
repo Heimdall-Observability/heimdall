@@ -8,11 +8,11 @@ export const setupClickhouseDb = async (
 	brokerList: string
 ) => {
 	await client.exec({
-		query: 'CREATE DATABASE IF NOT EXISTS heimdall_logs',
+		query: 'CREATE DATABASE IF NOT EXISTS default',
 	});
 
 	await client.exec({
-		query: `CREATE TABLE IF NOT EXISTS heimdall_logs.event
+		query: `CREATE TABLE IF NOT EXISTS default.event
             (
                 id         String,
                 event      String,
@@ -27,7 +27,7 @@ export const setupClickhouseDb = async (
 	});
 
 	await client.exec({
-		query: `CREATE TABLE IF NOT EXISTS heimdall_logs.event_queue
+		query: `CREATE TABLE IF NOT EXISTS default.event_queue
             (
                 id         String,
                 event      String,
@@ -48,7 +48,7 @@ export const setupClickhouseDb = async (
 	});
 
 	await client.exec({
-		query: `CREATE MATERIALIZED VIEW IF NOT EXISTS heimdall_logs.event_queue_mv TO heimdall_logs.event AS
+		query: `CREATE MATERIALIZED VIEW IF NOT EXISTS default.event_queue_mv TO default.event AS
         SELECT id,
         event,
         sessionId,
@@ -57,12 +57,12 @@ export const setupClickhouseDb = async (
         timestamp,
         websiteId,
         sign
-        FROM heimdall_logs.event_queue;`,
+        FROM default.event_queue;`,
 	});
 
 	await client.exec({
 		query: `
-        CREATE MATERIALIZED VIEW IF NOT EXISTS heimdall_logs.event_errors_mv
+        CREATE MATERIALIZED VIEW IF NOT EXISTS default.event_errors_mv
         (
             error String,
             raw String
@@ -72,7 +72,7 @@ export const setupClickhouseDb = async (
         SETTINGS index_granularity = 8192 AS
         SELECT _error AS error,
             _raw_message AS raw
-        FROM heimdall_logs.event_queue
+        FROM default.event_queue
         WHERE length(_error) > 0;
         `,
 	});

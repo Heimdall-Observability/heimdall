@@ -66,7 +66,6 @@ app.get('/', async (c) => {
 			if (err) {
 				throw err;
 			}
-			//@ts-expect-error
 			if (decoded.website !== websiteId) {
 				throw Error;
 			}

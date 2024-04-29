@@ -30,6 +30,7 @@ export function formatDate(input: string | number): string {
 		month: 'long',
 		day: 'numeric',
 		year: 'numeric',
+    hour: 'numeric',
 	});
 }
 
@@ -109,4 +110,18 @@ export async function getFavicon(url: string) {
 		`https://favicon-fetcher.victr.workers.dev/${url}`
 	);
 	return response;
+}
+
+// function to convert OpenTelemetry Duration to readable units and retain decimal precision and remove trailing zeros
+export function durationToReadableUnits(duration: number) {
+	const units = ['ns', 'μs', 'ms', 's'];
+	let unitIndex = 0;
+	let convertedDuration = duration;
+	while (convertedDuration >= 1000 && unitIndex < units.length - 1) {
+		convertedDuration /= 1000;
+		unitIndex++;
+	}
+	return `${convertedDuration.toFixed(2).replace(/\.?0+$/, '')} ${
+		units[unitIndex]
+	}`;
 }
