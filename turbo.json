@@ -56,5 +56,14 @@
       "outputs": [],
       "cache": true
     }
-  }
+  },
+  "globalEnv": [
+    "DATABASE_URL",
+    "NEXTAUTH_SECRET",
+    "RESEND_EMAIL_SECRET",
+    "CLICKHOUSE_HOST",
+    "CLICKHOUSE_PASSWORD",
+    "CLICKHOUSE_USERNAME",
+    "CLICKHOUSE_DB"
+  ]
 }

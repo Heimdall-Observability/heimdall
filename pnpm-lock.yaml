@@ -135,6 +135,9 @@ importers:
       '@libsql/client':
         specifier: 0.6.0
         version: 0.6.0
+      '@openstatus/next-monitoring':
+        specifier: ^0.0.3
+        version: 0.0.3(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@opentelemetry/api':
         specifier: 1.8.0
         version: 1.8.0
@@ -1367,6 +1370,12 @@ packages:
 
   '@one-ini/wasm@0.1.1':
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
+
+  '@openstatus/next-monitoring@0.0.3':
+    resolution: {integrity: sha512-5e8MMTW0Ne+2XBYdewz1d0TGTFCCwEPUvD5T+RL8/2PHdWSaRUes+end9aabV5txdrXV7mmatrDxWeqrWRZfvA==}
+    peerDependencies:
+      next: '>=14.0.0'
+      react: '>=18.2.0'
 
   '@opentelemetry/api-logs@0.51.0':
     resolution: {integrity: sha512-m/jtfBPEIXS1asltl8fPQtO3Sb1qMpuL61unQajUmM8zIxeMF1AlqzWXM3QedcYgTTFiJCew5uJjyhpmqhc0+g==}
@@ -6452,6 +6461,11 @@ snapshots:
       fastq: 1.17.1
 
   '@one-ini/wasm@0.1.1': {}
+
+  '@openstatus/next-monitoring@0.0.3(next@14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      next: 14.2.3(@opentelemetry/api@1.8.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
 
   '@opentelemetry/api-logs@0.51.0':
     dependencies:

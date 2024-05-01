@@ -11,6 +11,7 @@ import '@/styles/globals.css'
 // import Heimdall from '@heimdall-logs/tracker/react'
 
 import { constructMetadata } from '@/lib/construct-metadata'
+import { OpenStatusProvider } from '@openstatus/next-monitoring'
 // import '@/styles/syntax-highlighter.module.css';
 import Analytics from '../components/analytics'
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           GeistMono.variable,
         )}
       >
+        <OpenStatusProvider dsn="heimdall" />
         <ClientProvider>
           {children}
           <Toaster />
