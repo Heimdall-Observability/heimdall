@@ -1,25 +1,25 @@
 {
-	"name": "@heimdall-logs/clickhouse",
-	"version": "0.0.1",
-	"description": "",
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"main": "./dist/index.js",
-	"types": "./dist/index.d.ts",
-	"scripts": {
-		"migrate": "tsx src/setup.ts",
-		"build": "tsup"
-	},
-	"dependencies": {
-		"@clickhouse/client": "^1.0.1",
-		"@t3-oss/env-core": "^0.10.1",
-		"dotenv": "^16.4.5",
-		"kafkajs": "^2.2.4",
-		"tsx": "^4.7.3",
-		"zod": "^3.23.4"
-	},
-	"devDependencies": {
-		"@heimdall-logs/config": "workspace:*"
-	}
+  "name": "@heimdall-logs/clickhouse",
+  "version": "0.0.1",
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "migrate": "tsx src/setup.ts",
+    "build": "tsup"
+  },
+  "dependencies": {
+    "@clickhouse/client": "^1.0.1",
+    "@t3-oss/env-core": "^0.10.1",
+    "dotenv": "^16.4.5",
+    "kafkajs": "^2.2.4",
+    "tsx": "^4.8.2",
+    "zod": "^3.23.5"
+  },
+  "devDependencies": {
+    "@heimdall-logs/config": "workspace:*"
+  }
 }

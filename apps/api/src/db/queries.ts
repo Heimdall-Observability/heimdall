@@ -1,18 +1,18 @@
-import { kafka } from '@heimdall-logs/clickhouse';
-import { schema } from '@heimdall-logs/db';
-import { sql } from 'drizzle-orm';
+import { kafka } from '@heimdall-logs/clickhouse'
+import { schema } from '@heimdall-logs/db'
+import { sql } from 'drizzle-orm'
 
-import { convertToUTC } from '../lib/utils';
-import { EventRes, HeimdallEvent, TraceRes } from '../type';
-import { client } from './clickhouse';
-import { db } from './drizzle';
+import { convertToUTC } from '../lib/utils'
+import { EventRes, HeimdallEvent, TraceRes } from '../type'
+import { client } from './clickhouse'
+import { db } from './drizzle'
 
 export const hitsQuery = (
-	startDate: string,
-	endDate: string,
-	websiteId: string
+  startDate: string,
+  endDate: string,
+  websiteId: string,
 ) =>
-	`select id,
+  `select id,
           sessionId,
           visitorId,
           JSONExtract(properties, 'city', 'String')           as city,
@@ -30,149 +30,149 @@ export const hitsQuery = (
           timestamp
    from default.event
    WHERE ${
-			startDate && `timestamp >= '${startDate}' AND`
-		} timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'hits'`;
+     startDate && `timestamp >= '${startDate}' AND`
+   } timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'hits'`
 
 export const customEventsQuery = (
-	startDate: string,
-	endDate: string,
-	websiteId: string
+  startDate: string,
+  endDate: string,
+  websiteId: string,
 ) =>
-	`select *
+  `select *
    from default.event
    WHERE timestamp >= '${startDate}'
      AND timestamp <= '${endDate}'
      AND websiteId = '${websiteId}'
-     AND event != 'hits'`;
+     AND event != 'hits'`
 
 export const tracesQuery = (
-	startDate: string,
-	endDate: string,
-	websiteId: string
+  startDate: string,
+  endDate: string,
+  websiteId: string,
 ) =>
-	`SELECT *
+  `SELECT *
    FROM default.otel_traces
    WHERE Timestamp >= '${startDate}'
      AND Timestamp <= '${endDate}'
      AND ServiceName = '${websiteId}'
      AND SpanName != 'click'
    ORDER BY Timestamp DESC
-   LIMIT 100`;
+   LIMIT 100`
 
 export const dummyTracesQuery = (startDate: string, endDate: string) =>
-	`select *
+  `select *
    from default.demo_otel_traces
    WHERE Timestamp >= '${startDate}'
      AND Timestamp <= '${endDate}'
    ORDER BY Timestamp DESC
-   LIMIT 50`;
+   LIMIT 50`
 
 const createEvent = () => {
-	return async ({
-		id,
-		sessionId,
-		visitorId,
-		websiteId,
-		queryParams,
-		referrerDomain,
-		country,
-		city,
-		language,
-		device,
-		os,
-		browser,
-		duration,
-		currentPath,
-		referrerPath,
-		event,
-		payload,
-		type,
-		pageId,
-	}: HeimdallEvent & {
-		payload?: string;
-		pageId?: string;
-		type?: string;
-	}) => {
-		return {
-			clickhouse: async () => {
-				const { enabled, sendMessages, connect } = kafka;
-				const value = {
-					id,
-					sessionId,
-					visitorId,
-					websiteId,
-					event,
-					timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
-					properties: JSON.stringify({
-						queryParams: queryParams ? JSON.stringify(queryParams) : '{}',
-						referrerDomain,
-						country,
-						city,
-						language,
-						device,
-						os,
-						browser,
-						duration,
-						currentPath,
-						referrerPath,
-						payload,
-						type,
-						pageId,
-					}),
-					sign: 1,
-				};
-				if (enabled) {
-					await connect();
-					await sendMessages([value], 'events');
-				} else {
-					await client
-						.insert({
-							table: 'default.event',
-							values: [value],
-							format: 'JSONEachRow',
-						})
-						.then((res) => res);
-				}
-			},
-			sqlite: async () =>
-				db.insert(schema.events).values({
-					id,
-					sessionId,
-					visitorId,
-					websiteId,
-					event,
-					timestamp: new Date(),
-					properties: {
-						queryParams,
-						referrerDomain,
-						country,
-						city,
-						language,
-						device,
-						os,
-						browser,
-						duration,
-						currentPath,
-						referrerPath,
-					},
-				}),
-		};
-	};
-};
+  return async ({
+    id,
+    sessionId,
+    visitorId,
+    websiteId,
+    queryParams,
+    referrerDomain,
+    country,
+    city,
+    language,
+    device,
+    os,
+    browser,
+    duration,
+    currentPath,
+    referrerPath,
+    event,
+    payload,
+    type,
+    pageId,
+  }: HeimdallEvent & {
+    payload?: string
+    pageId?: string
+    type?: string
+  }) => {
+    return {
+      clickhouse: async () => {
+        const { enabled, sendMessages, connect } = kafka
+        const value = {
+          id,
+          sessionId,
+          visitorId,
+          websiteId,
+          event,
+          timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+          properties: JSON.stringify({
+            queryParams: queryParams ? JSON.stringify(queryParams) : '{}',
+            referrerDomain,
+            country,
+            city,
+            language,
+            device,
+            os,
+            browser,
+            duration,
+            currentPath,
+            referrerPath,
+            payload,
+            type,
+            pageId,
+          }),
+          sign: 1,
+        }
+        if (enabled) {
+          await connect()
+          await sendMessages([value], 'events')
+        } else {
+          await client
+            .insert({
+              table: 'default.event',
+              values: [value],
+              format: 'JSONEachRow',
+            })
+            .then((res) => res)
+        }
+      },
+      sqlite: async () =>
+        db.insert(schema.events).values({
+          id,
+          sessionId,
+          visitorId,
+          websiteId,
+          event,
+          timestamp: new Date(),
+          properties: {
+            queryParams,
+            referrerDomain,
+            country,
+            city,
+            language,
+            device,
+            os,
+            browser,
+            duration,
+            currentPath,
+            referrerPath,
+          },
+        }),
+    }
+  }
+}
 
 async function getHitsData(
-	startDateObj: Date,
-	endDateObj: Date,
-	websiteId: string
+  startDateObj: Date,
+  endDateObj: Date,
+  websiteId: string,
 ) {
-	return {
-		sqlite: async () => {
-			const event = schema.events;
-			return await db
-				.select()
-				.from(event)
-				.where(
-					sql`${event.websiteId} =
+  return {
+    sqlite: async () => {
+      const event = schema.events
+      return await db
+        .select()
+        .from(event)
+        .where(
+          sql`${event.websiteId} =
           ${websiteId}
           and
           event
@@ -185,49 +185,49 @@ async function getHitsData(
           and
           ${event.timestamp}
           <=
-          ${new Date(endDateObj).getTime()}`
-				)
-				.then((res) =>
-					res.map((event) => {
-						const { properties, timestamp, ...rest } = event;
-						return {
-							...rest,
-							...properties,
-							timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
-						};
-					})
-				);
-		},
-		clickhouse: async () => {
-			return await client
-				.query({
-					query: hitsQuery(
-						convertToUTC(startDateObj),
-						convertToUTC(endDateObj),
-						websiteId
-					),
-					format: 'JSONEachRow',
-				})
-				.then(async (res) => {
-					return (await res.json()) as HeimdallEvent[];
-				});
-		},
-	};
+          ${new Date(endDateObj).getTime()}`,
+        )
+        .then((res) =>
+          res.map((event) => {
+            const { properties, timestamp, ...rest } = event
+            return {
+              ...rest,
+              ...properties,
+              timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
+            }
+          }),
+        )
+    },
+    clickhouse: async () => {
+      return await client
+        .query({
+          query: hitsQuery(
+            convertToUTC(startDateObj),
+            convertToUTC(endDateObj),
+            websiteId,
+          ),
+          format: 'JSONEachRow',
+        })
+        .then(async (res) => {
+          return (await res.json()) as HeimdallEvent[]
+        })
+    },
+  }
 }
 
 async function getCustomEventData(
-	startDateObj: Date,
-	endDateObj: Date,
-	websiteId: string
+  startDateObj: Date,
+  endDateObj: Date,
+  websiteId: string,
 ) {
-	return {
-		sqlite: async () => {
-			const event = schema.events;
-			return await db
-				.select()
-				.from(event)
-				.where(
-					sql`${event.websiteId} =
+  return {
+    sqlite: async () => {
+      const event = schema.events
+      return await db
+        .select()
+        .from(event)
+        .where(
+          sql`${event.websiteId} =
           ${websiteId}
           and
           event
@@ -240,62 +240,62 @@ async function getCustomEventData(
           and
           ${event.timestamp}
           <=
-          ${new Date(endDateObj).getTime()}`
-				)
-				.then((res) =>
-					res.map((event) => {
-						const { properties, timestamp, ...rest } = event;
-						return {
-							...rest,
-							...properties,
-							timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
-						};
-					})
-				);
-		},
-		clickhouse: async () => {
-			return await client
-				.query({
-					query: customEventsQuery(
-						convertToUTC(startDateObj),
-						convertToUTC(endDateObj),
-						websiteId
-					),
-					format: 'JSONEachRow',
-				})
-				.then(async (res) => (await res.json()) as EventRes[])
-				.then((res) =>
-					res.map((s) => {
-						const properties = JSON.parse(s.properties);
-						return {
-							...properties,
-							id: s.id,
-							event: s.event,
-							sessionId: s.sessionId,
-							websiteId: s.websiteId,
-							visitorId: s.visitorId,
-							timestamp: s.timestamp,
-							duration: properties.duration ?? 0,
-						};
-					})
-				);
-		},
-	};
+          ${new Date(endDateObj).getTime()}`,
+        )
+        .then((res) =>
+          res.map((event) => {
+            const { properties, timestamp, ...rest } = event
+            return {
+              ...rest,
+              ...properties,
+              timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
+            }
+          }),
+        )
+    },
+    clickhouse: async () => {
+      return await client
+        .query({
+          query: customEventsQuery(
+            convertToUTC(startDateObj),
+            convertToUTC(endDateObj),
+            websiteId,
+          ),
+          format: 'JSONEachRow',
+        })
+        .then(async (res) => (await res.json()) as EventRes[])
+        .then((res) =>
+          res.map((s) => {
+            const properties = JSON.parse(s.properties)
+            return {
+              ...properties,
+              id: s.id,
+              event: s.event,
+              sessionId: s.sessionId,
+              websiteId: s.websiteId,
+              visitorId: s.visitorId,
+              timestamp: s.timestamp,
+              duration: properties.duration ?? 0,
+            }
+          }),
+        )
+    },
+  }
 }
 
 async function getTracesData(
-	startDateObj: Date,
-	endDateObj: Date,
-	websiteId: string
+  startDateObj: Date,
+  endDateObj: Date,
+  websiteId: string,
 ) {
-	return {
-		sqlite: async () => {
-			const event = schema.events;
-			return await db
-				.select()
-				.from(event)
-				.where(
-					sql`${event.websiteId} =
+  return {
+    sqlite: async () => {
+      const event = schema.events
+      return await db
+        .select()
+        .from(event)
+        .where(
+          sql`${event.websiteId} =
           ${websiteId}
           and
           event
@@ -308,87 +308,87 @@ async function getTracesData(
           and
           ${event.timestamp}
           <=
-          ${new Date(endDateObj).getTime()}`
-				)
-				.then((res) =>
-					res.map((event) => {
-						const { properties, timestamp, ...rest } = event;
-						return {
-							...rest,
-							...properties,
-							timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
-						};
-					})
-				);
-		},
-		clickhouse: async () => {
-			return await client
-				.query({
-					query: tracesQuery(
-						convertToUTC(startDateObj),
-						convertToUTC(endDateObj),
-						websiteId
-					),
-					format: 'JSONEachRow',
-				})
-				.then(async (res) => (await res.json()) as TraceRes[]);
-			// .then((res) =>
-			// 	res.map((s) => {
-			// 		const properties = JSON.parse(s.properties);
-			// 		return {
-			// 			...properties,
-			// 			id: s.id,
-			// 			// event: s.event,
-			// 			// sessionId: s.sessionId,
-			// 			// websiteId: s.websiteId,
-			// 			// visitorId: s.visitorId,
-			// 			timestamp: s.Timestamp,
-			// 			duration: properties.duration ?? 0,
-			// 		};
-			// 	})
-			// );
-		},
-	};
+          ${new Date(endDateObj).getTime()}`,
+        )
+        .then((res) =>
+          res.map((event) => {
+            const { properties, timestamp, ...rest } = event
+            return {
+              ...rest,
+              ...properties,
+              timestamp: timestamp.toISOString().slice(0, 19).replace('T', ' '),
+            }
+          }),
+        )
+    },
+    clickhouse: async () => {
+      return await client
+        .query({
+          query: tracesQuery(
+            convertToUTC(startDateObj),
+            convertToUTC(endDateObj),
+            websiteId,
+          ),
+          format: 'JSONEachRow',
+        })
+        .then(async (res) => (await res.json()) as TraceRes[])
+      // .then((res) =>
+      // 	res.map((s) => {
+      // 		const properties = JSON.parse(s.properties);
+      // 		return {
+      // 			...properties,
+      // 			id: s.id,
+      // 			// event: s.event,
+      // 			// sessionId: s.sessionId,
+      // 			// websiteId: s.websiteId,
+      // 			// visitorId: s.visitorId,
+      // 			timestamp: s.Timestamp,
+      // 			duration: properties.duration ?? 0,
+      // 		};
+      // 	})
+      // );
+    },
+  }
 }
 
 export function heimdallDb(db: 'sqlite' | 'clickhouse') {
-	return {
-		async insertEvent(
-			data: HeimdallEvent & {
-				payload?: string;
-				pageId?: string;
-				type?: string;
-			}
-		) {
-			const hits = createEvent();
-			const insert = await hits(data);
-			return insert[db]();
-		},
-		async getHits(
-			startDateObj: Date,
-			endDateObj: Date,
-			pastEndDateObj: Date,
-			websiteId: string
-		) {
-			const query1 = await getHitsData(startDateObj, endDateObj, websiteId);
-			const query2 = await getHitsData(endDateObj, pastEndDateObj, websiteId);
-			return await Promise.all([query1[db](), query2[db]()]);
-		},
-		async getCustomEvents(
-			startDateObj: Date,
-			endDateObj: Date,
-			websiteId: string
-		) {
-			const query = await getCustomEventData(
-				startDateObj,
-				endDateObj,
-				websiteId
-			);
-			return await query[db]();
-		},
-		async getTraces(startDateObj: Date, endDateObj: Date, websiteId: string) {
-			const query = await getTracesData(startDateObj, endDateObj, websiteId);
-			return await query[db]();
-		},
-	};
+  return {
+    async insertEvent(
+      data: HeimdallEvent & {
+        payload?: string
+        pageId?: string
+        type?: string
+      },
+    ) {
+      const hits = createEvent()
+      const insert = await hits(data)
+      return insert[db]()
+    },
+    async getHits(
+      startDateObj: Date,
+      endDateObj: Date,
+      pastEndDateObj: Date,
+      websiteId: string,
+    ) {
+      const query1 = await getHitsData(startDateObj, endDateObj, websiteId)
+      const query2 = await getHitsData(endDateObj, pastEndDateObj, websiteId)
+      return await Promise.all([query1[db](), query2[db]()])
+    },
+    async getCustomEvents(
+      startDateObj: Date,
+      endDateObj: Date,
+      websiteId: string,
+    ) {
+      const query = await getCustomEventData(
+        startDateObj,
+        endDateObj,
+        websiteId,
+      )
+      return await query[db]()
+    },
+    async getTraces(startDateObj: Date, endDateObj: Date, websiteId: string) {
+      const query = await getTracesData(startDateObj, endDateObj, websiteId)
+      return await query[db]()
+    },
+  }
 }

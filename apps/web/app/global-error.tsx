@@ -1,13 +1,13 @@
-'use client';
+'use client'
 
-import { ServerError } from '@/components/errors';
+import { ServerError } from '@/components/errors'
 
 export default function GlobalError({
-	error,
-	reset,
+  error,
+  reset,
 }: {
-	error: Error;
-	reset: () => void;
+  error: Error
+  reset: () => void
 }) {
-	return <ServerError error={error} reset={reset} />;
+  return <ServerError error={error} reset={reset} />
 }

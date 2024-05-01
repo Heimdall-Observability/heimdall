@@ -1,34 +1,60 @@
 {
-	"$schema": "https://turbo.build/schema.json",
-	"globalDotEnv": [".env"],
-	"pipeline": {
-		"build": {
-			"dependsOn": ["format", "^build"],
-			"outputs": ["dist/**", ".next/**", "!.next/cache/**"]
-		},
-		"check-types": {},
-		"format": {
-			"cache": false,
-			"outputs": ["**/*.{js,jsx,ts,tsx}", "!**/node_modules/**"]
-		},
-		"lint": {},
-		"dev": {
-			"cache": false,
-			"persistent": true
-		},
-		"clean": {
-			"cache": false
-		},
-		"migrate": {
-			"cache": false
-		},
-		"deploy": {
-			"cache": false
-		},
-		"typecheck": {
-			"dependsOn": ["build"],
-			"outputs": [],
-			"cache": true
-		}
-	}
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env"],
+  "pipeline": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "dotEnv": [
+        ".env.production.local",
+        ".env.local",
+        ".env.production",
+        ".env"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".output/**"
+      ],
+      "env": ["*"]
+    },
+    "check-types": {},
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dotEnv": [
+        ".env.development.local",
+        ".env.local",
+        ".env.development",
+        ".env"
+      ]
+    },
+    "start": {
+      "cache": false
+    },
+    "format": {
+      "outputMode": "new-only"
+    },
+    "lint": {
+      "dependsOn": ["^topo"]
+    },
+    "clean": {
+      "cache": false
+    },
+    "migrate": {
+      "cache": false
+    },
+    "deploy": {
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["build"],
+      "outputs": [],
+      "cache": true
+    }
+  }
 }

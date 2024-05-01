@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { createEnv } from '@t3-oss/env-nextjs';
+import { createEnv } from '@t3-oss/env-nextjs'
+import { z } from 'zod'
 
 export const env = createEnv({
   /**
@@ -61,9 +61,10 @@ export const env = createEnv({
     STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY,
     STRIPE_SECRET_KEY_LIVE: process.env.STRIPE_SECRET_KEY_LIVE,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE:
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_LIVE,
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT:
+      process.env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
   },
-});
+})

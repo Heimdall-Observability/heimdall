@@ -1,9 +1,9 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react'
 
 export const useCurrentCallback = <T extends (...args: any[]) => any>(
-	callback: T
+  callback: T,
 ) => {
-	const callbackRef = useRef(callback);
-	callbackRef.current = callback;
-	return useCallback((...args: any[]) => callbackRef.current(...args), []);
-};
+  const callbackRef = useRef(callback)
+  callbackRef.current = callback
+  return useCallback((...args: any[]) => callbackRef.current(...args), [])
+}

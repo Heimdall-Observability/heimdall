@@ -1,15 +1,15 @@
 {
-	"$schema": "https://ui.shadcn.com/schema.json",
-	"style": "new-york",
-	"rsc": true,
-	"tailwind": {
-		"config": "tailwind.config.ts",
-		"css": "styles/globals.css",
-		"baseColor": "gray",
-		"cssVariables": true
-	},
-	"aliases": {
-		"components": "@/components",
-		"utils": "@/lib/utils"
-	}
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "new-york",
+  "rsc": true,
+  "tailwind": {
+    "config": "tailwind.config.ts",
+    "css": "styles/globals.css",
+    "baseColor": "gray",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@/components",
+    "utils": "@/lib/utils"
+  }
 }

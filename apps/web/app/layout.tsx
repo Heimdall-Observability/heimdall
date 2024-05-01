@@ -1,93 +1,42 @@
-import { Metadata } from 'next';
+import type { ReactNode } from 'react'
 
-import type { ReactNode } from 'react';
+import { ClientProvider } from '@/components/client-provider'
+import { TailwindIndicator } from '@/components/tailwind-indicator'
+import { Toaster } from '@/components/ui/toaster'
+import { GeistMono } from 'geist/font/mono'
+import { GeistSans } from 'geist/font/sans'
 
-import { ClientProvider } from '@/components/client-provider';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
-import { Toaster } from '@/components/ui/toaster';
-import { fontHeading, fontMono, fontNumeric, fontSans } from '@/lib/fonts';
-import { cn } from '@/lib/utils';
-import '@/styles/globals.css';
-import Heimdall from '@heimdall-logs/tracker/react';
+import { cn } from '@/lib/utils'
+import '@/styles/globals.css'
+// import Heimdall from '@heimdall-logs/tracker/react'
 
+import { constructMetadata } from '@/lib/construct-metadata'
 // import '@/styles/syntax-highlighter.module.css';
-import Analytics from '../components/analytics';
+import Analytics from '../components/analytics'
 
-const title = 'Heimdall';
-const description = 'Monitor your app performance.';
-
-export const metadata: Metadata = {
-	title: {
-		default: title,
-		template: `%s | ${title}`,
-	},
-	description,
-	manifest: '/manifest.json',
-	keywords: [
-		'Monitoring',
-		'Open Source app analytics',
-		'heimdall',
-		'heimdall analytics',
-	],
-	themeColor: [
-		{ media: '(prefers-color-scheme: light)', color: 'white' },
-		{ media: '(prefers-color-scheme: dark)', color: 'black' },
-	],
-	viewport: {
-		width: 'device-width',
-		initialScale: 1,
-		userScalable: false,
-	},
-	icons: {
-		icon: '/favicon.ico',
-		shortcut: '/favicon-16x16.png',
-		apple: '/apple-touch-icon.png',
-	},
-	appleWebApp: {
-		title,
-		capable: true,
-		statusBarStyle: 'black-translucent',
-		startupImage: ['/apple-touch-icon.png'],
-	},
-};
+export const metadata = constructMetadata()
 
 export default function RootLayout({
-	children,
+  children,
 }: {
-	children: ReactNode;
+  children: ReactNode
 }): JSX.Element {
-	return (
-		<html
-			lang='en'
-			suppressHydrationWarning
-			className={cn(
-				'min-[100dvh] font-sans text-black',
-				fontSans.variable,
-				fontHeading.variable,
-				fontNumeric.variable,
-				fontMono.variable
-			)}
-		>
-			<body className='antialiased'>
-				<ClientProvider>
-					{children}
-					<Heimdall
-						config={{
-							id: 'heimdall',
-							consent: 'granted',
-							host: '/api/heimdall',
-							collector: '/api/trace',
-							// host: 'http://localhost:8000',
-							autoTrack: true,
-							// env: 'prod',
-							// debug: true,
-						}}
-					/>
-					<Toaster />
-					<Analytics />
-					<TailwindIndicator />
-				</ClientProvider>
-			</body>
-		</html>
-	);
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          'min-[100dvh] overscroll-none whitespace-pre-line bg-background font-sans text-foreground antialiased',
+          GeistSans.variable,
+          GeistMono.variable,
+        )}
+      >
+        <ClientProvider>
+          {children}
+          <Toaster />
+          <Analytics />
+          <TailwindIndicator />
+        </ClientProvider>
+      </body>
+    </html>
+  )
 }

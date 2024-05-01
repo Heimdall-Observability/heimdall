@@ -60,6 +60,15 @@
 	}
 }
 
+html,
+body,
+#__next,
+.main {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-size: 90%;
+}
+
 @layer base {
 	* {
 		@apply border-border;

@@ -2,8 +2,7 @@
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
  * for Docker builds.
  */
-import { env } from './env.mjs';
-import million from 'million/compiler';
+import { env } from './env.mjs'
 
 const nextConfig = {
   experimental: {
@@ -16,9 +15,9 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   output: 'standalone',
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+  poweredByHeader: false,
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -44,11 +43,6 @@ const nextConfig = {
   devIndicators: {
     buildActivityPosition: 'bottom-right',
   },
-};
+}
 
-export default million.next(nextConfig, {
-  auto: {
-    rsc: true,
-    threshold: 0.5,
-  },
-});
+export default nextConfig

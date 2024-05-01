@@ -1,91 +1,79 @@
 {
-	"name": "@heimdall-logs/tracker",
-	"version": "0.0.7",
-	"description": "A simple tracker for heimdall",
-	"main": "./dist/index.js",
-	"scripts": {
-		"test": "vitest",
-		"dev": "rm -rf /dist & tsup --watch",
-		"build": "rm -rf /dist & tsup"
-	},
-	"exports": {
-		".": {
-			"browser": "./dist/index.js",
-			"import": "./dist/index.js",
-			"require": "./dist/index.cjs"
-		},
-		"./react": {
-			"browser": "./dist/react/index.js",
-			"import": "./dist/react/index.js",
-			"require": "./dist/react/index.cjs"
-		}
-	},
-	"typesVersions": {
-		"*": {
-			"*": [
-				"dist/index.d.ts"
-			],
-			"react": [
-				"dist/react/index.d.ts"
-			]
-		}
-	},
-	"types": "dist/index.d.ts",
-	"keywords": [
-		"heimdall",
-		"event tracker",
-		"web analytics",
-		"analytics"
-	],
-	"author": "Francis Masha",
-	"license": "MIT",
-	"files": [
-		"dist",
-		"package.json",
-		"LICENSE",
-		"README.md"
-	],
-	"devDependencies": {
-		"@changesets/changelog-git": "^0.2.0",
-		"@changesets/changelog-github": "^0.5.0",
-		"@changesets/cli": "^2.27.1",
-		"@heimdall-logs/types": "workspace:*",
-		"@types/jest": "^29.5.12",
-		"@types/node": "^20.12.7",
-		"@types/react": "^18.3.1",
-		"@vitest/browser": "^1.5.2",
-		"happy-dom": "^14.7.1",
-		"react": "^18.3.1",
-		"sinon": "^17.0.1",
-		"terser": "^5.31.0",
-		"tsup": "^8.0.2",
-		"typescript": "^5.4.5",
-		"vitest": "^1.5.2",
-		"webdriverio": "^8.36.1"
-	},
-	"peerDependencies": {
-		"react": "^16.8||^17||^18"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"dependencies": {
-		"@opentelemetry/api": "1.8.0",
-		"@opentelemetry/auto-instrumentations-web": "0.39.0",
-		"@opentelemetry/context-zone": "1.24.0",
-		"@opentelemetry/core": "1.24.0",
-		"@opentelemetry/exporter-trace-otlp-http": "0.51.0",
-		"@opentelemetry/instrumentation": "0.51.0",
-		"@opentelemetry/instrumentation-document-load": "^0.38.0",
-		"@opentelemetry/instrumentation-fetch": "^0.51.0",
-		"@opentelemetry/instrumentation-user-interaction": "^0.38.0",
-		"@opentelemetry/instrumentation-xml-http-request": "^0.51.0",
-		"@opentelemetry/propagator-b3": "^1.24.0",
-		"@opentelemetry/resources": "1.24.0",
-		"@opentelemetry/sdk-trace-base": "1.24.0",
-		"@opentelemetry/sdk-trace-web": "1.24.0",
-		"@opentelemetry/semantic-conventions": "1.24.0",
-		"uuid": "^9.0.1",
-		"web-vitals": "^3.5.2"
-	}
+  "name": "@heimdall-logs/tracker",
+  "version": "0.0.7",
+  "description": "A simple tracker for heimdall",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "dev": "rm -rf /dist & tsup --watch",
+    "build": "rm -rf /dist & tsup"
+  },
+  "exports": {
+    ".": {
+      "browser": "./dist/index.js",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./react": {
+      "browser": "./dist/react/index.js",
+      "import": "./dist/react/index.js",
+      "require": "./dist/react/index.cjs"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "dist/index.d.ts"
+      ],
+      "react": [
+        "dist/react/index.d.ts"
+      ]
+    }
+  },
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "heimdall",
+    "event tracker",
+    "web analytics",
+    "analytics"
+  ],
+  "author": "Francis Masha",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "package.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "devDependencies": {
+    "@heimdall-logs/types": "workspace:*",
+    "@types/node": "^20.12.7",
+    "@types/react": "^18.3.1",
+    "@vitest/browser": "^1.5.3",
+    "happy-dom": "^14.7.1",
+    "react": "^18.3.1",
+    "tsup": "^8.0.2",
+    "typescript": "^5.4.5",
+    "vitest": "^1.5.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8||^17||^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "1.8.0",
+    "@opentelemetry/auto-instrumentations-web": "0.39.0",
+    "@opentelemetry/context-zone": "1.24.0",
+    "@opentelemetry/core": "1.24.0",
+    "@opentelemetry/exporter-trace-otlp-http": "0.51.0",
+    "@opentelemetry/instrumentation": "0.51.0",
+    "@opentelemetry/propagator-b3": "^1.24.0",
+    "@opentelemetry/resources": "1.24.0",
+    "@opentelemetry/sdk-trace-base": "1.24.0",
+    "@opentelemetry/sdk-trace-web": "1.24.0",
+    "@opentelemetry/semantic-conventions": "1.24.0",
+    "web-vitals": "^3.5.2"
+  }
 }

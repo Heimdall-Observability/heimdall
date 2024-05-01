@@ -1,20 +1,20 @@
 {
-	"$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-	"changelog": "@changesets/cli/changelog",
-	"commit": false,
-	"updateInternalDependencies": "patch",
-	"linked": [],
-	"access": "public",
-	"baseBranch": "main",
-	"ignore": [
-		"web",
-		"@heimdall-logs/api",
-		"@heimdall-logs/types",
-		"@heimdall-logs/db",
-		"@heimdall-logs/config",
-		"@heimdall-logs/clickhouse",
-		"@heimdall-logs/eslint-config",
-		"@heimdall-logs/logger",
-		"@heimdall-logs/request-context"
-	]
+  "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
+  "changelog": "@changesets/cli/changelog",
+  "commit": false,
+  "updateInternalDependencies": "patch",
+  "linked": [],
+  "access": "public",
+  "baseBranch": "main",
+  "ignore": [
+    "web",
+    "@heimdall-logs/api",
+    "@heimdall-logs/types",
+    "@heimdall-logs/db",
+    "@heimdall-logs/config",
+    "@heimdall-logs/clickhouse",
+    "@heimdall-logs/eslint-config",
+    "@heimdall-logs/logger",
+    "@heimdall-logs/request-context"
+  ]
 }

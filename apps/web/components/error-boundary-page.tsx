@@ -1,11 +1,11 @@
-import { ServerError } from '@/components/errors';
+import { ServerError } from '@/components/errors'
 
 export default function ErrorBoundaryPage({
-	error,
-	resetErrorBoundary,
+  error,
+  resetErrorBoundary,
 }: {
-	error: Error;
-	resetErrorBoundary: () => void;
+  error: Error
+  resetErrorBoundary: () => void
 }) {
-	return <ServerError error={error} reset={resetErrorBoundary} />;
+  return <ServerError error={error} reset={resetErrorBoundary} />
 }

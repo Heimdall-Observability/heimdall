@@ -1,59 +1,59 @@
-'use client';
+'use client'
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import WebSiteItem from '@/components/websites/website-item';
-import { fancyId } from '@/lib/utils';
-import { Website as WebsiteType } from '@heimdall-logs/types/models';
+import WebSiteItem from '@/components/websites/website-item'
+import { fancyId } from '@/lib/utils'
+import { Website as WebsiteType } from '@heimdall-logs/types/models'
 
-import { EmptyPlaceholder } from '../empty-placeholder';
-import { WebsiteCreateButton } from './website-create-button';
-import { DeleteWebsiteAlert } from './website-delete-alert';
-import { EditWebsiteForm } from './website-edit-form';
+import { EmptyPlaceholder } from '../empty-placeholder'
+import { WebsiteCreateButton } from './website-create-button'
+import { DeleteWebsiteAlert } from './website-delete-alert'
+import { EditWebsiteForm } from './website-edit-form'
 
 export default function WebsitesList({
-	websites,
+  websites,
 }: {
-	websites: (WebsiteType & { visitors: number })[];
+  websites: (WebsiteType & { visitors: number })[]
 }) {
-	const [selected, setSelected] = useState<string>('');
-	const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
-		undefined
-	);
-	const [isOpen, setIsOpen] = useState(false);
+  const [selected, setSelected] = useState<string>('')
+  const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
+    undefined,
+  )
+  const [isOpen, setIsOpen] = useState(false)
 
-	useEffect(() => {
-		setWebsite(websites.find((website) => website.id === selected));
-	}, [selected, websites]);
+  useEffect(() => {
+    setWebsite(websites.find((website) => website.id === selected))
+  }, [selected, websites])
 
-	return (
-		<div className='space-y-2'>
-			{websites.length ? (
-				websites.map((website) => (
-					<WebSiteItem
-						key={fancyId()}
-						site={website}
-						visitors={website.visitors}
-						setSelected={setSelected}
-						setIsOpen={setIsOpen}
-					/>
-				))
-			) : (
-				<EmptyPlaceholder className=' my-4'>
-					<EmptyPlaceholder.Icon name='layout' />
-					<EmptyPlaceholder.Title>No Website Added</EmptyPlaceholder.Title>
-					<EmptyPlaceholder.Description>
-						You haven&apos;t added any website yet. Start adding website
-					</EmptyPlaceholder.Description>
-					<WebsiteCreateButton />
-				</EmptyPlaceholder>
-			)}
-			<EditWebsiteForm
-				data={selectedWebsite}
-				setIsOpen={setIsOpen}
-				isOpen={isOpen}
-			/>
-			<DeleteWebsiteAlert id={selected} />
-		</div>
-	);
+  return (
+    <div className="space-y-2">
+      {websites.length ? (
+        websites.map((website) => (
+          <WebSiteItem
+            key={fancyId()}
+            site={website}
+            visitors={website.visitors}
+            setSelected={setSelected}
+            setIsOpen={setIsOpen}
+          />
+        ))
+      ) : (
+        <EmptyPlaceholder className=" my-4">
+          <EmptyPlaceholder.Icon name="layout" />
+          <EmptyPlaceholder.Title>No Website Added</EmptyPlaceholder.Title>
+          <EmptyPlaceholder.Description>
+            You haven&apos;t added any website yet. Start adding website
+          </EmptyPlaceholder.Description>
+          <WebsiteCreateButton />
+        </EmptyPlaceholder>
+      )}
+      <EditWebsiteForm
+        data={selectedWebsite}
+        setIsOpen={setIsOpen}
+        isOpen={isOpen}
+      />
+      <DeleteWebsiteAlert id={selected} />
+    </div>
+  )
 }
