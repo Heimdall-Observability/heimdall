@@ -2,12 +2,12 @@ import { redirect } from 'next/navigation'
 
 import { ReactNode } from 'react'
 
+import { auth } from '@/auth'
 import BottomNavigation from '@/components/bottom-navigation'
 import { MobileDashboardHeader } from '@/components/header'
 import { SideNav } from '@/components/side-nav'
 import { StoreSetter } from '@/components/store-setter'
 import { dashboardConfig } from '@/config/dashboard'
-import { getCurrentUser } from '@/lib/session'
 import { getTeams } from '@/server/query'
 import { getWebsite } from '@/server/query/website'
 
@@ -20,7 +20,8 @@ interface DashboardLayoutProps {
 export default async function DashboardWebsiteLayout({
   children,
 }: DashboardLayoutProps) {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   if (!user) {
     return redirect('/login')
   }

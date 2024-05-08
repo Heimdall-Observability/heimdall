@@ -1,46 +1,36 @@
+import { auth } from '@/auth'
 import { NextResponse } from 'next/server'
 
-import { getToken } from 'next-auth/jwt'
-import { withAuth } from 'next-auth/middleware'
+const publicAppPaths = ['/login']
 
-export default withAuth(
-  async function middleware(req) {
-    const token = await getToken({ req })
-    const isAuth = !!token
-    const isAuthPage = req.nextUrl.pathname.startsWith('/login')
+export default auth(async (req) => {
+  const pathname = req.nextUrl.pathname
 
-    if (isAuthPage) {
-      if (isAuth) {
-        return NextResponse.redirect(new URL('/dashboard', req.url))
-      }
-      return null
-    }
+  const isPublicAppPath = publicAppPaths.some((path) =>
+    pathname.startsWith(path),
+  )
 
-    if (!isAuth) {
-      let from = req.nextUrl.pathname
-      if (req.nextUrl.search) {
-        from += req.nextUrl.search
-      }
-      return NextResponse.redirect(
-        new URL(`/login?from=${encodeURIComponent(from)}`, req.url),
-      )
-    }
-  },
-  {
-    callbacks: {
-      async authorized() {
-        return true
-      },
-    },
-  },
-)
+  if (!req.auth && pathname.startsWith('/dashboard') && !isPublicAppPath) {
+    return NextResponse.redirect(
+      new URL(`/login?redirectTo=${encodeURIComponent(pathname)}`, req.url),
+    )
+  }
+})
 
+// Optionally, don't invoke Middleware on some paths
 export const config = {
   matcher: [
-    '/logs/:path*',
-    '/uptime/:path*',
+    '/((?!api|_next/static|_next/image|favicon.ico).*)',
     '/dashboard/:path*',
-    '/insights/:path*',
-    '/login',
   ],
 }
+
+// export const config = {
+//   matcher: [
+//     '/logs/:path*',
+//     '/uptime/:path*',
+//     '/dashboard/:path*',
+//     '/insights/:path*',
+//     '/login',
+//   ],
+// }

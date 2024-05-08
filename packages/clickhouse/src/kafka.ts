@@ -29,6 +29,7 @@ function getClient() {
     ssl: ssl ?? true,
   })
   if (process.env.NODE_ENV !== 'production') {
+    // @ts-expect-error
     global[KAFKA] = kafka
   }
   return kafka
@@ -76,8 +77,10 @@ async function connect(): Promise<Kafka> {
     kafka =
       process.env.KAFKA_USERNAME &&
       process.env.KAFKA_BROKER &&
+      // @ts-expect-error
       (global[KAFKA] || getClient())
     if (kafka) {
+      // @ts-expect-error
       producer = global[KAFKA_PRODUCER] || (await getProducer())
     }
   }
@@ -86,7 +89,9 @@ async function connect(): Promise<Kafka> {
 
 export default {
   enabled,
+  // @ts-expect-error
   client: kafka,
+  // @ts-expect-error
   producer,
   connect,
   sendMessage,

@@ -2,7 +2,15 @@
 
 import { useEffect, useState } from 'react'
 
-import { Dialog, DialogContent } from '@/components/ui/dialog'
+import {
+  Dialog,
+  DialogContent,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@heimdall-logs/ui'
 import { useTheme } from 'next-themes'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import {
@@ -12,13 +20,6 @@ import {
 
 import { CopyToClipboard } from './copy-to-clipboard'
 import { Icons } from './icons'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from './ui/select'
 
 const snippets = [
   {
@@ -245,7 +246,9 @@ export const AddTracker = ({
           <div className=" bg-gradient-br relative flex h-max md:w-[500px] w-fit flex-col rounded-md border from-gray-100 to-gray-300 pb-6 animate-in dark:border-muted-foreground/40 dark:from-black dark:to-muted">
             <div className=" flex  items-center justify-between space-y-2 border-b p-4 md:py-2">
               <div className=" flex items-center gap-2">
+                {/* @ts-ignore */}
                 <selected.icon />
+                {/* @ts-ignore */}
                 <p className=" text-xs ">{selected.fileName}</p>
               </div>
               <div className=" flex w-max items-center gap-2">
@@ -274,6 +277,7 @@ export const AddTracker = ({
                     </SelectItem>
                   </SelectContent>
                 </Select>
+                {/* @ts-ignore */}
                 {!selected.hideLangSelector && (
                   <Select
                     defaultValue="tsx"
@@ -292,11 +296,14 @@ export const AddTracker = ({
                     </SelectContent>
                   </Select>
                 )}
-                <CopyToClipboard text={selected.getCode(websiteId)} />
+                <CopyToClipboard
+                  text={selected?.getCode(websiteId) as string}
+                />
               </div>
             </div>
+            {/* @ts-ignore */}
             <SyntaxHighlighter
-              language={selected.lang ?? 'jsx'}
+              language={selected?.lang ?? 'jsx'}
               style={theme === 'dark' ? lightTheme : darkTheme}
               wrapLines
               showLineNumbers
@@ -307,7 +314,7 @@ export const AddTracker = ({
                 border: 'none',
               }}
             >
-              {selected.getCode(websiteId)}
+              {selected?.getCode(websiteId)}
             </SyntaxHighlighter>
           </div>
         </div>

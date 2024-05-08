@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
-import { Label } from '@/components/ui/label'
-import { ScrollArea } from '@/components/ui/scroll-area'
+import { localSettingAtom } from '@/jotai/store'
+import { TIMEZONES } from '@/lib/constants'
+import { ScrollArea } from '@heimdall-logs/ui'
+import { Label } from '@heimdall-logs/ui'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select'
-import { localSettingAtom } from '@/jotai/store'
-import { TIMEZONES } from '@/lib/constants'
+} from '@heimdall-logs/ui'
 import { useAtom } from 'jotai'
 
 export const GeneralSetting = () => {

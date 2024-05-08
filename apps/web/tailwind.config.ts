@@ -4,7 +4,8 @@ const tailwindConfig = {
   content: [
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
-    './node_modules/@almond-ui/core/src/theme/styles/*.ts',
+    './../../packages/ui/src/**/*.{ts,tsx}',
+    './node_modules/@openstatus/react/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: ['class'],
   theme: {
@@ -53,7 +54,7 @@ const tailwindConfig = {
         },
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)'],
+        sans: ['var(--font-sans)'],
         mono: ['var(--font-geist-mono)'],
       },
       borderRadius: {

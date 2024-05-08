@@ -9,7 +9,6 @@ import { EmptyPlaceholder } from '../empty-placeholder'
 import { WebsiteCardDetails } from './website-card-details'
 import { WebsiteCreateButton } from './website-create-button'
 import { DeleteWebsiteAlert } from './website-delete-alert'
-import { EditWebsiteForm } from './website-edit-form'
 
 export default function WebsitesCard({
   websites,
@@ -17,10 +16,10 @@ export default function WebsitesCard({
   websites: (WebsiteType & { visitors: number })[]
 }) {
   const [selected, setSelected] = useState<string>('')
-  const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
+  const [_selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
     undefined,
   )
-  const [isOpen, setIsOpen] = useState(false)
+  const [_isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     setWebsite(websites.find((website) => website.id === selected))
@@ -50,11 +49,6 @@ export default function WebsitesCard({
           <WebsiteCreateButton />
         </EmptyPlaceholder>
       )}
-      <EditWebsiteForm
-        data={selectedWebsite}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
-      />
       <DeleteWebsiteAlert id={selected} />
     </>
   )

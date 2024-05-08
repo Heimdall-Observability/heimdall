@@ -7,10 +7,10 @@ import { ReactNode } from 'react'
 
 import { BackLink } from '@/components/arrow-button'
 import MobileMenu from '@/components/mobile-menu'
-import { buttonVariants } from '@/components/ui/button'
 import { UserAccountNav } from '@/components/user-account-nav'
 import { cn } from '@/lib/utils'
 import { MainNavItem } from '@/types'
+import { Button } from '@heimdall-logs/ui'
 import { ExcludeSquare } from '@phosphor-icons/react'
 import { User } from 'next-auth'
 
@@ -70,7 +70,7 @@ function SiteHeader({ user, className }: Props) {
         <ExcludeSquare size={32} color="#0074a6" weight="duotone" />
         <Link
           href="/"
-          aria-label="almond-ui"
+          aria-label="heindall"
           className="block whitespace-nowrap text-lg font-semibold transition focus:outline-none"
         >
           heimdall
@@ -83,29 +83,23 @@ function SiteHeader({ user, className }: Props) {
             <NavItem key={link.href} href={link.href} text={link.name} />
           ))}
         </ul>
-        <MobileMenu user={user} />
+        <MobileMenu />
       </div>
 
       <div className="hidden md:flex">
         {user ? (
-          <UserAccountNav user={user} />
+          <UserAccountNav />
         ) : (
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'hover:bg-primary/10 hover:text-primary',
-            )}
-          >
-            Login
-          </Link>
+          <Button type="alternative" className="hidden lg:block" asChild>
+            <Link href="/login">Login</Link>
+          </Button>
         )}
       </div>
     </header>
   )
 }
 
-function DashboardHeader({ user, items, className }: DashboardHeaderProps) {
+function DashboardHeader({ items, className }: DashboardHeaderProps) {
   return (
     <header
       className={cn(
@@ -129,11 +123,11 @@ function DashboardHeader({ user, items, className }: DashboardHeaderProps) {
             <NavItem key={link.href} href={link.href} text={link.title} />
           ))}
         </ul>
-        <MobileMenu user={user} />
+        <MobileMenu />
       </div>
 
       <div className="hidden md:flex">
-        <UserAccountNav user={user} />
+        <UserAccountNav />
       </div>
     </header>
   )
@@ -171,11 +165,7 @@ function PublicDashboardHeader() {
   )
 }
 
-function MobileDashboardHeader({
-  user,
-  items,
-  className,
-}: DashboardHeaderProps) {
+function MobileDashboardHeader({ className }: DashboardHeaderProps) {
   return (
     <header
       className={cn(
@@ -190,7 +180,7 @@ function MobileDashboardHeader({
       </div>
 
       <div className="">
-        <UserAccountNav user={user} />
+        <UserAccountNav />
       </div>
     </header>
   )

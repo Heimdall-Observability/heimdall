@@ -1,8 +1,5 @@
-'use client'
-
-import Link from 'next/link'
-
 import ThemeSwitch from '@/components/theme-switch'
+import { UserAvatar } from '@/components/user-avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,16 +7,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { UserAvatar } from '@/components/user-avatar'
-import { User } from 'next-auth'
-import { signOut } from 'next-auth/react'
+  Skeleton,
+} from '@heimdall-logs/ui'
+import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 
-interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, 'name' | 'image' | 'email'>
-}
+export function UserAccountNav() {
+  const session = useSession()
 
-export function UserAccountNav({ user }: UserAccountNavProps) {
+  if (session.status !== 'authenticated') {
+    return <Skeleton className="h-8 w-8 rounded-full" />
+  }
+
+  const user = session?.data?.user
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -64,17 +65,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           </button>
         </DropdownMenuItem> */}
         <DropdownMenuSeparator />
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onSelect={(event) => {
-            event.preventDefault()
-            signOut({
-              callbackUrl: `${window.location.origin}/login`,
-            })
-          }}
-        >
-          Sign out
-        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => signOut()}>Log out</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

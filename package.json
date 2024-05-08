@@ -9,7 +9,7 @@
   "scripts": {
     "build": "dotenv -- turbo build --log-order=grouped --parallel",
     "dev": "dotenv -- turbo run dev --parallel",
-    "start": "turbo run start",
+    "start": "dotenv -- turbo run start",
     "format": "biome format --write .",
     "format:fix": "biome format --apply .",
     "lint": "turbo lint && manypkg check",
@@ -21,12 +21,11 @@
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.7.2",
+    "@biomejs/biome": "1.7.3",
     "@changesets/cli": "^2.27.1",
     "@manypkg/cli": "^0.21.4",
-    "@types/node": "^20.12.7",
-    "dotenv-cli": "^7.4.1",
-    "prettier": "^3.2.5",
+    "@types/node": "^20.12.10",
+    "dotenv-cli": "^7.4.2",
     "tsup": "^8.0.2",
     "turbo": "^1.13.3",
     "typescript": "^5.4.5"

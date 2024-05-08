@@ -3,9 +3,9 @@ import Link from 'next/link'
 
 import { useState } from 'react'
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 import { Website as WebsiteType } from '@heimdall-logs/types/models'
+import { Skeleton } from '@heimdall-logs/ui'
+import { Card, CardContent, CardHeader } from '@heimdall-logs/ui'
 import { User2 } from 'lucide-react'
 
 import logo from '../../public/android-chrome-512x512.png'
@@ -23,7 +23,7 @@ export function MonitorCardDetails({
   setSelected,
   setIsOpen,
 }: WebsiteProps) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [_isLoading, _setIsLoading] = useState(false)
   return (
     <Link href={`/s/${site.id}`}>
       <Card className="rounded-xl shadow-none @container/card hover:shadow-md">

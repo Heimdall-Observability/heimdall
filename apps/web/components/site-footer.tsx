@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { HTMLAttributes } from 'react'
 
 import { cn } from '@/lib/utils'
+import { StatusWidget } from '@openstatus/react'
 import { ArrowUpRight } from 'lucide-react'
 
 export function SiteFooter({ className }: HTMLAttributes<HTMLElement>) {
@@ -12,6 +13,10 @@ export function SiteFooter({ className }: HTMLAttributes<HTMLElement>) {
         <div className="flex flex-col gap-3 text-sm">
           <p className="text-foreground font-semibold">Socials</p>
           <FooterLink href="https://francismasha.com" label="francismasha" />
+          <StatusWidget
+            slug="heimdall"
+            href="https://heimdall.openstatus.dev/"
+          />
         </div>
         <div className="flex flex-col gap-3 text-sm">
           <p className="text-foreground font-semibold">Community</p>

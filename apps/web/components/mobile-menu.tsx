@@ -6,8 +6,8 @@ import { JSX, SVGProps, useEffect, useState } from 'react'
 
 import { cn, lockScroll } from '@/lib/utils'
 import styles from '@/styles/mobile-menu.module.css'
-import { User } from 'next-auth'
-import { signOut } from 'next-auth/react'
+import { Skeleton } from '@heimdall-logs/ui'
+import { signOut, useSession } from 'next-auth/react'
 import useDelayedRender from 'use-delayed-render'
 
 function MenuIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
@@ -59,7 +59,7 @@ function CrossIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   )
 }
 
-function MobileNav({ user }: { user?: User }) {
+function MobileNav() {
   const [navShow, setNavShow] = useState(false)
   const { mounted: isMenuMounted, rendered: isMenuRendered } = useDelayedRender(
     navShow,
@@ -86,6 +86,14 @@ function MobileNav({ user }: { user?: User }) {
       document.body.style.overflow = ''
     }
   }, [])
+
+  const session = useSession()
+
+  if (session.status !== 'authenticated') {
+    return <Skeleton className="h-8 w-8 rounded-full" />
+  }
+
+  const user = session?.data?.user
 
   return (
     <div className="sm:hidden">

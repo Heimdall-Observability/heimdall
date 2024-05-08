@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { Search } from 'lucide-react'
 
-import { ScrollArea } from '../../ui/scroll-area'
+import { ScrollArea } from '@heimdall-logs/ui'
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../ui/table'
+} from '@heimdall-logs/ui'
 import { TableLoading } from '../table-loading'
 import { Tip } from '../tooltip'
 

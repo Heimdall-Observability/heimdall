@@ -1,7 +1,7 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { TableCell, TableRow } from '@/components/ui/table'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import COUNTRIES from '@/lib/constants'
+import { TableCell, TableRow } from '@heimdall-logs/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@heimdall-logs/ui'
+import { Card, CardContent } from '@heimdall-logs/ui'
 import { Link2Icon } from 'lucide-react'
 import ReactCountryFlag from 'react-country-flag'
 

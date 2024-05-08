@@ -25,7 +25,7 @@ interface DateTimeFormatOptions {
   timeZone?: string | undefined
 }
 
-const formatDate = (date: Date): string => {
+const _formatDate = (date: Date): string => {
   const options = {
     year: 'numeric',
     month: 'short',

@@ -91,6 +91,7 @@ class ErrorBoundary extends Component<
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
+    // @ts-expect-error
     this.props.onError?.(error, info)
   }
 

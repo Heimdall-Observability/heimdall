@@ -1,11 +1,10 @@
 'use client'
 
-import { ReactElement } from 'react'
-
-import { toast } from '@/components/ui/use-toast'
 import { cn } from '@/lib/utils'
+import type { ReactElement } from 'react'
+import { toast } from 'sonner'
 
-import { Icons } from './icons'
+import { IconClipboard } from '@heimdall-logs/ui'
 
 export const CopyToClipboard = ({
   text,
@@ -19,13 +18,12 @@ export const CopyToClipboard = ({
   return (
     <div className=" flex items-center">
       {children}
-      <Icons.clipboard
-        className={cn('ml-2 h-5 w-5 cursor-pointer', className)}
+      <IconClipboard
+        size={14}
+        className={cn('cursor-pointer', className)}
         onClick={() => {
           navigator.clipboard.writeText(text)
-          toast({
-            title: 'Copied to clipboard',
-          })
+          toast('Copied to clipboard')
         }}
       />
     </div>

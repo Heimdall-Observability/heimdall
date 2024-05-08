@@ -1,5 +1,5 @@
-import { Skeleton } from '@/components/ui/skeleton'
 import { Website as WebsiteType } from '@heimdall-logs/types/models'
+import { Skeleton } from '@heimdall-logs/ui'
 import { MoreVertical, User2 } from 'lucide-react'
 
 interface WebsiteProps {

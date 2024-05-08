@@ -12,12 +12,12 @@ export class SessionIdProcessor implements SpanProcessor {
   }
 
   // @ts-expect-error
-  onStart(span: Span, parentContext: Context): void {
+  onStart(span: Span, _parentContext: Context): void {
     span.setAttribute(AttributeNames.SESSION_ID, userId)
   }
 
   // @ts-expect-error
-  onEnd(span: ReadableSpan): void {}
+  onEnd(_span: ReadableSpan): void {}
 
   shutdown(): Promise<void> {
     return Promise.resolve()

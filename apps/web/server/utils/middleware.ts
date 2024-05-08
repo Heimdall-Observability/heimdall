@@ -1,5 +1,5 @@
-import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
+import { auth } from '@/auth'
+import { db } from '@heimdall-logs/db'
 import { ROLE } from '@heimdall-logs/types/models'
 import { inArray } from 'drizzle-orm'
 import { User } from 'next-auth'
@@ -8,7 +8,8 @@ export const protectedAction = async <T>(
   fn: (user: User) => Promise<T>,
   withRole?: { role: ROLE[]; teamId: string },
 ) => {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   if (!user) {
     return null
   } else {

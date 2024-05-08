@@ -59,7 +59,7 @@ export const columns: ColumnDef<HeimdallCustomEvent>[] = [
       )
     },
     cell: ({ row }) => {
-      const relativeTime = dayjs(
+      const _relativeTime = dayjs(
         row.original.timestamp as unknown as string,
       ).fromNow()
       return dayjs(row.original.timestamp as unknown as string).fromNow()

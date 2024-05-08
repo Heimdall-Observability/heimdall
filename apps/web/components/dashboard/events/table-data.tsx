@@ -1,7 +1,5 @@
 import React, { Fragment, ReactNode, useEffect, useState } from 'react'
 
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import {
   Table,
   TableBody,
@@ -9,7 +7,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@heimdall-logs/ui'
+import { Input } from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import {
   ColumnDef,
   ColumnFiltersState,

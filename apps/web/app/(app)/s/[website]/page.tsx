@@ -1,10 +1,10 @@
 import { redirect } from 'next/navigation'
 
+import { auth } from '@/auth'
 import { Dashboard } from '@/components/dashboard'
-import { db } from '@/lib/db'
 import { generateToken } from '@/lib/generate-token'
-import { getCurrentUser } from '@/lib/session'
 import { queries } from '@/server/query/queries'
+import { db } from '@heimdall-logs/db'
 import { schema } from '@heimdall-logs/db'
 import { eq } from 'drizzle-orm'
 
@@ -13,7 +13,8 @@ export default async function Page({
 }: {
   params: { website: string }
 }) {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   const token = generateToken({
     id: user?.id ?? 'public',
     website: params.website as string,

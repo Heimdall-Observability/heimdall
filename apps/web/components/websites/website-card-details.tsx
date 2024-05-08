@@ -3,10 +3,10 @@ import Link from 'next/link'
 
 import { useEffect, useState } from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 import { getFavicon } from '@/lib/utils'
 import { Website as WebsiteType } from '@heimdall-logs/types/models'
+import { Skeleton } from '@heimdall-logs/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@heimdall-logs/ui'
 import { User2 } from 'lucide-react'
 
 import logo from '../../public/android-chrome-512x512.png'
@@ -24,7 +24,7 @@ export function WebsiteCardDetails({
   setSelected,
   setIsOpen,
 }: WebsiteProps) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [_isLoading, _setIsLoading] = useState(false)
   const [favicon, setFavicon] = useState('')
   // const favicon = getFavicon(site.url).then((favicon) => {
   // 	return favicon;

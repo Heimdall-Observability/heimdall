@@ -9,7 +9,6 @@ import { Website as WebsiteType } from '@heimdall-logs/types/models'
 import { EmptyPlaceholder } from '../empty-placeholder'
 import { WebsiteCreateButton } from './website-create-button'
 import { DeleteWebsiteAlert } from './website-delete-alert'
-import { EditWebsiteForm } from './website-edit-form'
 
 export default function WebsitesList({
   websites,
@@ -17,10 +16,10 @@ export default function WebsitesList({
   websites: (WebsiteType & { visitors: number })[]
 }) {
   const [selected, setSelected] = useState<string>('')
-  const [selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
+  const [_selectedWebsite, setWebsite] = useState<WebsiteType | undefined>(
     undefined,
   )
-  const [isOpen, setIsOpen] = useState(false)
+  const [_isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
     setWebsite(websites.find((website) => website.id === selected))
@@ -48,11 +47,6 @@ export default function WebsitesList({
           <WebsiteCreateButton />
         </EmptyPlaceholder>
       )}
-      <EditWebsiteForm
-        data={selectedWebsite}
-        setIsOpen={setIsOpen}
-        isOpen={isOpen}
-      />
       <DeleteWebsiteAlert id={selected} />
     </div>
   )

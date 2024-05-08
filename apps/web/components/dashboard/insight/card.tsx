@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@/components/ui/tooltip'
+} from '@heimdall-logs/ui'
+import { Skeleton } from '@heimdall-logs/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@heimdall-logs/ui'
 import { ArrowDown, ArrowUpIcon, LucideIcon } from 'lucide-react'
 
 export type InsightType = {

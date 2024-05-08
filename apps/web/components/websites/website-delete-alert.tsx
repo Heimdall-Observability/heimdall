@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation'
 
 import { useState } from 'react'
 
+import { websiteDeleteModalAtom } from '@/jotai/store'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,11 +12,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import { toast } from '@/components/ui/use-toast'
-import { websiteDeleteModalAtom } from '@/jotai/store'
+} from '@heimdall-logs/ui'
 import { useAtom } from 'jotai'
 
+import { toast } from 'sonner'
 import { Icons } from '../icons'
 
 export function DeleteWebsiteAlert({ id }: { id: string }) {
@@ -31,15 +31,11 @@ export function DeleteWebsiteAlert({ id }: { id: string }) {
       setIsDeleteLoading(false)
       setShowDeleteAlert(false)
       router.refresh()
-      return toast({
-        title: 'Website deleted.',
-      })
+      return toast.success('Website deleted.')
     } catch (e: any) {
       setIsDeleteLoading(false)
-      toast({
-        title: 'Something went wrong.',
+      toast.error('Something went wrong.', {
         description: e.message,
-        variant: 'destructive',
       })
     }
   }

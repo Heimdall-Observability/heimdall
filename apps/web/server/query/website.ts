@@ -1,10 +1,12 @@
-import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
+'use server'
+import { db } from '@heimdall-logs/db'
 
+import { auth } from '@/auth'
 import { queries } from './queries'
 
 export const getWebsite = async () => {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   if (!user) {
     throw new Error('User not found')
   }

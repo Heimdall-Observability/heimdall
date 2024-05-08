@@ -1,16 +1,15 @@
-import { authOptions } from '@/lib/auth'
 import cors from '@/lib/cors'
-import { db } from '@/lib/db'
 import { websiteFormSchema } from '@/lib/validations/website'
+import { db } from '@heimdall-logs/db'
 import { schema } from '@heimdall-logs/db'
 import { eq } from 'drizzle-orm'
-import { getServerSession } from 'next-auth'
 
+import { auth } from '@/auth'
 import { DISALLOWED } from './disallowed'
 
 export const GET = async (_: Request) => {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return new Response('Unauthorized', { status: 403 })
     }
@@ -28,7 +27,7 @@ export const GET = async (_: Request) => {
 
 export const POST = async (request: Request) => {
   try {
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return new Response('Unauthorized', { status: 403 })
     }

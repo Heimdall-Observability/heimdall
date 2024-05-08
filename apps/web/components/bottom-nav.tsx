@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@heimdall-logs/ui'
 
 export default function BottomNav() {
   return (

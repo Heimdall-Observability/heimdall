@@ -1,8 +1,8 @@
-import { Card, CardContent } from '@/components/ui/card'
-import { TableCell, TableRow } from '@/components/ui/table'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import COUNTRIES from '@/lib/constants'
 import { GetVitalsResponse } from '@heimdall-logs/types'
+import { TableCell, TableRow } from '@heimdall-logs/ui'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@heimdall-logs/ui'
+import { Card, CardContent } from '@heimdall-logs/ui'
 import {
   Asterisk,
   Link2Icon,

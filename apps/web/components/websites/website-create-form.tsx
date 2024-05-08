@@ -2,33 +2,50 @@
 
 import { useRouter } from 'next/navigation'
 
-import { useEffect, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 
-import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
 import { websiteFormSchema } from '@/lib/validations/website'
+import { Form } from '@heimdall-logs/ui'
+import { Input } from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
-import { Icons } from '../icons'
+import { toast } from 'sonner'
+import { useDebounce } from 'use-debounce'
+import { toFormikValidationSchema } from 'zod-formik-adapter'
 
 interface Props {
   toggleDialog: (open: boolean) => void
 }
 
+export const ZCreateWebsiteSchema = z.object({
+  slug: z
+    .string({
+      required_error: "We're gonna use this as an identifier so it's required",
+    })
+    .min(1, "I don't think you can have a slug with 0 characters")
+    .max(20, "I don't think you can have a slug with more than 20 characters")
+    .transform((value) => value.toLowerCase())
+    .transform((value) => value.replace(/\s/g, '_')),
+  title: z
+    .string()
+    .min(1, 'We kinda hope you give us some kind of title here')
+    .max(20, 'Can we make it a little shorter than 20 chars'),
+  url: z
+    .string({ required_error: 'Url field is required like every other fields' })
+    .url('How do you plan to collect data without providing url?'),
+  public: z.boolean().optional(),
+  active: z.boolean().optional(),
+})
+
 export const WebsiteForm = (props: Props) => {
-  const [isLoading, startTransition] = useTransition()
+  const [slugUrl, _setSlugUrl] = useState<string>('')
+  const [slugError, setSlugError] = useState<string | null>(null)
+  const [_isLoading, startTransition] = useTransition()
   const { refresh } = useRouter()
-  const form = useForm<z.infer<typeof websiteFormSchema>>({
+  const _form = useForm<z.infer<typeof websiteFormSchema>>({
     resolver: zodResolver(websiteFormSchema),
     defaultValues: {
       url: '',
@@ -48,121 +65,117 @@ export const WebsiteForm = (props: Props) => {
         })
         if (!res.ok) {
           if (res.status === 409) {
-            toast({
-              title: 'Uh oh!',
+            toast.error('Uh oh!', {
               description:
                 'This website already exists. Please try again with a different website ID or Website URL.',
-              variant: 'destructive',
             })
           }
-          toast({
-            title: 'Uh oh!',
+          toast.error('Uh oh!', {
             description:
               'This website already exists. Please try again with a different website ID or Website URL.',
-            variant: 'destructive',
           })
         }
         props.toggleDialog(false)
         refresh()
-      } catch (e) {
-        toast({
-          title: 'Uh oh!',
+      } catch (e: any) {
+        toast('Uh oh!', {
           description: `An error occurred: ${e.message}`,
-          variant: 'destructive',
         })
       }
     })
   }
 
-  const fieldValue = form.watch('url')
+  const generateSlug = (url: string): string => {
+    const strippedUrl = url
+      .replace('https://', '')
+      .replace('http://', '')
+      .replace(/:\d+/, '')
+    const allCom = url.split('.')
+    return strippedUrl
+      .replace(`.${allCom[allCom.length - 1]}`, '')
+      .replace(/\./g, '_')
+  }
+
+  const [debouncedSlug] = useDebounce(slugUrl, 500)
 
   useEffect(() => {
-    let url = fieldValue.replace('https://', '').replace('https://', '')
-    const allCom = fieldValue.split('.')
-    url = url.replace(`.${allCom[allCom.length - 1]}`, '').replace(/\./g, '_')
+    if (debouncedSlug.length > 0 && !slugError) {
+      fetch(`/api/website/${slugUrl}/exists`).then(async (res) => {
+        if (res.status === 200) {
+          const exists = await res.json()
+          setSlugError(exists === 1 ? 'Slug is already in use.' : null)
+        }
+      })
+    }
+  }, [debouncedSlug, slugError, slugUrl])
 
-    form.setValue('id', url)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fieldValue])
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit, (e) => {
-          return toast({
-            title: 'Uh oh! ',
-            description:
-              e.root?.message ??
-              e.id?.message ??
-              e.title?.message ??
-              e.url?.message,
-            variant: 'destructive',
-          })
-        })}
-        className="space-y-4"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormLabel>Website Title</FormLabel>
-              {/* <FormMessage /> */}
-              <FormControl>
-                <Input
-                  placeholder="Your Website Title"
-                  {...field}
-                  className=" "
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="url"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormLabel>Website URL</FormLabel>
-              {/* <FormMessage /> */}
-              <FormControl>
-                <Input
-                  placeholder="https://example.com"
-                  {...field}
-                  className=" "
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="id"
-          render={({ field }) => (
-            <FormItem className="">
-              <FormLabel>Your website @heimdall</FormLabel>
-              {/* <FormMessage /> */}
-              <FormControl>
-                <div className="flex items-center rounded-md border border-input px-1 focus-within:outline-none">
-                  <span className=" flex h-10 items-center border-r px-2 text-sm">
-                    heimdall.com/
-                  </span>
-                  <input
-                    placeholder="site_name"
-                    {...field}
-                    className="flex h-10 rounded-md border border-none bg-transparent p-2 text-sm outline-none ring-offset-background file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                  />
-                </div>
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <Button type="submit" disabled={isLoading} aria-disabled={isLoading}>
-          {isLoading ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : null}
-          Add Website
-        </Button>
-      </form>
+    <Form
+      id="website-form"
+      validateOnBlur
+      initialValues={{
+        title: '',
+        url: '',
+        slug: '',
+      }}
+      validationSchema={toFormikValidationSchema(ZCreateWebsiteSchema)}
+      onSubmit={onSubmit}
+    >
+      {({
+        isSubmitting,
+        values,
+        setFieldValue,
+      }: {
+        isSubmitting: boolean
+        values: any
+        setFieldValue: any
+      }) => {
+        return (
+          <div className="flex flex-col gap-4">
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              label="Website Title"
+              placeholder="Your Website Title"
+              disabled={isSubmitting}
+            />
+
+            <Input
+              id="url"
+              name="url"
+              type="text"
+              label="Website URL"
+              placeholder="https://example.com"
+              disabled={isSubmitting}
+              onChange={() => {
+                const slug = generateSlug(values.url)
+                setFieldValue('slug', slug)
+              }}
+            />
+
+            <Input
+              id="slug"
+              name="slug"
+              type="text"
+              label="Your website @mxl-console"
+              placeholder="site_name"
+              disabled={isSubmitting}
+            />
+
+            <Button
+              block
+              form="website-form"
+              htmlType="submit"
+              size="medium"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Add Website
+            </Button>
+          </div>
+        )
+      }}
     </Form>
   )
 }

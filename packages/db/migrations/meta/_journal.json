@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1693758175581,
-      "tag": "0000_smart_jocasta",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1693761203679,
-      "tag": "0001_material_liz_osborn",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1694489824817,
-      "tag": "0002_small_micromax",
+      "when": 1715107587978,
+      "tag": "0000_unknown_vector",
       "breakpoints": true
     }
   ]

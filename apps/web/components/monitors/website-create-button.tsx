@@ -2,26 +2,24 @@
 
 import { useState } from 'react'
 
-import { Button, ButtonProps } from '@/components/ui/button'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
-import { toast } from '@/components/ui/use-toast'
 import { WebsiteForm } from '@/components/websites/website-create-form'
 import { userWebsitesAtom } from '@/jotai/store'
+import { Dialog, DialogContent, DialogTrigger } from '@heimdall-logs/ui'
+import { Button, ButtonProps } from '@heimdall-logs/ui'
 import { useAtom } from 'jotai'
 
+import { toast } from 'sonner'
 import { Icons } from '../icons'
 
-export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
+export function WebsiteCreateButton({ type, ...props }: ButtonProps) {
   const [websites] = useAtom(userWebsitesAtom)
   // const [, setCreateWebsite] = useAtom(websiteFormAtom);
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
   async function onDialogOpenChange(state: boolean) {
     if (websites.length > 9) {
-      return toast({
-        title: 'Limit of 10 websites reached.',
+      return toast('Limit of 10 websites reached.', {
         description: 'We currently only support 10 websites per account.',
-        variant: 'destructive',
       })
     }
     setIsDialogOpen(state)
@@ -31,8 +29,7 @@ export function WebsiteCreateButton({ variant, ...props }: ButtonProps) {
   return (
     <Dialog onOpenChange={onDialogOpenChange} open={isDialogOpen}>
       <DialogTrigger>
-        <Button {...props}>
-          <Icons.add className="h-4 w-4 " />
+        <Button {...props} icon={<Icons.add className="h-4 w-4 " />}>
           <span className="hidden md:block">New Website</span>
         </Button>
       </DialogTrigger>

@@ -1,11 +1,10 @@
 'use server'
-
-import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
 import { PLANS } from '@/lib/stripe/plans'
+import { db } from '@heimdall-logs/db'
 import { env } from 'env.mjs'
 
+import { auth } from '@/auth'
 import { queries } from '../query/queries'
 
 //TODO: look into this
@@ -15,7 +14,7 @@ export async function cancelPlan(customerId: string) {
       .list({
         customer: customerId,
       })
-      .then((res) => res.data[0].id)
+      .then((res) => res?.data[0].id)
     return await stripe.subscriptions.update(subscriptionId, {
       cancel_at_period_end: true,
       cancellation_details: {
@@ -34,7 +33,8 @@ export async function createCheckoutSession(
     quantity?: number
   }[],
 ) {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   if (!user || !user.email) {
     return null
   }

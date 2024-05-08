@@ -1,21 +1,14 @@
 import type { AdapterAccount } from '@auth/core/adapters'
-import {
-  int,
-  integer,
-  primaryKey,
-  sqliteTable,
-  text,
-} from 'drizzle-orm/sqlite-core'
+import { integer, primaryKey, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 
 export const users = sqliteTable('user', {
-  id: text('id').notNull().primaryKey(),
+  id: text('id')
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
   name: text('name'),
   email: text('email').notNull(),
   emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
   image: text('image'),
-  plan: text('plan').default('free'),
-  stripeId: text('stripeId'),
-  billingCycleStart: int('billingCycleStart'),
 })
 
 export const accounts = sqliteTable(
@@ -36,12 +29,14 @@ export const accounts = sqliteTable(
     session_state: text('session_state'),
   },
   (account) => ({
-    compoundKey: primaryKey(account.provider, account.providerAccountId),
+    compoundKey: primaryKey({
+      columns: [account.provider, account.providerAccountId],
+    }),
   }),
 )
 
 export const sessions = sqliteTable('session', {
-  sessionToken: text('sessionToken').notNull().primaryKey(),
+  sessionToken: text('sessionToken').primaryKey(),
   userId: text('userId')
     .notNull()
     .references(() => users.id, { onDelete: 'cascade' }),
@@ -56,6 +51,6 @@ export const verificationTokens = sqliteTable(
     expires: integer('expires', { mode: 'timestamp_ms' }).notNull(),
   },
   (vt) => ({
-    compoundKey: primaryKey(vt.identifier, vt.token),
+    compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
   }),
 )

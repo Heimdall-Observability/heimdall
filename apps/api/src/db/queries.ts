@@ -1,11 +1,10 @@
 import { kafka } from '@heimdall-logs/clickhouse'
-import { schema } from '@heimdall-logs/db'
+import { db, schema } from '@heimdall-logs/db'
 import { sql } from 'drizzle-orm'
 
 import { convertToUTC } from '../lib/utils'
 import { EventRes, HeimdallEvent, TraceRes } from '../type'
 import { client } from './clickhouse'
-import { db } from './drizzle'
 
 export const hitsQuery = (
   startDate: string,

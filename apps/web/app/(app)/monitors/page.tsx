@@ -1,10 +1,10 @@
 import MonitorsList from '@/components/monitors/monitors-list'
 import Search from '@/components/search'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { WebsiteCreateButton } from '@/components/websites/website-create-button'
 import WebsitesCard from '@/components/websites/websites-card'
 import { cn } from '@/lib/utils'
 import { getWebsite } from '@/server/query/website'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@heimdall-logs/ui'
 import { LayoutGrid, List } from 'lucide-react'
 
 export default async function DashboardPage() {

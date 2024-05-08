@@ -1,10 +1,10 @@
 import Link from 'next/link'
 
+import { auth } from '@/auth'
 import ExpandingArrow from '@/components/expanding-arrow'
-import { H3 } from '@/components/typography'
-import { buttonVariants } from '@/components/ui/button'
-import { getCurrentUser } from '@/lib/session'
+import { H4 } from '@/components/typography'
 import { cn } from '@/lib/utils'
+import { buttonVariants } from '@heimdall-logs/ui'
 
 const features = [
   {
@@ -25,7 +25,8 @@ const features = [
 ]
 
 export default async function HomePage() {
-  const user = await getCurrentUser()
+  const session = await auth()
+  const user = session?.user
   return (
     <>
       <section className="space-y-6 pb-8 pt-10 md:pb-12 lg:py-32">
@@ -84,7 +85,8 @@ export default async function HomePage() {
               href={user ? '/dashboard' : '/login'}
               className={cn(
                 buttonVariants({
-                  size: 'lg',
+                  size: 'large',
+                  type: 'primary',
                 }),
               )}
             >
@@ -102,10 +104,10 @@ export default async function HomePage() {
           <div className="rounded-2xl bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary">
             Monitoring and Reporting
           </div>
-          <H3>
+          <H4>
             Gain a global perspective on your API's performance with real-time
             monitoring
-          </H3>
+          </H4>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
             Synthetic monitoring for your APIs. Check the latency of your APIs
             from around the world.
@@ -119,10 +121,8 @@ export default async function HomePage() {
             >
               <div className="flex h-[140px] flex-col justify-between rounded-md p-6">
                 <div className="space-y-2">
-                  <h3 className="font-bold">{feature.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    {feature.description}
-                  </p>
+                  <h2 className="font-semibold">{feature.title}</h2>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </div>
               </div>
             </div>

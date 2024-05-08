@@ -1,10 +1,9 @@
-import { authOptions } from '@/lib/auth'
+import { auth } from '@/auth'
 import { removeWebsiteData } from '@/lib/clickhouse'
-import { db } from '@/lib/db'
 import { websiteFormSchema } from '@/lib/validations/website'
+import { db } from '@heimdall-logs/db'
 import { schema } from '@heimdall-logs/db'
 import { eq } from 'drizzle-orm'
-import { getServerSession } from 'next-auth'
 import { z } from 'zod'
 
 const routeContextSchema = z.object({
@@ -24,7 +23,7 @@ export const PATCH = async (
     if (!id) {
       return new Response('Id not specified', { status: 400 })
     }
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return new Response('Unauthorized', { status: 403 })
     }
@@ -92,7 +91,7 @@ export const DELETE = async (
     if (!id) {
       return new Response('Id not specified', { status: 400 })
     }
-    const session = await getServerSession(authOptions)
+    const session = await auth()
     if (!session) {
       return new Response('Unauthorized', { status: 401 })
     }

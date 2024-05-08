@@ -7,14 +7,13 @@ import { ReactNode } from 'react'
 
 import Conditional from '@/components/conditional'
 import { Icons } from '@/components/icons'
-import { Button } from '@/components/ui/button'
+import { Button } from '@heimdall-logs/ui'
 import errorStack from 'error-stack-parser'
 
 function ErrorPage({
   error,
   title,
   subtitle,
-  statusCode,
   action,
 }: {
   error?: Error
@@ -97,7 +96,6 @@ function ErrorPage({
 function NotFoundErrorPage({
   title,
   subtitle,
-  statusCode,
   action,
 }: {
   title?: string

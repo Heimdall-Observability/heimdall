@@ -4,9 +4,9 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { Icons } from '@/components/icons'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { SidebarNavItem } from '@/types'
+import { Button } from '@heimdall-logs/ui'
 
 interface Props {
   items: SidebarNavItem[]
@@ -40,18 +40,15 @@ export default function BottomNavigation({ items }: Props) {
                   <Button
                     aria-label={title}
                     disabled={disabled}
-                    variant="ghost"
-                    size="icon"
+                    type="text"
                     className={cn(
                       pathname === href
                         ? 'bg-primary/20 hover:bg-primary/20 hover:text-primary'
                         : 'text-gray-500',
                       'ring-primary/50 hover:bg-primary/10 disabled:text-muted-foreground/50 h-8 w-14 rounded-full p-0 font-medium transition-all hover:ring-1 disabled:cursor-not-allowed disabled:opacity-80',
                     )}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </Button>
-                  {/*<span className='text-xs'>{title}</span>*/}
+                    icon={<Icon className="h-5 w-5" />}
+                  ></Button>
                 </Link>
               )
             )

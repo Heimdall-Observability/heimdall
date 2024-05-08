@@ -1,11 +1,12 @@
-import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
+import { auth } from '@/auth'
 import { apiKeySchema } from '@/lib/validations/api-key'
+import { db } from '@heimdall-logs/db'
 import { schema } from '@heimdall-logs/db'
 
 export const POST = async (req: Request) => {
   try {
-    const user = await getCurrentUser()
+    const session = await auth()
+    const user = session?.user
     if (!user)
       return new Response(null, {
         status: 401,

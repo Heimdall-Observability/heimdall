@@ -2,31 +2,29 @@
   "name": "@heimdall-logs/db",
   "version": "0.0.1",
   "description": "",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "src/index.ts",
   "keywords": [],
   "author": "Francis Masha",
   "license": "ISC",
   "scripts": {
     "generate": "drizzle-kit generate:sqlite",
-    "studio": "drizzle-kit studio --port 3333",
-    "migrate": "tsx src/migrate.ts",
-    "build": "tsup",
-    "dev": "tsup --watch"
+    "push": "drizzle-kit push:sqlite",
+    "studio": "pnpm with-env drizzle-kit studio --port 3333",
+    "migrate": "pnpm with-env tsx src/migrate.mts",
+    "dev": "turso dev --db-file heimdall.db",
+    "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
     "@auth/core": "^0.30.0",
-    "@libsql/client": "0.6.0",
+    "@libsql/client": "^0.6.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "dotenv": "^16.4.5",
-    "drizzle-kit": "^0.20.17",
-    "drizzle-orm": "^0.30.9",
+    "drizzle-kit": "^0.20.18",
+    "drizzle-orm": "^0.30.10",
     "drizzle-zod": "^0.5.1",
-    "tsup": "^8.0.2",
-    "tsx": "^4.8.2",
-    "zod": "^3.23.5"
+    "zod": "^3.23.7"
   },
   "devDependencies": {
-    "@heimdall-logs/config": "workspace:*"
+    "@heimdall-logs/tsconfig": "workspace:*"
   }
 }

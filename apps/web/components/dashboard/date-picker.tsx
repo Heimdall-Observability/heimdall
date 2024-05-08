@@ -1,20 +1,5 @@
 import React from 'react'
 
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Separator } from '@/components/ui/separator'
 import { usageAtom } from '@/jotai/store'
 import {
   getLast15Minutes,
@@ -29,6 +14,17 @@ import {
   getYesterday,
 } from '@/lib/time-helper'
 import { cn } from '@/lib/utils'
+import { Separator } from '@heimdall-logs/ui'
+import { Popover, PopoverContent, PopoverTrigger } from '@heimdall-logs/ui'
+import { Calendar } from '@heimdall-logs/ui'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import { CalendarIcon } from '@radix-ui/react-icons'
 import { format, subMonths } from 'date-fns'
 import { useAtom } from 'jotai'
@@ -56,8 +52,8 @@ export function CalendarDateRangePicker({
         <PopoverTrigger asChild>
           <Button
             id="date"
-            variant={'outline'}
-            size="sm"
+            type={'outline'}
+            size="small"
             className={cn(
               'w-max justify-start bg-background text-left font-normal',
               !date && ' text-stone-800',
@@ -212,7 +208,7 @@ export const DatePicker = ({
           <SelectItem value="thisMonth">This Month</SelectItem>
           <SelectItem value="last30">Last 30 Days</SelectItem>
           <SelectItem value="last90">Last 90 Days</SelectItem>
-          {usage && usage.plan.slug !== 'free' && (
+          {usage && usage?.plan?.slug !== 'free' && (
             <SelectItem value="thisYear">This Year</SelectItem>
           )}
           <Separator className="my-2" />

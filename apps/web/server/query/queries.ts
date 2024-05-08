@@ -1,5 +1,5 @@
 import { client, getIsWebsiteActive } from '@/lib/clickhouse'
-import { db } from '@/lib/db'
+import { db } from '@heimdall-logs/db'
 import { sql } from 'drizzle-orm'
 import { env } from 'env.mjs'
 
@@ -74,7 +74,7 @@ const getTotalEventsCount = async (
   }
 }
 
-export const isWebsiteActive = (websiteId: string) => ({
+export const isWebsiteActive = async (websiteId: string) => ({
   sqlite: async () => {
     //TODO: to be done
   },

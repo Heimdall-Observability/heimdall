@@ -1,313 +1,181 @@
-import Link from 'next/link'
+'use client'
 
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-import { Button } from '@/components/ui/button'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { toast } from '@/components/ui/use-toast'
-import { siteConfig } from '@/config/site'
-import { websiteDeleteModalAtom } from '@/jotai/store'
+import { useEffect, useState, useTransition } from 'react'
+
 import { websiteFormSchema } from '@/lib/validations/website'
-import { Website } from '@heimdall-logs/types/models'
+import { Form } from '@heimdall-logs/ui'
+import { Input } from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { AnimatePresence, motion } from 'framer-motion'
-import { useAtom } from 'jotai'
-import { ExternalLink, Info, Trash2 } from 'lucide-react'
 import { useForm } from 'react-hook-form'
-import Modal from 'react-modal'
 import { z } from 'zod'
 
-import { CopyToClipboard } from '../copy-to-clipboard'
-import { Icons } from '../icons'
+import { toast } from 'sonner'
+import { useDebounce } from 'use-debounce'
+import { toFormikValidationSchema } from 'zod-formik-adapter'
 
-export const EditWebsiteForm = ({
-  data,
-  isOpen,
-  setIsOpen,
-}: {
-  data?: Website
-  isOpen: boolean
-  setIsOpen: (state: boolean) => void
-}) => {
-  const [isLoading, setIsLoading] = useState(false)
-  const [, setDeleteAlert] = useAtom(websiteDeleteModalAtom)
-  const form = useForm<z.infer<typeof websiteFormSchema>>({
+interface Props {
+  toggleDialog: (open: boolean) => void
+}
+
+export const ZCreateWebsiteSchema = z.object({
+  slug: z
+    .string({
+      required_error: "We're gonna use this as an identifier so it's required",
+    })
+    .min(1, "I don't think you can have a slug with 0 characters")
+    .max(20, "I don't think you can have a slug with more than 20 characters")
+    .transform((value) => value.toLowerCase())
+    .transform((value) => value.replace(/\s/g, '_')),
+  title: z
+    .string()
+    .min(1, 'We kinda hope you give us some kind of title here')
+    .max(20, 'Can we make it a little shorter than 20 chars'),
+  url: z
+    .string({ required_error: 'Url field is required like every other fields' })
+    .url('How do you plan to collect data without providing url?'),
+  public: z.boolean().optional(),
+  active: z.boolean().optional(),
+})
+
+export const EditWebsiteForm = (props: Props) => {
+  const [slugUrl, _setSlugUrl] = useState<string>('')
+  const [slugError, setSlugError] = useState<string | null>(null)
+  const [_isLoading, startTransition] = useTransition()
+  const { refresh } = useRouter()
+  const _form = useForm<z.infer<typeof websiteFormSchema>>({
     resolver: zodResolver(websiteFormSchema),
+    defaultValues: {
+      url: '',
+      id: '',
+    },
   })
 
-  async function onSubmit(values: z.infer<typeof websiteFormSchema>) {
-    setIsLoading(true)
-    try {
-      const res = await fetch(`/api/website/${data?.id}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      })
-      if (!res.ok) {
-        toast({
-          title: 'Uh oh!',
-          description:
-            'Error updating website. Please try again later or contact support if the issue persists.',
-          variant: 'destructive',
+  const onSubmit = (values: z.infer<typeof websiteFormSchema>) => {
+    startTransition(async () => {
+      try {
+        const res = await fetch('/api/website', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        })
+        if (!res.ok) {
+          if (res.status === 409) {
+            toast.error('Uh oh!', {
+              description:
+                'This website already exists. Please try again with a different website ID or Website URL.',
+            })
+          }
+          toast.error('Uh oh!', {
+            description:
+              'This website already exists. Please try again with a different website ID or Website URL.',
+          })
+        }
+        props.toggleDialog(false)
+        refresh()
+      } catch (e: any) {
+        toast('Uh oh!', {
+          description: `An error occurred: ${e.message}`,
         })
       }
-      toast({
-        title: 'Success!',
-        description: 'Website updated successfully.',
-      })
-    } catch {
-      toast({
-        title: 'Uh oh!',
-        description:
-          'Error updating website. Please try again later or contact support if the issue persists.',
-        variant: 'destructive',
-      })
-    }
-    setIsLoading(false)
-    setIsOpen(false)
+    })
   }
 
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      scale: 1,
-    },
+  const generateSlug = (url: string): string => {
+    const strippedUrl = url
+      .replace('https://', '')
+      .replace('http://', '')
+      .replace(/:\d+/, '')
+    const allCom = url.split('.')
+    return strippedUrl
+      .replace(`.${allCom[allCom.length - 1]}`, '')
+      .replace(/\./g, '_')
   }
+
+  const [debouncedSlug] = useDebounce(slugUrl, 500)
+
   useEffect(() => {
-    if (data) {
-      const { setValue } = form
-      setValue('id', data.id)
-      setValue('title', data.title ?? '')
-      setValue('url', data.url)
-      setValue('public', data.public)
+    if (debouncedSlug.length > 0 && !slugError) {
+      fetch(`/api/website/${slugUrl}/exists`).then(async (res) => {
+        if (res.status === 200) {
+          const exists = await res.json()
+          setSlugError(exists === 1 ? 'Slug is already in use.' : null)
+        }
+      })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [debouncedSlug, slugError, slugUrl])
+
   return (
-    <AnimatePresence>
-      {isOpen ? (
-        <Modal
-          isOpen={isOpen}
-          onRequestClose={() => setIsOpen(false)}
-          ariaHideApp
-          shouldCloseOnEsc
-          shouldCloseOnOverlayClick
-          className="font-jost mx-4 flex h-full items-center justify-center border-none outline-none backdrop:blur-xl"
-          style={{
-            overlay: {
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              backdropFilter: 'blur(5px)',
-            },
-            content: {},
-          }}
-        >
-          <motion.div
-            variants={modalVariants} // Apply the animation variants
-            initial="hidden" // Set the initial animation state
-            animate="visible" // Set the target animation
-            exit={{
-              opacity: 0,
-              transition: { duration: 0.1 },
-            }} // Exit gracefully
-            transition={{
-              type: 'keyframes',
-              delay: 0.1,
-              ease: 'easeInOut',
-              duration: 0.3,
-            }}
-            className="relative flex w-11/12 flex-col justify-center  rounded-md border bg-gradient-to-tr from-gray-100 to-gray-200 px-8 pb-10 pt-4 animate-in dark:border-stone-800 dark:from-black dark:to-stone-900/20 md:w-3/12"
-          >
-            <div className=" ml-auto">
-              <Button
-                variant="outline"
-                className=""
-                onClick={() => {
-                  setIsOpen(false)
-                  setDeleteAlert(true)
-                }}
-              >
-                <Trash2 size={16} className=" text-red-500" />
-              </Button>
-            </div>
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit, (e) => {
-                  return toast({
-                    title: 'Uh oh! ',
-                    description:
-                      e.root?.message ?? e.title?.message ?? e.url?.message,
-                    variant: 'destructive',
-                  })
-                })}
-                className="space-y-2 "
-              >
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem className=" w-full">
-                      <FormLabel>Website Title</FormLabel>
-                      <FormControl>
-                        <Input placeholder="title" {...field} className=" " />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="url"
-                  render={({ field }) => (
-                    <FormItem className=" w-full">
-                      <FormLabel>Website URL</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="https://example.com"
-                          {...field}
-                          className=""
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="id"
-                  render={({ field }) => (
-                    <FormItem className=" w-full grow">
-                      <FormLabel>Your website @heimdall</FormLabel>
-                      {/* <FormMessage /> */}
-                      <FormControl>
-                        <div className="flex items-center rounded-md  border border-input px-1 focus-within:outline-none">
-                          <span className="flex h-10 items-center border-r px-2 text-sm dark:border-stone-800">
-                            heimdall.francismasha.com/
-                          </span>
-                          <input
-                            placeholder="site_name"
-                            {...field}
-                            className="flex h-10 w-full rounded-md border border-none bg-transparent p-2 text-sm outline-none ring-offset-background file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
-                          />
-                        </div>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+    <Form
+      id="website-form"
+      validateOnBlur
+      initialValues={{
+        title: '',
+        url: '',
+        slug: '',
+      }}
+      validationSchema={toFormikValidationSchema(ZCreateWebsiteSchema)}
+      onSubmit={onSubmit}
+    >
+      {({
+        isSubmitting,
+        values,
+        setFieldValue,
+      }: {
+        isSubmitting: boolean
+        values: any
+        setFieldValue: any
+      }) => {
+        return (
+          <div className="flex flex-col gap-4">
+            <Input
+              id="title"
+              name="title"
+              type="text"
+              label="Website Title"
+              placeholder="Your Website Title"
+              disabled={isSubmitting}
+            />
 
-                <FormField
-                  control={form.control}
-                  name="public"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>
-                        <div className=" flex items-start gap-1">
-                          Public Page
-                          <TooltipProvider>
-                            <Tooltip>
-                              <TooltipTrigger>
-                                <Info size={12} />
-                              </TooltipTrigger>
-                              <TooltipContent>
-                                <p className=" text-sm">
-                                  Public page will make your website public and
-                                  accessible to anyone with the link.
-                                </p>
-                              </TooltipContent>
-                            </Tooltip>
-                          </TooltipProvider>
-                        </div>
-                      </FormLabel>
-                      {field.value ? (
-                        <div className=" flex items-center justify-between">
-                          <Link
-                            href={`${siteConfig.url}/${data?.id}`}
-                            target="_blank"
-                            className=" flex items-center gap-2 decoration-blue-500 hover:underline"
-                          >
-                            <p className=" text-sm text-blue-600">
-                              {`${siteConfig.url}/`}
-                              <span className="">{data?.id}</span>{' '}
-                            </p>
+            <Input
+              id="url"
+              name="url"
+              type="text"
+              label="Website URL"
+              placeholder="https://example.com"
+              disabled={isSubmitting}
+              onChange={() => {
+                const slug = generateSlug(values.url)
+                setFieldValue('slug', slug)
+              }}
+            />
 
-                            <ExternalLink
-                              size={14}
-                              className=" cursor-pointer text-blue-500"
-                            />
-                          </Link>
-                          <CopyToClipboard
-                            text={`${siteConfig.url}/${data?.id}`}
-                            className="h-4 w-4"
-                          />
-                        </div>
-                      ) : null}
-                      <FormControl className="">
-                        <Select
-                          onValueChange={(e) => field.onChange(e === 'on')}
-                          value={field.value ? 'on' : 'off'}
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="off">Off</SelectItem>
-                            <SelectItem value="on">On</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
+            <Input
+              id="slug"
+              name="slug"
+              type="text"
+              label="Your website @mxl-console"
+              placeholder="site_name"
+              disabled={isSubmitting}
+            />
 
-                <div className=" space-x-2">
-                  <Button type="submit" disabled={isLoading}>
-                    {isLoading ? (
-                      <Icons.spinner className="h-4 w-4 animate-spin" />
-                    ) : (
-                      'Update Website'
-                    )}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className=""
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </Form>
-          </motion.div>
-        </Modal>
-      ) : null}
-    </AnimatePresence>
+            <Button
+              block
+              form="website-form"
+              htmlType="submit"
+              size="medium"
+              disabled={isSubmitting}
+              loading={isSubmitting}
+            >
+              Add Website
+            </Button>
+          </div>
+        )
+      }}
+    </Form>
   )
 }

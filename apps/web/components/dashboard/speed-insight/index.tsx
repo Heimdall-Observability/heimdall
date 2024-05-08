@@ -1,6 +1,9 @@
 import { CopyToClipboard } from '@/components/copy-to-clipboard'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { useIsMobile } from '@/hooks/use-viewport'
+import { cn, fetcher } from '@/lib/utils'
+import { GetVitalsResponse } from '@heimdall-logs/types'
+import { Website } from '@heimdall-logs/types/models'
+import { Tabs, TabsList, TabsTrigger } from '@heimdall-logs/ui'
 import {
   Dialog,
   DialogContent,
@@ -8,12 +11,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { useIsMobile } from '@/hooks/use-viewport'
-import { cn, fetcher } from '@/lib/utils'
-import { GetVitalsResponse } from '@heimdall-logs/types'
-import { Website } from '@heimdall-logs/types/models'
+} from '@heimdall-logs/ui'
+import { Card, CardContent, CardHeader, CardTitle } from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import {
   ArrowDown,
   ArrowUpIcon,

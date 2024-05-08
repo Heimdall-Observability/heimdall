@@ -1,6 +1,18 @@
 import { useState } from 'react'
 
-import { Button } from '@/components/ui/button'
+import COUNTRIES from '@/lib/constants'
+import { heimdall } from '@heimdall-logs/tracker'
+import { HeimdallCustomEvent } from '@heimdall-logs/types'
+import { Toggle } from '@heimdall-logs/ui'
+import { ScrollArea } from '@heimdall-logs/ui'
+import { Label } from '@heimdall-logs/ui'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@heimdall-logs/ui'
 import {
   Dialog,
   DialogContent,
@@ -9,20 +21,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-import { Toggle } from '@/components/ui/toggle'
-import COUNTRIES from '@/lib/constants'
-import { heimdall } from '@heimdall-logs/tracker'
-import { HeimdallCustomEvent } from '@heimdall-logs/types'
+} from '@heimdall-logs/ui'
+import { Button } from '@heimdall-logs/ui'
 import { Equal, EqualNot, SlidersHorizontal } from 'lucide-react'
 
 import { filter } from './small-filter'

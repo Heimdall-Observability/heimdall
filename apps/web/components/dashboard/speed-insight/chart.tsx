@@ -44,7 +44,7 @@ export const SpeedChart = ({
                 <p className=" text-sm font-light">
                   if you haven`&apos;t setup tracker refer to the{' '}
                   <a
-                    href="https://loglib.io/docs"
+                    href="https://heimdall_logs.io/docs"
                     target="_blank"
                     className=" text-blue-700 underline"
                     rel="noreferrer"

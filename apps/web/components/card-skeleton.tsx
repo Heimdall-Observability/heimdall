@@ -1,5 +1,5 @@
-import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
-import { Skeleton } from '@/components/ui/skeleton'
+import { Skeleton } from '@heimdall-logs/ui'
+import { Card, CardContent, CardFooter, CardHeader } from '@heimdall-logs/ui'
 
 export function CardSkeleton() {
   return (

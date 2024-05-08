@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { useTheme } from 'next-themes'
 
 const ThemeSwitch = () => {
-  const [mounted, setMounted] = useState<boolean>(false)
+  const [_mounted, setMounted] = useState<boolean>(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
 
   // When mounted on a client, now we can show the UI

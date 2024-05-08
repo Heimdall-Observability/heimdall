@@ -21,7 +21,7 @@ export type Config = {
   env?: 'auto' | 'prod' | 'dev'
   /** The interval (in milliseconds) for sending data to the server. */
   postInterval?: number
-  /** The hostname or array of hostnames to send data to. By default it sends to the api.loglib.io */
+  /** The hostname or array of hostnames to send data to. By default it sends to the api.heimdall_logs.io */
   host?: string | string[]
   /** The user's consent status for tracking.
    * If not granted, it uses a hashed version of the user ip address as user id.

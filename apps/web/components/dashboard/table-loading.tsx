@@ -1,5 +1,5 @@
-import { TableBody, TableCell, TableRow } from '@/components/ui/table'
 import { cn } from '@/lib/utils'
+import { TableBody, TableCell, TableRow } from '@heimdall-logs/ui'
 
 const TableLoading = ({
   cellCount,

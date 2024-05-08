@@ -5,11 +5,12 @@ dotenv.config()
 
 export default {
   out: './migrations',
-  schema: './src/schema',
+  schema: './src/schema/index.ts',
   breakpoints: true,
   driver: 'turso',
+  strict: true,
   dbCredentials: {
-    url: (process.env.TURSO_DB_URL as string) ?? 'file:./db.sqlite',
+    url: (process.env.TURSO_DB_URL as string) ?? 'file:./heimdall.db',
     authToken: process.env.TURSO_DB_AUTH_TOKEN as string,
   },
 } satisfies Config

@@ -2,6 +2,8 @@ import { useRouter } from 'next/navigation'
 
 import { useState } from 'react'
 
+import { toast } from '@/components/ui/use-toast'
+import { websiteDeleteModalAtom } from '@/jotai/store'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,9 +13,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog'
-import { toast } from '@/components/ui/use-toast'
-import { websiteDeleteModalAtom } from '@/jotai/store'
+} from '@heimdall-logs/ui'
 import { useAtom } from 'jotai'
 
 import { Icons } from '../icons'

@@ -1,19 +1,8 @@
 {
+  "extends": "@heimdall-logs/tsconfig/base.json",
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
+    "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "preserve",
-    "incremental": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
@@ -24,8 +13,8 @@
         "name": "next"
       }
     ],
-    "downlevelIteration": true,
-    "strictNullChecks": true
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "module": "esnext"
   },
   "include": [
     "next-env.d.ts",
@@ -35,7 +24,9 @@
     ".contentlayer/generated",
     "src/lib/tinybird.js",
     "drizzle.config.mjs",
-    "drizzle.config.mjs"
+    "drizzle.config.mjs",
+    ".",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

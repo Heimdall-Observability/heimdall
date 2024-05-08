@@ -1,5 +1,4 @@
-import { db } from '@/lib/db'
-import { getCurrentUser } from '@/lib/session'
+import { db } from '@heimdall-logs/db'
 import { schema } from '@heimdall-logs/db'
 import { eq } from 'drizzle-orm'
 import { z } from 'zod'
@@ -16,7 +15,8 @@ export const DELETE = async (
 ) => {
   try {
     apiKeysCtxSchema.parse(context)
-    const user = await getCurrentUser()
+    const session = await auth()
+    const user = session?.user
     if (!user) return new Response(null, { status: 401 })
     // const isUserOwned = await db.apiKey.findFirst({
     //     where: {

@@ -1,9 +1,9 @@
 'use client'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import COUNTRIES from '@/lib/constants'
 import { fancyId } from '@/lib/utils'
 import { HeimdallCustomEvent } from '@heimdall-logs/types'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@heimdall-logs/ui'
 import { Row } from '@tanstack/react-table'
 
 const renderSubComponent = ({ row }: { row: Row<HeimdallCustomEvent> }) => {
