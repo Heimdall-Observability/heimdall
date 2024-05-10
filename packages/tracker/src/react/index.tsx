@@ -3,7 +3,8 @@ import React, { useEffect, useRef } from 'react'
 import { heimdall } from '../lib'
 import { record } from '../record'
 import { trace } from '../trace'
-import { Config, Internal } from '../types'
+import type { Config, Internal } from '../types'
+import { HeimdallErrorBoundary } from './heimdall-error-boundary'
 
 interface Props {
   config: Config
@@ -13,8 +14,7 @@ declare global {
   interface Window {
     llc: NonNullable<Config>
     lli: Internal
-    i: any
-    logLib: typeof heimdall
+    heimdallLogs: typeof heimdall
   }
 }
 
@@ -23,10 +23,10 @@ declare global {
  * @param {Partial<Config>} [config] - The configuration options for the tracker. See {@link Config} for overview
  * @see [Documentation](https://heimdall.francismasha.com/docs) for details.
  */
-function Heimdall({ config }: Props) {
+function HeimdallAnalytics({ config }: Props) {
   useEffect(() => {
     record(config)
-    trace(config).then(() => console.log('trace setup successful'))
+    trace(config).then(() => console.log('Trace setup successful'))
   }, [])
   return null
 }
@@ -46,7 +46,7 @@ type TrackViewProps = {
 /**
  *  Tracks the view of the component when it is visible in the viewport.
  */
-export function TrackView({ name, payload, children }: TrackViewProps) {
+function TrackView({ name, payload, children }: TrackViewProps) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const observable = new IntersectionObserver((entries) => {
@@ -66,7 +66,7 @@ export function TrackView({ name, payload, children }: TrackViewProps) {
 /**
  * a wrapper component that tracks the click event of the child component.
  */
-export function TrackClick({ name, payload, children }: TrackViewProps) {
+function TrackClick({ name, payload, children }: TrackViewProps) {
   return React.cloneElement(children as React.ReactElement, {
     onClick: () => {
       heimdall.track(name, payload)
@@ -74,4 +74,4 @@ export function TrackClick({ name, payload, children }: TrackViewProps) {
   })
 }
 
-export default Heimdall
+export { HeimdallAnalytics, TrackView, TrackClick, HeimdallErrorBoundary }

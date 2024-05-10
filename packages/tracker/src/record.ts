@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 import { clickHandler } from './handlers/clickHandler'
 import { sendEvents, sendPageView } from './server'
-import { Config } from './types'
+import type { Config } from './types'
 import { Logger } from './utils/logger'
 import {
   addInterval,
@@ -49,6 +48,7 @@ export function record(config?: Partial<Config>) {
   window.lli = {
     eventsBank: [],
     vitalQueue: new Set(),
+    eventsQueue: new Set(),
     startTime: now,
     currentUrl: `${location.pathname}${location.search}`,
     currentRef: document.referrer,
@@ -58,6 +58,7 @@ export function record(config?: Partial<Config>) {
     intervals: [],
     sdkVersion: packageJson.version,
   }
+
   const logger = Logger(window.llc.debug)
   logger.log('Start recording:', window.llc)
 
@@ -100,6 +101,8 @@ export function record(config?: Partial<Config>) {
     const currentUrl = window.lli.currentUrl
     sessionEndHandler(() => sendPageView(currentRef, currentUrl))
   }
+
+  logger.log('Stop recording:', window.llc)
 }
 
 export const navigationHandler = (_: string, __: string, url: string) => {

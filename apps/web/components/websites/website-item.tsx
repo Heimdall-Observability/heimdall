@@ -1,6 +1,7 @@
 import { Website as WebsiteType } from '@heimdall-logs/types/models'
 import { Skeleton } from '@heimdall-logs/ui'
 import { MoreVertical, User2 } from 'lucide-react'
+import Link from 'next/link'
 
 interface WebsiteProps {
   site: WebsiteType
@@ -16,15 +17,18 @@ export default function WebSiteItem({
   setSelected,
 }: WebsiteProps) {
   return (
-    <div className="cursor-pointer grid grid-cols-12 bg-card border rounded-xl items-center justify-between px-2 md:px-6 py-3 hover:bg-accent/50">
+    <Link
+      href={`/dashboard/${site.id}/runtime-logs`}
+      className="cursor-pointer grid grid-cols-12 bg-card border rounded-xl items-center justify-between px-2 md:px-6 py-3 hover:bg-accent/50"
+    >
       <div className="flex items-center gap-1 text-lime-500 col-span-2 md:col-span-1">
         <User2 size={20} />
-        <p className="text-sm">{visitors}</p>
+        <p className="text-sm font-mono">{visitors}</p>
       </div>
       <div className="col-span-9 md:col-span-10">
         <div className="grid gap-1">
           {site.title}
-          <p className="text-xs text-muted-foreground">{site.url}</p>
+          <p className="text-muted-foreground">{site.url}</p>
         </div>
       </div>
       <div className="flex flex-row items-center gap-4">
@@ -40,7 +44,7 @@ export default function WebSiteItem({
           }}
         />
       </div>
-    </div>
+    </Link>
   )
 }
 

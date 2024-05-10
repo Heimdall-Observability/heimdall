@@ -1,0 +1,51 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.7.2/schema.json",
+  "organizeImports": { "enabled": true },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 80,
+    "attributePosition": "auto",
+    "ignore": [
+      "*.d.ts",
+      "input.js",
+      "output.js",
+      "dist",
+      "build",
+      "pnpm-lock.yaml",
+      "node_modules",
+      "build-ncc",
+      ".next",
+      ".vscode",
+      "generated"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": false },
+    "ignore": ["node_modules/", "dist/", "dist-site/", ".bin/*"]
+  },
+  "javascript": {
+    "formatter": {
+      "jsxQuoteStyle": "double",
+      "quoteProperties": "asNeeded",
+      "trailingComma": "all",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSpacing": true,
+      "bracketSameLine": false,
+      "quoteStyle": "single",
+      "attributePosition": "auto"
+    }
+  },
+  "overrides": [
+    { "include": ["**/*.test.*"] },
+    {
+      "include": ["vitest.config.ts"],
+      "linter": { "rules": { "style": { "noDefaultExport": "off" } } }
+    }
+  ]
+}

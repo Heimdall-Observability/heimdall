@@ -1,42 +1,74 @@
-import { Kafka, Producer, RecordMetadata } from 'kafkajs'
+import type { Producer, RecordMetadata } from 'kafkajs'
+import { Kafka, logLevel } from 'kafkajs'
 
-import { KAFKA, KAFKA_PRODUCER } from './lib/constants'
+import { env } from '../env'
 
 let kafka: Kafka
 let producer: Producer
-const enabled = Boolean(process.env.KAFKA_USERNAME && process.env.KAFKA_BROKER)
+// const enabled = Boolean(process.env.KAFKA_USERNAME && process.env.KAFKA_BROKER)
+const enabled = Boolean(process.env.KAFKA_BROKER)
 
 function getClient() {
-  const username = process.env.KAFKA_USERNAME as string
-  const password = process.env.KAFKA_PASSWORD as string
-  const brokers = process.env.KAFKA_BROKER
-    ? process.env.KAFKA_BROKER.split(',')
-    : []
-  const ssl = process.env.CA_CERT
-    ? {
-        ca: process.env.CA_CERT,
-        key: process.env.CLIENT_KEY,
-        cert: process.env.CLIENT_CERT,
-      }
-    : null
-  const kafka = new Kafka({
+  const _username = env.KAFKA_USERNAME
+  const _password = env.KAFKA_PASSWORD
+  const brokers = env.KAFKA_BROKER ? env.KAFKA_BROKER.split(',') : []
+
+  // const sasl =
+  // 	username && password
+  // 		? {
+  // 				username,
+  // 				password,
+  // 				mechanism: 'plain',
+  // 			}
+  // 		: null
+
+  // const ssl = process.env.CA_CERT
+  // 	? {
+  // 			ca: process.env.CA_CERT,
+  // 			key: process.env.CLIENT_KEY,
+  // 			cert: process.env.CLIENT_CERT,
+  // 		}
+  // 	: null
+
+  // const kafka = new Kafka({
+  // 	clientId: 'mxl-console',
+  // 	brokers,
+  // 	ssl: {
+  // 		servername: 'localhost',
+  // 		rejectUnauthorized: false,
+  // 		ca: [
+  // 			fs.readFileSync(
+  // 				'/Users/francismasha/Documents/Projects/OpenSourced/kafkajs/testHelpers/certs/cert-signed',
+  // 				'utf-8'
+  // 			),
+  // 		],
+  // 	},
+  // 	sasl: {
+  // 		mechanism: 'plain',
+  // 		username: 'test',
+  // 		password: 'testtest',
+  // 	},
+  // 	logLevel: logLevel.ERROR,
+  // })
+
+  // if (process.env.NODE_ENV !== 'production') {
+  //   global[KAFKA] = kafka
+  // }
+
+  return new Kafka({
     brokers,
-    sasl: {
-      mechanism: 'scram-sha-256',
-      username,
-      password,
-    },
-    ssl: ssl ?? true,
+    ssl: false,
+    // sasl: {
+    // 	mechanism: 'scram-sha-256',
+    // 	username,
+    // 	password,
+    // },
+    logLevel: logLevel.ERROR,
   })
-  if (process.env.NODE_ENV !== 'production') {
-    // @ts-expect-error
-    global[KAFKA] = kafka
-  }
-  return kafka
 }
 
 async function sendMessage(
-  message: { [key: string]: string | number },
+  message: Record<string, string | number>,
   topic: string,
 ): Promise<RecordMetadata[]> {
   await connect()
@@ -52,7 +84,7 @@ async function sendMessage(
 }
 
 async function sendMessages(
-  messages: { [key: string]: string | number }[],
+  messages: Record<string, string | number>[],
   topic: string,
 ) {
   await connect()
@@ -74,21 +106,18 @@ async function getProducer(): Promise<Producer> {
 
 async function connect(): Promise<Kafka> {
   if (!kafka) {
-    kafka =
-      process.env.KAFKA_USERNAME &&
-      process.env.KAFKA_BROKER &&
-      // @ts-expect-error
-      (global[KAFKA] || getClient())
+    kafka = getClient()
     if (kafka) {
-      // @ts-expect-error
-      producer = global[KAFKA_PRODUCER] || (await getProducer())
+      producer = await getProducer()
     }
   }
   return kafka
 }
 
 export default {
-  enabled,
+  // TODO: Remove !enabled once Kafka is fully configured
+  enabled: !enabled,
+  // enabled: !enabled,
   // @ts-expect-error
   client: kafka,
   // @ts-expect-error

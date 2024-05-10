@@ -1,13 +1,14 @@
-import { serve } from '@hono/node-server'
+// import { serve } from '@hono/node-server'
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
-import { logger as appLogger } from 'hono/logger'
+import { logger } from 'hono/logger'
 import jwt from 'jsonwebtoken'
 
-import { db } from '@heimdall-logs/db'
-import { env } from '../env'
+import { clickhouseClient as client, db } from '@heimdall-logs/db'
+import { VitalData } from '@heimdall-logs/types/tracker'
+import { detect } from 'detect-browser'
+import { showRoutes } from 'hono/dev'
 import { eventDB } from './db'
-import { client } from './db/clickhouse'
 import { hitsQuery } from './db/queries'
 import { rateLimitCheck } from './lib/rate-limit'
 import { retryFunction } from './lib/retry'
@@ -16,19 +17,21 @@ import { convertToUTC } from './lib/utils'
 import { router } from './routes'
 import { getInsight } from './routes/insight'
 import { getTablesData } from './routes/table'
+import { getVitalsData } from './routes/vital-graph-table'
+import { getVitalInsight } from './routes/vital-insight'
 import { apiQuery, insightPubApiSchema, insightSchema } from './schema'
 import { Filter, HeimdallEvent, Path } from './type'
 
-const app = new Hono()
+const app = new Hono({ strict: false })
 
-app.use('*', appLogger())
+app.use('*', logger())
 app.use('*', cors())
 
-app.get('/ping', (c) => c.text('pong'))
+app.get('/ping', (c) => c.json({ ping: 'pong' }, 200))
 
 app.post('/', async (c) => {
   const body = await c.req.json()
-  const headers = Object.fromEntries(c.req.headers)
+  const headers = Object.fromEntries(c.req.raw.headers)
   const query = c.req.query()
   if (!body.path) {
     return c.json(null, 200)
@@ -36,6 +39,66 @@ app.post('/', async (c) => {
   const path: Path = body.path
   const res = await router({ path, rawBody: body, req: { headers, query } })
   return c.json(null, res.status)
+})
+
+app.post('/vitals', async (c) => {
+  const body = await c.req.json<VitalData[]>()
+  const headers = Object.fromEntries(c.req.raw.headers)
+  const query = c.req.query()
+  const sessionData = await detect({ headers, query }, body[0].screenWidth)
+  // const usage = checkUsage(body[0].websiteId)
+  // if (!usage) {
+  //   return c.json(null, 403)
+  // }
+  await eventDB.insertEvents(
+    body.map((data) => {
+      const { sessionId, visitorId, id, websiteId, ...rest } = data
+      return {
+        properties: JSON.stringify({
+          ...sessionData,
+          ...rest,
+        }),
+        timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
+        event: 'vitals',
+        sessionId,
+        visitorId,
+        websiteId,
+        id: id,
+        sign: 1,
+      }
+    }),
+  )
+  return c.json(null, 200)
+})
+
+app.get('/vitals', async (c) => {
+  const startDateObj = new Date(c.req.query('startDate'))
+  const endDateObj = new Date(c.req.query('endDate'))
+  const duration = endDateObj.getTime() - startDateObj.getTime()
+  const pastEndDateObj = new Date(startDateObj.getTime() - duration)
+  const websiteId = c.req.query('websiteId')
+  const timezone = c.req.query('timezone')
+  try {
+    const [events, lastEvents] = await retryFunction(
+      eventDB.getVital,
+      [startDateObj, endDateObj, pastEndDateObj, websiteId],
+      3,
+      4,
+    )
+    const insight = getVitalInsight(events, lastEvents)
+    const vitalsData = getVitalsData(events, startDateObj, endDateObj, timezone)
+    return c.json(
+      {
+        ...insight,
+        graph: vitalsData.dataByDate,
+        data: vitalsData.data,
+      },
+      200,
+    )
+  } catch (e) {
+    console.error(e)
+    return c.json(null, 500)
+  }
 })
 
 app.get('/', async (c) => {
@@ -46,7 +109,7 @@ app.get('/', async (c) => {
   }
   const { startDate, endDate, timeZone, websiteId, token } = queries.data
   try {
-    jwt.verify(token, env.NEXTAUTH_SECRET, (err, decoded) => {
+    jwt.verify(token, process.env.AUTH_SECRET, (err, decoded) => {
       if (err) {
         throw err
       }
@@ -296,12 +359,11 @@ app.get('/v1/insight', async (c) => {
   }
 })
 
-serve(
-  {
-    fetch: app.fetch,
-    port: 8000,
-  },
-  (info) => {
-    console.info(`The app has started successfully ${info.port}}`)
-  },
-)
+const isDev = process.env.NODE_ENV === 'development'
+if (isDev) showRoutes(app, { verbose: true })
+
+const port = isDev ? 8000 : 8000
+
+const server = { port, fetch: app.fetch }
+
+export default server

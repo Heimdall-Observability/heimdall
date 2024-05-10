@@ -1,10 +1,16 @@
 import { kafka } from '@heimdall-logs/clickhouse'
-import { db, schema } from '@heimdall-logs/db'
+import { clickhouseClient as client, db, schema } from '@heimdall-logs/db'
 import { sql } from 'drizzle-orm'
 
+import { VitalDateWithSession } from '@heimdall-logs/types/tracker'
 import { convertToUTC } from '../lib/utils'
-import { EventRes, HeimdallEvent, TraceRes } from '../type'
-import { client } from './clickhouse'
+import { EventRes, HeimdallEvent } from '../type'
+
+const getStringJsonExtract = (q: string[]) => {
+  return q
+    .map((val) => `JSONExtract(properties, ${val}, "String") as ${val}`)
+    .join(',')
+}
 
 export const hitsQuery = (
   startDate: string,
@@ -39,32 +45,44 @@ export const customEventsQuery = (
 ) =>
   `select *
    from default.event
-   WHERE timestamp >= '${startDate}'
+   WHERE websiteId = '${websiteId}'
      AND timestamp <= '${endDate}'
-     AND websiteId = '${websiteId}'
+     AND timestamp >= '${startDate}'
      AND event != 'hits'`
 
 export const tracesQuery = (
   startDate: string,
   endDate: string,
-  websiteId: string,
+  _websiteId: string,
 ) =>
   `SELECT *
    FROM default.otel_traces
-   WHERE Timestamp >= '${startDate}'
-     AND Timestamp <= '${endDate}'
-     AND ServiceName = '${websiteId}'
+   WHERE Timestamp <= '${endDate}'
+     AND Timestamp >= '${startDate}'
      AND SpanName != 'click'
    ORDER BY Timestamp DESC
    LIMIT 100`
 
-export const dummyTracesQuery = (startDate: string, endDate: string) =>
-  `select *
-   from default.demo_otel_traces
-   WHERE Timestamp >= '${startDate}'
-     AND Timestamp <= '${endDate}'
-   ORDER BY Timestamp DESC
-   LIMIT 50`
+export const vitalsQuery = (
+  startDate: string,
+  endDate: string,
+  websiteId: string,
+) => {
+  getStringJsonExtract([
+    'country',
+    'city',
+    'browser',
+    'language',
+    'currentPath',
+    'delta',
+    'navigationType',
+    'rating',
+    'value',
+    'name',
+    'os',
+  ])
+  return `select id, sessionId, visitorId, properties, timestamp from default.event WHERE timestamp >= '${startDate}' AND timestamp <= '${endDate}' AND websiteId = '${websiteId}' AND event = 'vitals'`
+}
 
 const createEvent = () => {
   return async ({
@@ -159,6 +177,46 @@ const createEvent = () => {
   }
 }
 
+type InsertEventParams = {
+  id: string
+  sessionId: string
+  visitorId: string
+  websiteId: string
+  event: string
+  properties: string
+  timestamp: string
+  sign: 1 | -1
+}
+
+const createEvents = (data: InsertEventParams[]) => {
+  return {
+    clickhouse: async () => {
+      const { enabled, sendMessages, connect } = kafka
+      if (enabled) {
+        await connect()
+        await sendMessages(data, 'events')
+      } else {
+        await client
+          .insert({
+            table: 'default.event',
+            values: data,
+            format: 'JSONEachRow',
+          })
+          .then((res) => res)
+      }
+    },
+    sqlite: async () => {
+      await db.insert(schema.events).values(
+        data.map((d) => ({
+          ...d,
+          timestamp: new Date(),
+          properties: JSON.parse(d.properties),
+        })),
+      )
+    },
+  }
+}
+
 async function getHitsData(
   startDateObj: Date,
   endDateObj: Date,
@@ -171,20 +229,10 @@ async function getHitsData(
         .select()
         .from(event)
         .where(
-          sql`${event.websiteId} =
-          ${websiteId}
-          and
-          event
-          =
-          'hits'
-          and
-          ${event.timestamp}
-          >=
-          ${new Date(startDateObj.getTime())}
-          and
-          ${event.timestamp}
-          <=
-          ${new Date(endDateObj).getTime()}`,
+          sql`${event.websiteId} = ${websiteId}
+          and event = 'hits'
+          and ${event.timestamp} >= ${new Date(startDateObj.getTime())}
+          and ${event.timestamp} <= ${new Date(endDateObj).getTime()}`,
         )
         .then((res) =>
           res.map((event) => {
@@ -282,7 +330,44 @@ async function getCustomEventData(
   }
 }
 
-async function getTracesData(
+function getSiteVitals(websiteId: string, startDate: Date, endDate: Date) {
+  return {
+    sqlite: async () => {
+      const event = schema.events
+      return await db
+        .select()
+        .from(event)
+        .where(
+          sql`${event.websiteId} = ${websiteId} and event = 'vitals' and ${
+            event.timestamp
+          } >= ${new Date(startDate.getTime())} and ${
+            event.timestamp
+          } <= ${new Date(endDate).getTime()}`,
+        )
+        .then((res) =>
+          res.map((r) => ({
+            ...r,
+            ...r.properties,
+            timestamp: r.timestamp.toISOString().slice(0, 19).replace('T', ' '),
+          })),
+        )
+    },
+    clickhouse: async () => {
+      return await client
+        .query({
+          query: vitalsQuery(
+            convertToUTC(startDate),
+            convertToUTC(endDate),
+            websiteId,
+          ),
+          format: 'JSONEachRow',
+        })
+        .then(async (res) => (await res.json()) as VitalDateWithSession[])
+    },
+  }
+}
+
+async function getTraceData(
   startDateObj: Date,
   endDateObj: Date,
   websiteId: string,
@@ -321,7 +406,7 @@ async function getTracesData(
         )
     },
     clickhouse: async () => {
-      return await client
+      return client
         .query({
           query: tracesQuery(
             convertToUTC(startDateObj),
@@ -330,24 +415,26 @@ async function getTracesData(
           ),
           format: 'JSONEachRow',
         })
-        .then(async (res) => (await res.json()) as TraceRes[])
-      // .then((res) =>
-      // 	res.map((s) => {
-      // 		const properties = JSON.parse(s.properties);
-      // 		return {
-      // 			...properties,
-      // 			id: s.id,
-      // 			// event: s.event,
-      // 			// sessionId: s.sessionId,
-      // 			// websiteId: s.websiteId,
-      // 			// visitorId: s.visitorId,
-      // 			timestamp: s.Timestamp,
-      // 			duration: properties.duration ?? 0,
-      // 		};
-      // 	})
-      // );
+        .then(async (res) => await res.json())
     },
   }
+}
+
+async function getTracesData(
+  startDateObj: Date,
+  endDateObj: Date,
+  websiteId: string,
+) {
+  return client
+    .query({
+      query: tracesQuery(
+        convertToUTC(startDateObj),
+        convertToUTC(endDateObj),
+        websiteId,
+      ),
+      format: 'JSONEachRow',
+    })
+    .then(async (res) => await res.json())
 }
 
 export function heimdallDb(db: 'sqlite' | 'clickhouse') {
@@ -362,6 +449,10 @@ export function heimdallDb(db: 'sqlite' | 'clickhouse') {
       const hits = createEvent()
       const insert = await hits(data)
       return insert[db]()
+    },
+    async insertEvents(data: InsertEventParams[]) {
+      const insert = createEvents(data)
+      await insert[db]()
     },
     async getHits(
       startDateObj: Date,
@@ -387,7 +478,40 @@ export function heimdallDb(db: 'sqlite' | 'clickhouse') {
     },
     async getTraces(startDateObj: Date, endDateObj: Date, websiteId: string) {
       const query = await getTracesData(startDateObj, endDateObj, websiteId)
-      return await query[db]()
+
+      return query
+    },
+    async getVital(
+      startDateObj: Date,
+      endDateObj: Date,
+      pastEndDateObj: Date,
+      websiteId: string,
+    ): Promise<[VitalDateWithSession[], VitalDateWithSession[]]> {
+      const query1 = getSiteVitals(websiteId, startDateObj, endDateObj)[db]
+      const query2 = getSiteVitals(websiteId, endDateObj, pastEndDateObj)[db]
+      const data = await Promise.all([
+        query1().then((res) =>
+          res.map((r) => {
+            const { properties, ...rest } = r
+            const propertiesJson = JSON.parse(properties)
+            return {
+              ...propertiesJson,
+              ...rest,
+            } as VitalDateWithSession
+          }),
+        ),
+        query2().then((res) =>
+          res.map((r) => {
+            const { properties, ...rest } = r
+            const propertiesJson = JSON.parse(properties)
+            return {
+              ...propertiesJson,
+              ...rest,
+            } as VitalDateWithSession
+          }),
+        ),
+      ])
+      return data
     },
   }
 }

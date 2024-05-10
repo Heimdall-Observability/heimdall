@@ -64,6 +64,7 @@ export async function send(
 ) {
   const logger = Logger(window.llc.debug)
   const url = path ? window.llc.host + path : window.llc.host
+  logger.log('Sending data to:', url)
   if (!data || (Array.isArray(data) && data.length === 0)) {
     logger.log('Skipping empty request')
     return
@@ -77,6 +78,7 @@ export async function send(
   const maxRetries = 3
 
   async function sendRequest(host: string) {
+    logger.log('host', host)
     try {
       if (!window.llc.useBeacon) {
         await fetch(host, {

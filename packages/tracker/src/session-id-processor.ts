@@ -1,5 +1,9 @@
-import { Context } from '@opentelemetry/api'
-import { ReadableSpan, Span, SpanProcessor } from '@opentelemetry/sdk-trace-web'
+import type { Context } from '@opentelemetry/api'
+import type {
+  ReadableSpan,
+  Span,
+  SpanProcessor,
+} from '@opentelemetry/sdk-trace-web'
 
 import { AttributeNames } from './enums/attribute-names'
 import Session from './session'
@@ -11,12 +15,10 @@ export class SessionIdProcessor implements SpanProcessor {
     return Promise.resolve()
   }
 
-  // @ts-expect-error
   onStart(span: Span, _parentContext: Context): void {
     span.setAttribute(AttributeNames.SESSION_ID, userId)
   }
 
-  // @ts-expect-error
   onEnd(_span: ReadableSpan): void {}
 
   shutdown(): Promise<void> {

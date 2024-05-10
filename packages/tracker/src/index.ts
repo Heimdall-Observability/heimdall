@@ -1,5 +1,5 @@
 import { heimdall } from './lib'
-import { Config, Internal } from './types'
+import type { Config, Internal } from './types'
 
 declare global {
   interface Window {

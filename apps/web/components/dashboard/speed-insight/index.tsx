@@ -1,19 +1,15 @@
-import { CopyToClipboard } from '@/components/copy-to-clipboard'
+'use client'
+import { env } from '@/env.mjs'
 import { useIsMobile } from '@/hooks/use-viewport'
+import { localSettingAtom } from '@/jotai/store'
+import { getLast24Hour } from '@/lib/time-helper'
 import { cn, fetcher } from '@/lib/utils'
 import { GetVitalsResponse } from '@heimdall-logs/types'
-import { Website } from '@heimdall-logs/types/models'
 import { Tabs, TabsList, TabsTrigger } from '@heimdall-logs/ui'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@heimdall-logs/ui'
+import { Dialog, DialogContent, DialogTrigger } from '@heimdall-logs/ui'
 import { Card, CardContent, CardHeader, CardTitle } from '@heimdall-logs/ui'
 import { Button } from '@heimdall-logs/ui'
+import { useAtom } from 'jotai/index'
 import {
   ArrowDown,
   ArrowUpIcon,
@@ -27,37 +23,52 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import useSWR from 'swr'
-import { Filter, TimeRange } from '../type'
+import { Filter, FilterProp, TimeRange } from '../type'
 import { SpeedChart } from './chart'
 import { Stat, stats } from './stats'
 import { SpeedTables } from './table'
+
 export const SpeedInsight = ({
   website,
-  timeRange,
-  setting,
   token,
-  url,
-  showUpdateDialog,
 }: {
-  website: Website
-  timeRange: TimeRange
-  setting: {
-    graph: string | null
-    timezone: string
-  }
-  filters: Filter[]
+  website: { id: string; url: string; title: string | null }
   token: string
-  url: string
-  showUpdateDialog: boolean //insight data is available
 }) => {
+  const [timeRange, _setTimeRange] = useState<TimeRange>({
+    startDate: getLast24Hour(),
+    endDate: new Date(),
+    stringValue: '24hr',
+  })
+  const [_customTime, _setCustomTime] = useState(false)
+  const [filters, setFilters] = useState<Filter[]>([])
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const [setting] = useAtom(localSettingAtom)
+  const url = env.NEXT_PUBLIC_API_URL
+
+  function addFilter(f: Filter) {
+    setFilters([...filters, f])
+  }
+
+  function clearFilter(key: string) {
+    setFilters((prev) => prev.filter((f) => f.key !== key))
+  }
+
+  const isFilterActive = (key: string) =>
+    filters.some((filter) => filter.key === key)
+
+  const _filter: FilterProp = {
+    addFilter,
+    clearFilter,
+    isFilterActive,
+  }
+
   const { data, isLoading } = useSWR<GetVitalsResponse>(
     `${url}/vitals?websiteId=${
       website.id
     }&startDate=${timeRange.startDate.toUTCString()}&endDate=${timeRange.endDate.toUTCString()}&timeZone=${
-      setting.timezone
+      setting.timezone ?? timezone
     }&token=${token}`,
     fetcher,
   )
@@ -71,8 +82,8 @@ export const SpeedInsight = ({
   const [chartDevice, setChartDevice] = useState('desktop')
   const [chartType, setChartType] = useState('bar-graph')
   return (
-    <div className="  gap-4 space-y-4">
-      <div className="grid gap-4 md:grid-cols-2 grid-cols-2 lg:grid-cols-5">
+    <div className="gap-4 space-y-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-5">
         {statsList.map((stat) => {
           const value = data?.[stat.short].current
           const change = data?.[stat.short].change
@@ -80,44 +91,43 @@ export const SpeedInsight = ({
             <Card
               className={cn(
                 activeStat.name === stat.name
-                  ? 'flex-grow relative bg-gradient-to-tr from-stone-900 to-stone-950 shadow-sm shadow-brand-900/30'
-                  : 'flex-grow opacity-80 cursor-pointer',
+                  ? 'relative grow cursor-pointer bg-muted/10 p-0 shadow-none'
+                  : 'grow cursor-pointer opacity-80 shadow-none',
               )}
               key={stat.name}
               onClick={() => setActiveStat(stat)}
             >
               {activeStat.name === stat.name && (
-                <span className="absolute top-0 h-px blur-sm left-1/2 w-1/2 bg-gradient-circle from-brand-500/90 rounded-md to-brand-800/30"></span>
+                <span className="absolute left-1/2 top-0 h-px w-1/2 rounded-md blur-sm"></span>
               )}
-              <CardHeader className=" md:flex-row md:justify-between md:items-center">
-                <CardTitle className=" text-sm xl:text-base">
+              <CardHeader className="md:flex-row md:items-center md:justify-between">
+                <CardTitle className="text-sm font-normal">
                   {stat.name}
                 </CardTitle>
                 <Dialog>
                   <DialogTrigger>
-                    <div className="w-max border px-3 cursor-pointer flex items-center gap-2 py-1 rounded-md  relative bg-brand-900/40">
+                    <div className="relative flex w-max cursor-pointer items-center gap-2 rounded-md border px-3 py-1">
                       <ArrowUpLeftFromCircle size={12} />
                       <span className="text-xs">{stat.short}</span>
                     </div>
                   </DialogTrigger>
                   <DialogContent>
-                    <div className=" p-4  h-min space-y-2">
-                      <div>
-                        <p className=" font-bold">
-                          {stat.name} ({stat.short})
-                        </p>
+                    <div className="h-min  space-y-2 p-4">
+                      <div className="text-lg font-medium tracking-tight xl:text-xl">
+                        {stat.name} ({stat.short})
                       </div>
-                      {activeStat.description}
+                      <span className="text-muted-foreground">
+                        {activeStat.description}
+                      </span>
                       <Link
                         href={`https://web.dev/${stat.short.toLowerCase()}`}
                         target="_blank"
                       >
                         <Button
-                          size="sm"
-                          className="gap-2 mt-4 text-brand-400"
-                          variant="outline"
+                          className="text-brand-400 mt-4 gap-2"
+                          type="outline"
+                          iconRight={<ExternalLinkIcon size={14} />}
                         >
-                          <ExternalLinkIcon size={14} />
                           <span>Learn More</span>
                         </Button>
                       </Link>
@@ -126,14 +136,14 @@ export const SpeedInsight = ({
                 </Dialog>
               </CardHeader>
               {!isLoading && data ? (
-                <CardContent className=" flex md:flex-row flex-col md:items-center justify-between">
-                  <div className=" flex flex-col gap-1 items-start">
-                    <p className=" text-lg lg:text-xl xl:text-2xl font-bold">
+                <CardContent className=" flex flex-col justify-between md:flex-row md:items-center">
+                  <div className=" flex flex-col items-start gap-1">
+                    <p className="text-xl font-medium tracking-tight xl:text-2xl">
                       {stat.formatter(data?.[stat.short].current ?? 0)}
                     </p>
-                    <div className="hidden border px-3 rounded-md py-px md:flex items-center justify-center">
+                    <div className="hidden items-center justify-center rounded-md border px-3 py-px md:flex">
                       <span
-                        className="text-xs text-brand-800"
+                        className="text-brand-800 text-xs"
                         style={{
                           color: stat.getRating(value).style,
                         }}
@@ -142,10 +152,10 @@ export const SpeedInsight = ({
                       </span>
                     </div>
                   </div>
-                  <div className=" flex md:flex-col justify-between  gap-2">
-                    <div className="md:hidden border px-3 rounded-md py-px flex items-center justify-center">
+                  <div className=" flex justify-between gap-2  md:flex-col">
+                    <div className="flex items-center justify-center rounded-md border px-3 py-px md:hidden">
                       <span
-                        className="text-xs text-brand-800"
+                        className="text-brand-800 text-xs"
                         style={{
                           color: stat.getRating(value).style,
                         }}
@@ -153,13 +163,13 @@ export const SpeedInsight = ({
                         {stat.getRating(value).label}
                       </span>
                     </div>
-                    <div className=" flex justify-between items-center">
+                    <div className=" flex items-center justify-between">
                       {change ? (
-                        <div className=" flex text-xs xl:text-sm items-center">
+                        <div className=" flex items-center text-xs xl:text-sm">
                           {change > 0 ? (
-                            <ArrowUpIcon className=" text-green-500 w-4 xl:w-5" />
+                            <ArrowUpIcon className=" w-4 text-green-500 xl:w-5" />
                           ) : (
-                            <ArrowDown className=" text-red-500 w-4 xl:w-5" />
+                            <ArrowDown className=" w-4 text-red-500 xl:w-5" />
                           )}
                           <div>{`${change} %`}</div>
                         </div>
@@ -173,10 +183,10 @@ export const SpeedInsight = ({
                 <CardContent className=" h-24 w-full animate-pulse">
                   <div className="flex flex-col justify-center gap-2">
                     <div className="text-2xl font-bold">
-                      <div className="bg-gray-200 dark:bg-gray-800 h-7 w-24 "></div>
+                      <div className="h-7 w-24 bg-gray-200 dark:bg-gray-800 "></div>
                     </div>
                     <div className="text-2xl font-bold">
-                      <div className="bg-gray-200 dark:bg-gray-800 h-4 w-9 "></div>
+                      <div className="h-4 w-9 bg-gray-200 dark:bg-gray-800 "></div>
                     </div>
                   </div>
                 </CardContent>
@@ -185,12 +195,12 @@ export const SpeedInsight = ({
           )
         })}
       </div>
-      <div className="grid gap-4 min-h-max md:grid-cols-2 lg:grid-cols-7 grid-cols-1">
+      <div className="grid min-h-max grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-7 md:col-span-4">
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle className="text-base">
               <Tabs onValueChange={setChartDevice} value={chartDevice}>
-                <TabsList className=" bg-stone-900">
+                <TabsList>
                   <TabsTrigger value="desktop">
                     <div className=" flex items-center gap-1 text-xs md:text-sm">
                       <Monitor size={isMobile ? 10 : 16} />
@@ -208,7 +218,7 @@ export const SpeedInsight = ({
             </CardTitle>
 
             <Tabs value={chartType} onValueChange={setChartType}>
-              <TabsList className=" bg-stone-900">
+              <TabsList>
                 <TabsTrigger value="bar-graph">
                   <BarChart size={isMobile ? 14 : 18} />
                 </TabsTrigger>
@@ -228,9 +238,6 @@ export const SpeedInsight = ({
             />
           </CardContent>
         </Card>
-        <UpdateTrackerDialog
-          trigger={!isLoading && !data?.data.pages.length && showUpdateDialog}
-        />
         <SpeedTables
           data={data?.data}
           activeStat={activeStat}
@@ -238,39 +245,5 @@ export const SpeedInsight = ({
         />
       </div>
     </div>
-  )
-}
-
-export const UpdateTrackerDialog = ({ trigger }: { trigger: boolean }) => {
-  const [isOpen, setIsOpen] = useState(false)
-  useEffect(() => {
-    setIsOpen(trigger)
-  }, [])
-  return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>There is no data yet!</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
-          Update the tracker to start collecting speed metrics
-        </DialogDescription>
-        <div className=" border rounded-md flex items-center justify-between pr-6">
-          <SyntaxHighlighter
-            language="bash"
-            style={a11yDark}
-            wrapLines
-            customStyle={{
-              background: 'none',
-              fontSize: '0.8rem',
-              border: 'none',
-            }}
-          >
-            pnpm i @heimdall-logs/tracker@latest
-          </SyntaxHighlighter>
-          <CopyToClipboard text="pnpm i @heimdall-logs/tracker@latest" />
-        </div>
-      </DialogContent>
-    </Dialog>
   )
 }

@@ -1,14 +1,25 @@
 import { browserName, detectOS } from 'detect-browser'
 import { z } from 'zod'
 
+import { clickhouseClient as client } from '@heimdall-logs/db'
 import { eventDB } from '../db'
-import { client } from '../db/clickhouse'
 import { apiResponse } from '../lib/api-response'
 import { getDevice } from '../lib/detect/get-device'
 import { getIpAddress } from '../lib/detect/get-ip-address'
 import { getLocation } from '../lib/detect/get-location'
 import { setVisitorId } from '../lib/set-visitor-id'
 import { RouteType } from './type'
+
+export type InsertEventParams = {
+  id: string
+  sessionId: string
+  visitorId: string
+  websiteId: string
+  event: string
+  properties: string
+  timestamp: string
+  sign: 1 | -1
+}
 
 export const eventSchema = z.object({
   events: z.array(

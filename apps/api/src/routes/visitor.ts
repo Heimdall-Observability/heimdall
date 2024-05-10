@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { client } from '../db/clickhouse'
+import { clickhouseClient as client } from '@heimdall-logs/db'
 import { apiResponse } from '../lib/api-response'
 import { RouteType } from './type'
 

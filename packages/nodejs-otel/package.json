@@ -1,0 +1,100 @@
+{
+  "name": "@heimdall-logs/nodejs-otel",
+  "version": "0.0.1",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "Safaricom MXL NodeJS wrapper around OpenTelemetry APIs",
+  "author": "Francis Konde",
+  "license": "MIT",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "edge": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/edge/index.js"
+      },
+      "edge-light": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/edge/index.js"
+      },
+      "worker": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/edge/index.js"
+      },
+      "workerd": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/edge/index.js"
+      },
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/node/index.js"
+      },
+      "node": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/node/index.js"
+      },
+      "types": "./dist/types/index.d.ts",
+      "default": "./dist/edge/index.js"
+    }
+  },
+  "types": "./dist/types/index.d.ts",
+  "files": ["dist", "LICENSE"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "pnpm clean && pnpm tsx build.ts && pnpm build-types && pnpm build-site",
+    "build-only": "pnpm tsx build.ts",
+    "build-types": "tsc --noEmit false --declaration --emitDeclarationOnly --stripInternal --declarationDir dist/types src/index.ts",
+    "build-site": "pnpm build-typedoc && cp index.html LICENSE CHANGELOG.md dist-site",
+    "build-typedoc": "pnpm typedoc src/index.ts",
+    "clean": "rimraf dist && rimraf dist-site",
+    "format": "biome format --write .",
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "pnpm build",
+    "type-check": "tsc --noEmit",
+    "unit-test": "vitest --run",
+    "unit-test-coverage": "vitest --run --coverage",
+    "unit-test-watch": "vitest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.7.3",
+    "@opentelemetry/api": "1.8.0",
+    "@opentelemetry/api-logs": "^0.51.1",
+    "@opentelemetry/context-async-hooks": "^1.24.1",
+    "@opentelemetry/core": "1.24.1",
+    "@opentelemetry/exporter-trace-otlp-http": "0.51.1",
+    "@opentelemetry/instrumentation": "0.51.1",
+    "@opentelemetry/otlp-exporter-base": "^0.51.1",
+    "@opentelemetry/otlp-proto-exporter-base": "^0.51.1",
+    "@opentelemetry/otlp-transformer": "^0.51.1",
+    "@opentelemetry/resources": "1.24.1",
+    "@opentelemetry/sdk-logs": "^0.51.1",
+    "@opentelemetry/sdk-metrics": "1.24.1",
+    "@opentelemetry/sdk-trace-base": "1.24.1",
+    "@opentelemetry/semantic-conventions": "1.24.1",
+    "@types/node": "^20.12.11",
+    "@vitest/coverage-v8": "^1.6.0",
+    "esbuild": "^0.21.1",
+    "protobufjs": "^7.3.0",
+    "rimraf": "^5.0.5",
+    "tsx": "^4.9.3",
+    "typedoc": "^0.25.13",
+    "typedoc-plugin-markdown": "4.0.1",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "peerDependencies": {
+    "@opentelemetry/api": "^1.7.0",
+    "@opentelemetry/api-logs": "^0.46.0",
+    "@opentelemetry/instrumentation": "^0.46.0",
+    "@opentelemetry/resources": "^1.19.0",
+    "@opentelemetry/sdk-logs": "^0.46.0",
+    "@opentelemetry/sdk-metrics": "^1.19.0",
+    "@opentelemetry/sdk-trace-base": "^1.19.0"
+  }
+}

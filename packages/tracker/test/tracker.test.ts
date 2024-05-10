@@ -1,4 +1,4 @@
-import { Mock, vi } from 'vitest'
+import { type Mock, vi } from 'vitest'
 
 import { setConsent, track } from '../src/methods'
 import { navigationHandler, record } from '../src/record'
@@ -59,6 +59,7 @@ describe('Session Start', () => {
 
 describe('should send pageview when navigating to new page', () => {
   beforeEach(() => {
+    // @ts-expect-error
     window.lli = {
       currentRef: '',
       currentUrl: '',
@@ -104,7 +105,7 @@ describe('should send pageview when navigating to new page', () => {
 describe('should send data on visibility change', () => {
   it('should send session end info on session end', () => {
     record()
-    const eventBank = [
+    window.lli.eventsBank = [
       {
         eventName: 'direct',
         eventType: 'click',
@@ -113,7 +114,6 @@ describe('should send data on visibility change', () => {
         page: '/test',
       },
     ]
-    window.lli.eventsBank = eventBank
     ;(send as Mock).mockClear()
     ;(send as Mock).mockImplementation((_, __, fn?: () => void) => {
       fn?.()

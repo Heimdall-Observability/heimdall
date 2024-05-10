@@ -83,8 +83,12 @@ function ErrorPage({
               </div>
             </Conditional>
 
-            <Button onClick={action}>
-              <Icons.reload className="mr-2 h-4 w-4" /> Reload
+            <Button
+              size="medium"
+              onClick={action}
+              icon={<Icons.reload className="h-4 w-4" />}
+            >
+              Reload
             </Button>
           </div>
         </div>

@@ -11,9 +11,9 @@ const tailwindConfig = {
   theme: {
     container: {
       center: true,
-      padding: '0.5rem',
+      padding: '2rem',
       screens: {
-        '2xl': '1200px',
+        '2xl': '1400px',
       },
     },
     extend: {

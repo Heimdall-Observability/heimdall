@@ -6,7 +6,8 @@
   "scripts": {
     "test": "vitest",
     "dev": "rm -rf /dist & tsup --watch",
-    "build": "rm -rf /dist & tsup"
+    "build": "rm -rf /dist & tsup",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
   },
   "exports": {
     ".": {
@@ -32,10 +33,10 @@
   "license": "MIT",
   "files": ["dist", "package.json", "LICENSE", "README.md"],
   "devDependencies": {
-    "@heimdall-logs/types": "workspace:*",
-    "@types/node": "^20.12.10",
+    "@types/node": "^20.12.11",
     "@types/react": "^18.3.1",
     "@vitest/browser": "^1.6.0",
+    "axios": "^1.6.8",
     "happy-dom": "^14.10.1",
     "react": "^18.3.1",
     "tsup": "^8.0.2",
@@ -55,11 +56,14 @@
     "@opentelemetry/core": "1.24.1",
     "@opentelemetry/exporter-trace-otlp-http": "0.51.1",
     "@opentelemetry/instrumentation": "0.51.1",
+    "@opentelemetry/instrumentation-document-load": "^0.38.0",
+    "@opentelemetry/instrumentation-user-interaction": "^0.38.0",
+    "@opentelemetry/instrumentation-xml-http-request": "^0.51.1",
     "@opentelemetry/propagator-b3": "^1.24.1",
     "@opentelemetry/resources": "1.24.1",
-    "@opentelemetry/sdk-trace-base": "1.24.1",
     "@opentelemetry/sdk-trace-web": "1.24.1",
-    "@opentelemetry/semantic-conventions": "1.24.1",
+    "js-cookie": "^3.0.5",
+    "react-error-boundary": "^4.0.13",
     "web-vitals": "^3.5.2"
   }
 }

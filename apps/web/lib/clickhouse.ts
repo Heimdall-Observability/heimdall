@@ -3,7 +3,7 @@ import { createClient } from '@clickhouse/client'
 
 export const client = createClient({
   url: env.CLICKHOUSE_HOST,
-  password: env.CLICKHOUSE_PASSWORD,
+  // password: env.CLICKHOUSE_PASSWORD,
   username: env.CLICKHOUSE_USERNAME,
   database: env.CLICKHOUSE_DB,
 })

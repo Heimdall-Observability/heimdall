@@ -129,7 +129,7 @@ export const EventFilter = ({
               eventsCount: data.length,
             })
           }}
-          variant="outline"
+          type="outline"
           className=" relative flex items-center gap-2 font-medium"
         >
           <SlidersHorizontal size={14} />
@@ -162,6 +162,7 @@ export const EventFilter = ({
                   )!
 
                   if (pressed) {
+                    // @ts-expect-error
                     setActiveFilter((fil) => [
                       ...fil,
                       {

@@ -1,4 +1,41 @@
-import { VitalData } from '@heimdall-logs/types/tracker'
+export interface VitalData {
+  visitorId: string
+  sessionId: string
+  websiteId: string
+  sdkVersion: string
+  screenWidth: number
+  language: string
+  queryParams: Record<string, string>
+  currentPath: string
+  id: string
+  delta: number
+  value: number
+  name: string
+  rating: 'good' | 'needs-improvement' | 'poor'
+  navigationType: string
+}
+
+export interface VitalDateWithSession {
+  visitorId: string
+  sessionId: string
+  websiteId: string
+  language: string
+  queryParams: Record<string, string>
+  currentPath: string
+  id: string
+  delta: number
+  value: number
+  name: string
+  rating: 'good' | 'needs-improvement' | 'poor'
+  navigationType: string
+  city: string
+  country: string
+  browser: string
+  os: string
+  device: string
+  timestamp: Date
+  properties: any
+}
 
 export type Config = {
   /** The ID of the tracker instance */
@@ -21,7 +58,7 @@ export type Config = {
   env?: 'auto' | 'prod' | 'dev'
   /** The interval (in milliseconds) for sending data to the server. */
   postInterval?: number
-  /** The hostname or array of hostnames to send data to. By default it sends to the api.heimdall_logs.io */
+  /** The hostname or array of hostnames to send data to. By default it sends to the api.loglib.io */
   host?: string | string[]
   /** The user's consent status for tracking.
    * If not granted, it uses a hashed version of the user ip address as user id.
@@ -30,7 +67,7 @@ export type Config = {
    * You can set it globally here,
    * or You can change the user consent
    * using the setConsent method exported from the tracker..
-   * @example import {setConsent} from "@heimdall-logs/tracker"
+   * @example import {setConsent} from "@loglib/tracker"
    * setConsent("granted") */
   consent?: 'granted' | 'denied'
   useServerPath?: boolean
@@ -60,6 +97,7 @@ export interface Internal {
   intervals: NodeJS.Timer[]
   sdkVersion: string
   vitalQueue: Set<VitalData>
+  eventsQueue: Set<any>
 }
 
 export interface InitInfo {
@@ -77,6 +115,11 @@ declare global {
   interface Window {
     llc: Config
     lli: Internal
+    // heimdalla?: (
+    //   event: 'beforeSend' | 'event' | 'pageview',
+    //   properties?: unknown,
+    // ) => void
+    // heimdallq?: [string, unknown?][]
     heimdall: {
       record: (config: Partial<Config>) => void
       track: (name: string, payload?: Record<string, any>) => void

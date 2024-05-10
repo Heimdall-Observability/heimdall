@@ -1,9 +1,3 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
-import { env } from './env.mjs'
-
 const nextConfig = {
   logging: {
     level: 'verbose',
@@ -15,6 +9,7 @@ const nextConfig = {
   poweredByHeader: false,
   typescript: { ignoreBuildErrors: true },
   experimental: {
+    instrumentationHook: true,
     serverComponentsExternalPackages: [
       'libsql',
       // "@libsql/client",
@@ -36,13 +31,25 @@ const nextConfig = {
   },
   rewrites: async () => [
     {
-      source: '/api/heimdall',
-      destination: env.NEXT_PUBLIC_API_URL,
+      source: '/api/trace',
+      destination: 'http://localhost:4318/v1/traces',
     },
     {
-      source: '/api/trace',
-      destination: env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+      source: '/api/heimdall',
+      destination: 'http://localhost:8000',
     },
+    {
+      source: '/api/heimdall/:path*',
+      destination: `http://localhost:8000/:path*`,
+    },
+    // {
+    //   source: '/api/heimdall',
+    //   destination: env.NEXT_PUBLIC_API_URL,
+    // },
+    // {
+    //   source: '/api/trace',
+    //   destination: env.NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT,
+    // },
     {
       source: '/api/openstatus',
       destination: 'https://vitals.openstat.us/',

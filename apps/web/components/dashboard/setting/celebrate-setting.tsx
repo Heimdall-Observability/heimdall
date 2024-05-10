@@ -1,6 +1,6 @@
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { Switch } from '@/components/ui/switch'
 import { celebrateSettingAtom } from '@/jotai/store'
+import { Alert, AlertDescription, AlertTitle } from '@heimdall-logs/ui'
+import { Switch } from '@heimdall-logs/ui'
 import { Label } from '@heimdall-logs/ui'
 import { Input } from '@heimdall-logs/ui'
 import { useAtom } from 'jotai'

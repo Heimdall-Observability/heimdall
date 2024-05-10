@@ -24,3 +24,63 @@ services:
       - "9464"          # Prometheus exporter
       - "8888"          # metrics endpoint
     logging: *logging
+
+  ch:
+    image: clickhouse/clickhouse-server:23.11.5
+    user: '101:101'
+    container_name: ch
+    hostname: ch
+    restart: always
+    volumes:
+      - ./clickhouse/etc/clickhouse-server/config.d/config.xml:/etc/clickhouse-server/config.d/config.xml:ro
+      - ./clickhouse/etc/clickhouse-server/users.d/users.xml:/etc/clickhouse-server/users.d/users.xml:ro
+    ports:
+      - '8123:8123'
+      - '9000:9000'
+    depends_on:
+      - minio
+      - createbuckets
+    healthcheck:
+      test: wget --no-verbose --tries=1 --spider http://clickhouse:8123/ping || exit 1
+      interval: 5s
+      timeout: 3s
+      retries: 100
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  # Object storage, AWS alternative
+  minio:
+    container_name: minio-local
+    image: quay.io/minio/minio
+    restart: always
+    hostname: minio
+    command: server --address 0.0.0.0:10000 --console-address 0.0.0.0:10001 /data
+    ports:
+      - '127.0.0.1:10000:10000'
+      - '127.0.0.1:10001:10001'
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
+    logging: *logging
+
+  createbuckets:
+    container_name: createbuckets-local
+    image: minio/mc
+    depends_on:
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minio:10000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSWORD};
+      /usr/bin/mc admin info myminio;
+      /usr/bin/mc mb myminio/clickhouse;
+      /usr/bin/mc policy set public myminio/clickhouse;
+      exit 0;
+      "
+
+volumes:
+  minio_data:
+    driver: local

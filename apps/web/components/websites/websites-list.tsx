@@ -26,7 +26,7 @@ export default function WebsitesList({
   }, [selected, websites])
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 mt-4">
       {websites.length ? (
         websites.map((website) => (
           <WebSiteItem

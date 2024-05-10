@@ -1,10 +1,10 @@
 import {
-  CLSMetricWithAttribution,
-  FCPMetricWithAttribution,
-  FIDMetricWithAttribution,
-  INPMetricWithAttribution,
-  LCPMetricWithAttribution,
-  TTFBMetricWithAttribution,
+  type CLSMetricWithAttribution,
+  type FCPMetricWithAttribution,
+  type FIDMetricWithAttribution,
+  type INPMetricWithAttribution,
+  type LCPMetricWithAttribution,
+  type TTFBMetricWithAttribution,
   onCLS,
   onFCP,
   onFID,
@@ -12,11 +12,13 @@ import {
   onLCP,
   onTTFB,
 } from 'web-vitals/attribution'
+
 import { send } from './server'
 import { getUrlParams, getVisitorId } from './utils/util'
 
 export function recordWebVitals() {
   const queue = window.lli.vitalQueue
+
   function addToQueue(
     metric:
       | CLSMetricWithAttribution
@@ -44,6 +46,7 @@ export function recordWebVitals() {
     }
     queue.add(data)
   }
+
   onCLS(addToQueue)
   onFCP(addToQueue)
   onFID(addToQueue)

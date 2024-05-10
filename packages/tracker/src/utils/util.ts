@@ -1,4 +1,4 @@
-import { ServerEvents } from '../types'
+import type { ServerEvents } from '../types'
 
 export function getVisitorId() {
   const getId = () => localStorage.getItem('heimdall-id')
@@ -27,9 +27,7 @@ export const getUrlParams = () => {
   return Object.fromEntries(urlSearchParams.entries())
 }
 
-export const isUndefined = function (obj: any): obj is undefined {
-  return obj === void 0
-}
+export const isUndefined = (obj: any): obj is undefined => obj === void 0
 
 export function isProduction() {
   return window.llc.env === 'prod'
@@ -94,22 +92,19 @@ export function q(e: ServerEvents) {
 
 export function getUrl() {
   if (typeof process === 'undefined') {
-    return 'https://api.francismasha.com'
+    return 'http://127.0.0.1:8000/v1'
   }
-  if (process.env.NEXT_PUBLIC_HEIMDALL_URL || process.env.HEIMDALL_URL) {
-    const url = process.env.NEXT_PUBLIC_HEIMDALL_URL ?? process.env.HEIMDALL_URL
+  if (process.env.NEXT_PUBLIC_MXL_URL || process.env.MXL_URL) {
+    const url = process.env.NEXT_PUBLIC_MXL_URL ?? process.env.MXL_URL
     return `${url}/api/heimdall`
   }
-  return 'https://api.francismasha.com'
+  return 'http://127.0.0.1:8000/v1'
 }
 
 export const parseHost = (url: string) => {
   // In case they update the tracker but didn't remove the host
-  if (
-    url === 'https://heimdall.francismasha.com' ||
-    url === 'https://www.heimdall.francismasha.com'
-  ) {
-    return 'https://api.francismasha.com'
+  if (url === 'http://127.0.0.1:3000' || url === 'http://127.0.0.1:3001') {
+    return 'http://127.0.0.1:8000/v1'
   } else {
     return url
   }
@@ -122,7 +117,7 @@ export const setSessionStartTime = (time: number) => {
 export const getSessionDuration = () => {
   const startTime = sessionStorage.getItem('heimdall-session-start-time')
   if (startTime) {
-    return (Date.now() - parseInt(startTime)) / 1000
+    return (Date.now() - Number.parseInt(startTime)) / 1000
   }
   return 0
 }

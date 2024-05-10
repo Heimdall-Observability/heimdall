@@ -80,8 +80,8 @@ export const setupClickhouseDb = async (
 
 async function main() {
   const client = createClient({
-    host: env.CLICKHOUSE_HOST,
-    password: env.CLICKHOUSE_PASSWORD,
+    url: env.CLICKHOUSE_HOST,
+    // password: env.CLICKHOUSE_PASSWORD,
   })
   await setupClickhouseDb(client, env.KAFKA_BROKER)
 }

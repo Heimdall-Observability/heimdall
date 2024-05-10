@@ -45,7 +45,7 @@
     "clean": {
       "cache": false
     },
-    "migrate": {
+    "db:setup": {
       "cache": false
     },
     "deploy": {

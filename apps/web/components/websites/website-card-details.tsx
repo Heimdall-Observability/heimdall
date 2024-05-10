@@ -37,7 +37,7 @@ export function WebsiteCardDetails({
   }, [])
 
   return (
-    <Link href={`/s/${site.id}`}>
+    <Link href={`/dashboard/${site.id}/runtime-logs`}>
       <Card className="rounded-xl shadow-none hover:shadow-md">
         <CardHeader className="p-4 md:p-6 md:pb-3 flex justify-between flex-row">
           <div className="flex items-center gap-2">
@@ -49,22 +49,20 @@ export function WebsiteCardDetails({
               className="border rounded-full shrink p-0.5"
             />
             <div className="">
-              <CardTitle className="text-base font-normal">
+              <CardTitle className="text-base font-normal tracking-normal">
                 {site.title}
               </CardTitle>
-              <p className="text-xs text-muted-foreground truncate">
-                {site.url}
-              </p>
+              <p className="text-muted-foreground truncate">{site.url}</p>
             </div>
           </div>
           <div className="flex items-center justify-center border-2 border-secondary rounded-full h-8 w-8">
-            <span className="text-xs font-light">100</span>
+            <span className="font-mono font-light">100</span>
           </div>
         </CardHeader>
         <CardContent className="flex justify-between gap-2 p-4 pt-0 md:p-6 md:pt-3">
-          <div className="flex items-center gap-2 text-lime-500">
+          <div className="flex items-center gap-2 text-lime-600">
             <User2 size={20} />
-            <p className="text-xs slashed-zero">
+            <p className="font-mono tracking-tight slashed-zero">
               {visitors}{' '}
               <span className="hidden md:inline-block">Visitors</span>
             </p>

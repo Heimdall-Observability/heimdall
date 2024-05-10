@@ -1,6 +1,6 @@
 {
   "name": "@heimdall-logs/root",
-  "packageManager": "pnpm@9.0.6",
+  "packageManager": "pnpm@9.1.0",
   "private": true,
   "author": {
     "name": "Francis Masha",
@@ -18,13 +18,14 @@
     "postinstall": "pnpm lint:ws",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "typecheck": "turbo typecheck"
+    "typecheck": "turbo typecheck",
+    "db:setup": "dotenv -- turbo db:setup"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
     "@changesets/cli": "^2.27.1",
     "@manypkg/cli": "^0.21.4",
-    "@types/node": "^20.12.10",
+    "@types/node": "^20.12.11",
     "dotenv-cli": "^7.4.2",
     "tsup": "^8.0.2",
     "turbo": "^1.13.3",

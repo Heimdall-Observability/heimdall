@@ -6,28 +6,35 @@ import {
 } from '@opentelemetry/core'
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http'
 import { registerInstrumentations } from '@opentelemetry/instrumentation'
+import { DocumentLoadInstrumentation } from '@opentelemetry/instrumentation-document-load'
+import { UserInteractionInstrumentation } from '@opentelemetry/instrumentation-user-interaction'
+import { XMLHttpRequestInstrumentation } from '@opentelemetry/instrumentation-xml-http-request'
 import { B3InjectEncoding, B3Propagator } from '@opentelemetry/propagator-b3'
+import { Resource, browserDetector } from '@opentelemetry/resources'
+import { detectResourcesSync } from '@opentelemetry/resources/build/src/detect-resources'
+// import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base'
 import {
-  Resource,
-  browserDetector,
-  detectResourcesSync,
-} from '@opentelemetry/resources'
-import { BatchSpanProcessor } from '@opentelemetry/sdk-trace-base'
-import { WebTracerProvider } from '@opentelemetry/sdk-trace-web'
-import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions'
+  BatchSpanProcessor,
+  WebTracerProvider,
+} from '@opentelemetry/sdk-trace-web'
 
 import { SessionIdProcessor } from './session-id-processor'
-import { Config } from './types'
+import type { Config } from './types'
 
-// const COLLECTOR_STRING = 'https://otelcol.francismasha.com/v1/traces';
 const COLLECTOR_STRING = 'http://localhost:4318/v1/traces'
+
+const {
+  NEXT_PUBLIC_OTEL_SERVICE_NAME = '',
+  NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT = '',
+  IS_SYNTHETIC_REQUEST = '',
+} = typeof window !== 'undefined' ? process.env : {}
 
 export async function trace({ collector, id }: Partial<Config>) {
   const { ZoneContextManager } = await import('@opentelemetry/context-zone')
 
   let resource = new Resource({
-    [SemanticResourceAttributes.SERVICE_NAME]: id,
-    [SemanticResourceAttributes.SERVICE_VERSION]: '0.0.1',
+    'service.name': NEXT_PUBLIC_OTEL_SERVICE_NAME || id,
+    'service.version': '0.0.1',
   })
 
   // Setup Propagator
@@ -55,11 +62,14 @@ export async function trace({ collector, id }: Partial<Config>) {
   provider.addSpanProcessor(
     new BatchSpanProcessor(
       new OTLPTraceExporter({
-        url: collector || COLLECTOR_STRING,
-        // headers: {
-        // 	'content-type': 'application/json',
-        // },
+        url:
+          NEXT_PUBLIC_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT ||
+          collector ||
+          COLLECTOR_STRING,
       }),
+      {
+        scheduledDelayMillis: 500,
+      },
     ),
   )
 
@@ -73,15 +83,15 @@ export async function trace({ collector, id }: Partial<Config>) {
   registerInstrumentations({
     tracerProvider: provider,
     instrumentations: [
-      // new DocumentLoadInstrumentation(),
-      // new UserInteractionInstrumentation(),
-      // new XMLHttpRequestInstrumentation(),
+      new DocumentLoadInstrumentation(),
+      new UserInteractionInstrumentation(),
+      new XMLHttpRequestInstrumentation(),
       getWebAutoInstrumentations({
         '@opentelemetry/instrumentation-fetch': {
           propagateTraceHeaderCorsUrls: /.*/,
           clearTimingResources: true,
           applyCustomAttributesOnSpan(span) {
-            span.setAttribute('app.synthetic_request', 'true')
+            span.setAttribute('app.synthetic_request', IS_SYNTHETIC_REQUEST)
           },
         },
         '@opentelemetry/instrumentation-xml-http-request': {

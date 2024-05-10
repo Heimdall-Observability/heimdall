@@ -1,0 +1,97 @@
+import { diag } from '@opentelemetry/api'
+import type { OTLPExporterError } from '@opentelemetry/otlp-exporter-base'
+import { OTLPExporterBase } from '@opentelemetry/otlp-exporter-base/build/src/OTLPExporterBase'
+import type { OTLPExporterConfig } from './config'
+
+/** @internal */
+export abstract class OTLPExporterEdgeBase<
+  ExportItem,
+  ServiceRequest,
+> extends OTLPExporterBase<OTLPExporterConfig, ExportItem, ServiceRequest> {
+  /** @internal */
+  private _headers: Record<string, unknown> | undefined
+
+  constructor(config: OTLPExporterConfig = {}) {
+    super(config)
+    if (config.headers) {
+      this._headers = config.headers
+    }
+  }
+
+  onShutdown(): void {
+    diag.debug('@heimdall-logs/nodejs-otel/otlp: onShutdown')
+  }
+
+  onInit(): void {
+    diag.debug('@heimdall-logs/nodejs-otel/otlp: onInit')
+  }
+
+  send(
+    items: ExportItem[],
+    onSuccess: () => void,
+    onError: (error: OTLPExporterError) => void,
+  ): void {
+    if (this._shutdownOnce.isCalled) {
+      diag.debug(
+        '@heimdall-logs/nodejs-otel/otlp: Shutdown already started. Cannot send objects',
+      )
+      return
+    }
+
+    const serviceRequest = this.convert(items)
+
+    let body: string | Uint8Array | Blob
+    let contentType: string
+    let headers: Record<string, string> | undefined
+    try {
+      const message = this.toMessage(serviceRequest)
+      ;({ body, contentType, headers } = message)
+    } catch (e) {
+      diag.warn('@heimdall-logs/nodejs-otel/otlp: no proto', e)
+      return
+    }
+
+    const promise = fetch(this.url, {
+      method: 'POST',
+      body,
+      headers: {
+        ...this._headers,
+        ...headers,
+        'Content-Type': contentType,
+        'User-Agent': 'OTel-OTLP-Exporter-JavaScript/0.46.0',
+      },
+      // @ts-expect-error - this handles a Next.js specific issue
+      next: { internal: true },
+    })
+      .then((res) => {
+        diag.debug(
+          '@heimdall-logs/nodejs-otel/otlp: onSuccess',
+          res.status,
+          res.statusText,
+        )
+        onSuccess()
+        // Drain the response body.
+        void res.arrayBuffer().catch(() => undefined)
+      })
+      .catch((err) => {
+        diag.error('@heimdall-logs/nodejs-otel/otlp: onError', err)
+        onError(err as OTLPExporterError)
+      })
+      .finally(() => {
+        const index = this._sendingPromises.indexOf(promise)
+        this._sendingPromises.splice(index, 1)
+      })
+
+    this._sendingPromises.push(promise)
+  }
+
+  getDefaultUrl(_config: OTLPExporterConfig): string {
+    throw new Error('Method not implemented.')
+  }
+
+  abstract toMessage(serviceRequest: ServiceRequest): {
+    body: string | Uint8Array | Blob
+    contentType: string
+    headers?: Record<string, string>
+  }
+}

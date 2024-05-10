@@ -1,0 +1,10 @@
+{
+  "out": "dist-site/api",
+  "plugin": ["typedoc-plugin-markdown"],
+  "cacheBust": true,
+  "name": "@heimdall-logs/nodejs-otel",
+  "disableGit": true,
+  "disableSources": true,
+  "hideGenerator": true,
+  "readme": "none"
+}

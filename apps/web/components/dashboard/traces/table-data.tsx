@@ -9,7 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from '@heimdall-logs/ui'
-import { Input } from '@heimdall-logs/ui'
 import { Button } from '@heimdall-logs/ui'
 import {
   ColumnDef,
@@ -26,8 +25,6 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { AnimatePresence, motion } from 'framer-motion'
-
-import { EventFilter } from './filter'
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -97,20 +94,6 @@ function DataTable<TData, TValue>({
         traces
       </p>
       <motion.div className="scrollbar-hide rounded-xl border bg-card dark:border-gray-800">
-        <div className="flex items-center justify-between px-2 py-4">
-          <Input
-            placeholder="Search Traces..."
-            value={
-              (table.getColumn('eventName')?.getFilterValue() as string) ?? ''
-            }
-            onChange={(event) =>
-              table.getColumn('eventName')?.setFilterValue(event.target.value)
-            }
-            className="max-w-sm"
-          />
-          {/* @ts-ignore */}
-          <EventFilter data={data} setData={setLocalData} />
-        </div>
         <Table className="scrollbar-hide">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -201,7 +184,7 @@ function DataTable<TData, TValue>({
                 pageSize: pagination.pageSize + 40,
               })
             }}
-            variant="outline"
+            type="outline"
           >
             Load More
           </Button>

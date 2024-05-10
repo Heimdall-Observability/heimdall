@@ -456,11 +456,7 @@ export const Dashboard = ({
                   }}
                 >
                   <TabsContent value="logs">
-                    <Traces
-                      startDate={timeRange.startDate}
-                      endDate={timeRange.endDate}
-                      websiteId={website.id}
-                    />
+                    <Traces id={website.id} />
                   </TabsContent>
                 </TrackClick>
               </motion.div>
