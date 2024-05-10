@@ -1,12 +1,4 @@
-import { env } from '@/env.mjs'
-import { createClient } from '@clickhouse/client'
-
-export const client = createClient({
-  url: env.CLICKHOUSE_HOST,
-  // password: env.CLICKHOUSE_PASSWORD,
-  username: env.CLICKHOUSE_USERNAME,
-  database: env.CLICKHOUSE_DB,
-})
+import { clickhouseClient as client } from '@heimdall-logs/db'
 
 export const getIsWebsiteActive = async ({
   websiteId,

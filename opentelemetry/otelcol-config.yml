@@ -11,7 +11,7 @@ receivers:
 exporters:
   # Clickhouse exporter
   clickhouse:
-    endpoint: tcp://ch:9000?dial_timeout=10s&compress=lz4
+    endpoint: 
     ttl_days: 3
     database: default
     username: default

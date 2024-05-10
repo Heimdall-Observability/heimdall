@@ -1,4 +1,5 @@
-import { client, getIsWebsiteActive } from '@/lib/clickhouse'
+import { getIsWebsiteActive } from '@/lib/clickhouse'
+import { clickhouseClient as client } from '@heimdall-logs/db'
 import { db } from '@heimdall-logs/db'
 import { sql } from 'drizzle-orm'
 import { env } from 'env.mjs'
