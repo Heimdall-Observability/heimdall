@@ -1,8 +1,7 @@
-export type WEBSITE =
-  | WEBSITE_SHORTNAMES.ANALYTICS
-  | WEBSITE_SHORTNAMES.INSIGHTS
-  | WEBSITE_SHORTNAMES.WEB_VITALS
-  | WEBSITE_SHORTNAMES.RUNTIME_LOGS
+export type WEBSITE = WEBSITE_SHORTNAMES.RUNTIME_LOGS
+// | WEBSITE_SHORTNAMES.INSIGHTS
+// | WEBSITE_SHORTNAMES.WEB_VITALS
+// | WEBSITE_SHORTNAMES.ANALYTICS
 
 export enum WEBSITE_NAMES {
   ANALYTICS = 'Analytics',
@@ -27,15 +26,18 @@ export type Website = {
 }
 
 export const websites: Website = {
-  analytics: {
-    name: WEBSITE_NAMES.ANALYTICS,
-  },
-  insights: {
-    name: WEBSITE_NAMES.INSIGHTS,
-  },
-  web_vitals: {
-    name: WEBSITE_NAMES.WEB_VITALS,
-  },
+  // analytics: {
+  //   name: WEBSITE_NAMES.ANALYTICS,
+  // },
+  // insights: {
+  //   name: WEBSITE_NAMES.INSIGHTS,
+  // },
+  // web_vitals: {
+  //   name: WEBSITE_NAMES.WEB_VITALS,
+  // },
+  // traces: {
+  //   name: WEBSITE_NAMES.RUNTIME_LOGS,
+  // },
   runtime_logs: {
     name: WEBSITE_NAMES.RUNTIME_LOGS,
   },

@@ -1,0 +1,103 @@
+/*.content {*/
+/*	!*height: fit-content;*!*/
+/*	!*max-width: 640px;*!*/
+/*	background-image: url('/hero.svg');*/
+/*	width: 268px;*/
+/*	height: 812px;*/
+/*	!*flex-shrink: 0;*!*/
+/*	background-repeat: repeat-y;*/
+/*	position: absolute;*/
+/*	top: 0;*/
+/*	left: 0;*/
+/*	display: flex;*/
+/*}*/
+
+@media screen and (min-width: 640px) {
+	.main {
+		display: none;
+	}
+
+	.main:before {
+		display: none;
+	}
+
+	.main:after {
+		display: none;
+	}
+}
+
+.main {
+	width: 40%;
+	min-height: 100vh;
+	position: fixed;
+	display: flex;
+	justify-content: left;
+	/*padding: 120px 24px 160px 24px;*/
+	pointer-events: none;
+	left: 0;
+}
+
+.main:before {
+	/*background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);*/
+	position: absolute;
+	/*content: "";*/
+	z-index: 2;
+	/*width: 40%;*/
+	height: 100%;
+	top: 0;
+}
+
+.main:after {
+	content: '';
+	background-image: url('/hero.svg');
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+}
+
+@media screen and (max-width: 640px) {
+	.content {
+		display: none;
+	}
+
+	.content:before {
+		display: none;
+	}
+
+	.content:after {
+		display: none;
+	}
+}
+
+.content {
+	/*width: 40%;*/
+	min-height: 100vh;
+	position: fixed;
+	display: flex;
+	justify-content: left;
+	/*padding: 120px 24px 160px 24px;*/
+	pointer-events: none;
+	left: 0;
+}
+
+.content:before {
+	/*background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);*/
+	position: absolute;
+	/*content: "";*/
+	z-index: 2;
+	/*width: 40%;*/
+	height: 100%;
+	top: 0;
+}
+
+.content:after {
+	content: '';
+	background-image: url('/hero-home.svg');
+	z-index: 1;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+}

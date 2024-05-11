@@ -63,6 +63,33 @@ export const tracesQuery = (
    ORDER BY Timestamp DESC
    LIMIT 100`
 
+export const runtimeLogs = (
+  startDate: string,
+  endDate: string,
+  websiteId: string,
+) =>
+  `SELECT TraceId AS id,
+          min(Timestamp) AS timestamp,
+          SpanAttributes['http.method'] AS method,
+          SpanAttributes['http.target'] AS route,
+          SpanAttributes['http.status_code'] AS status_code,
+          SpanAttributes['resource.name'] AS host,
+          SpanAttributes['http.message'] AS message,
+          StatusMessage AS event_message
+   FROM
+     otel_traces
+   WHERE ServiceName = '${websiteId}'
+--      AND ParentSpanId == ''
+     AND ResourceAttributes['telemetry.sdk.language'] = 'nodejs'
+--      AND ResourceAttributes['entity.type'] = 'SERVICE'
+     AND SpanAttributes['next.span_type'] = 'BaseServer.handleRequest'
+--      AND route != '/_next/*'
+--      AND StatusCode != 'STATUS_CODE_UNSET'
+     AND Timestamp >= '${startDate}'
+     AND Timestamp <= '${endDate}'
+   GROUP BY ResourceAttributes, SpanAttributes, event_message, TraceId
+   ORDER BY timestamp DESC`
+
 export const vitalsQuery = (
   startDate: string,
   endDate: string,
@@ -427,7 +454,7 @@ async function getTracesData(
 ) {
   return client
     .query({
-      query: tracesQuery(
+      query: runtimeLogs(
         convertToUTC(startDateObj),
         convertToUTC(endDateObj),
         websiteId,

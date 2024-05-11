@@ -11,12 +11,6 @@ import {
   UnfoldVertical,
 } from 'lucide-react'
 
-function removeQueryString(url: string | URL) {
-  const urlObj = new URL(url)
-  urlObj.search = ''
-  return urlObj.toString()
-}
-
 export const columns: ColumnDef<HeimdallTraces>[] = [
   {
     id: 'expander',
@@ -78,8 +72,8 @@ export const columns: ColumnDef<HeimdallTraces>[] = [
         <div className="flex flex-col">
           <div className="text-sm">{row.original.SpanName}</div>
           <div className="text-xs text-muted-foreground">
-            {removeQueryString(row.original.SpanAttributes?.['http.url'])}
-            {/*{row.original.SpanAttributes?.['http.url']}*/}
+            {/*{removeQueryString(row.original.SpanAttributes?.['http.url'])}*/}
+            {row.original.SpanAttributes?.['http.url']}
           </div>
         </div>
       )

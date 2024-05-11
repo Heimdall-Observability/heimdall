@@ -46,7 +46,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.11",
-    "drizzle-kit": "^0.21.0",
+    "drizzle-kit": "^0.21.1",
     "drizzle-orm": "^0.30.10",
     "error-stack-parser": "^2.1.4",
     "framer-motion": "^11.1.9",

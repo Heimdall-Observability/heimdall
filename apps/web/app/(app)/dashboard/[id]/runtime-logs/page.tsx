@@ -1,4 +1,4 @@
-import Traces from '@/components/dashboard/traces'
+import RuntimeLogs from '@/components/dashboard/runtime-logs'
 import SectionContainer from '@/components/layout/section-container'
 import { PageHeader } from '@/components/page-header'
 
@@ -13,7 +13,7 @@ export default function RuntimeLogsPage({
         title="Runtime logs"
         description="A view of your application's runtime logs."
       />
-      <Traces id={params.id} />
+      <RuntimeLogs id={params.id} />
     </SectionContainer>
   )
 }
